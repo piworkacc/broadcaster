@@ -18,19 +18,19 @@ app.set('view engine', 'hbs');
 
 app.use(
   session({
-    secret: process.env.SESSION_SECRET ?? 'ljkfhlksJHFK', // строка для шифрования сессии
-    resave: false, // не пересохраняем сессию если не было изменений
-    saveUninitialized: false, // не сохраняем сессию если она пустая
-    cookie: { secure: false }, // не HTTPS
-    name: 'sessionCoockieIvan', // имя сессионной куки
-    store: new FileStore(), // хранилище для куков - папка с файлами
+    secret: process.env.SESSION_SECRET ?? 'ljkfhlksJHFK',
+    resave: false,
+    saveUninitialized: false,
+    cookie: { secure: false },
+    name: 'sessionCoockieIvan',
+    store: new FileStore(),
   }),
 );
 
 app.use(cors());
 app.use(logger('dev'));
 app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
+app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
