@@ -13,8 +13,8 @@ const nms = require('./mediaServer');
 
 nms.run();
 
-const indexRouter = require('./routes/index');
-const usersRouter = require('./routes/users');
+const indexRouter = require('./src/routes/index.router');
+const usersRouter = require('./src/routes/users.router');
 
 const app = express();
 const HTTPServer = http.createServer(app);
@@ -41,6 +41,12 @@ app.use(
 );
 
 app.use(cors());
+
+// app.use(cors({
+//   credentials: true,
+//   origin: 'http://localhost:3000/'
+// }));
+
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -48,7 +54,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
-app.use('/users', usersRouter);
+app.use('/api', usersRouter);
 
 // app.use
 
