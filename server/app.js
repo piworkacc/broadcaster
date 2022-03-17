@@ -7,7 +7,7 @@ const logger = require('morgan');
 const session = require('express-session');
 const FileStore = require('session-file-store')(session);
 
-const { WSS, WSHandler } = require('./websockets/index');
+const { WSS, WSHandler } = require('./chat/index');
 
 const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
