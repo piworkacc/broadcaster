@@ -7,11 +7,14 @@ const logger = require('morgan');
 const session = require('express-session');
 const FileStore = require('session-file-store')(session);
 
+const { WSS, WSHandler } = require('./websockets/index');
+
 const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
 
 const app = express();
 
+WSS.on('connection', WSHandler);
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'hbs');
@@ -59,5 +62,3 @@ const PORT = process.env.PORT ?? 3001;
 app.listen(PORT, () => {
   console.log(`Broadcaster started on ${PORT}`);
 });
-
-module.exports = app;
