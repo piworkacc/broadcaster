@@ -14,9 +14,10 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   User.init({
-    userName: DataTypes.STRING,
-    userPassword: DataTypes.STRING,
-    userEmail: DataTypes.STRING,
+    name: DataTypes.STRING,
+    password: DataTypes.STRING,
+    email: DataTypes.STRING,
+    stream_name: DataTypes.STRING,
   }, {
     sequelize,
     modelName: 'User',
