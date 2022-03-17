@@ -7,10 +7,12 @@ import Logout from './components/Logout/Logout';
 
 
 
+import Header from "./components/Header/Header.component";
 
 function App() {
   return (
     <div className="App">
+      <Header />
       <Routes>
         <Route index element ={<Main/>}/>
         <Route path="/login" element={<Login />} />

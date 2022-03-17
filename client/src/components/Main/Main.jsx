@@ -1,11 +1,14 @@
 import React from 'react';
-import style from './Main.module.css';
+import SideBar from "../SideBar/SideBar.component";
+
 
 const Main = () => {
 	return (
-			<div>
-				Veshai!
-			</div>
+			<main >
+				<SideBar/>
+			</main>
+
+
 	)
 };
 
