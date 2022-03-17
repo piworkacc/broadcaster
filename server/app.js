@@ -9,6 +9,9 @@ const FileStore = require('session-file-store')(session);
 const { Server } = require('socket.io');
 
 const http = require('http');
+const nms = require('./mediaServer');
+
+nms.run();
 
 const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
