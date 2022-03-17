@@ -1,0 +1,29 @@
+.header {
+    width: 100vw;
+    height: 70px;
+    background-color: #000;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.header__logo {
+    margin-left: 40px;
+    width: 200px;
+    height:40px;
+}
+
+.header__signInBtn {
+    font-family: 'Robert Sans Medium', Arial, sans-serif;
+    color: #fff;
+    margin-right: 30px;
+    width: 100px;
+    height: 40px;
+    background-color: #ee4540;
+    border-radius: 20px;
+    border: none;
+}
+
+.header__searchBox {
+
+}
