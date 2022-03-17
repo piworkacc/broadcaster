@@ -10,7 +10,7 @@ const SearchInput = () => {
 			<div>
 				<div style={searchContainer}>
 					<Input style={searchInput}/>
-					<button style={buttonSearch}><SearchOutlined /> </button>
+					<button style={buttonSearch}><SearchOutlined/> </button>
 				</div>
 			</div>
 	)
