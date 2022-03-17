@@ -1,6 +1,6 @@
 import {ADD_VIDEO} from "../actionTypes/videoTypes";
 
-const parrotReducer = (state = [], action) => {
+const videoReducer = (state = [], action) => {
 	const { type, payload } = action;
 	switch (type) {
 		case ADD_VIDEO:
@@ -10,4 +10,4 @@ const parrotReducer = (state = [], action) => {
 	}
 };
 
-export default parrotReducer;
+export default videoReducer;

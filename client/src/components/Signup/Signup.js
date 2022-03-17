@@ -1,9 +1,32 @@
-import React from "react";
 import { Form, Input, Button } from 'antd';
+import React, { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import useUxios from "../../hooks/useUxios";
+import ErrorComponent from '../ErrorComponent/index';
+import Loading from '../Loading/index';
+import { registerAC } from '../../redux/sagas/sagasAC';
 
-const SignInForm = () => {
+const Signup = () => {
+  const dispatch = useDispatch();
+  const auth = useSelector((store) => store.auth);
+  const navigate = useNavigate();
+  const [inputs, setInputs] = useState({});
+  const { error, loading, uxios } = useUxios();
+  
+  useEffect(() => {
+    if (auth.ok) {
+      navigate('/');
+    }
+  }, [auth, navigate]);
+
   const onFinish = (values) => {
     console.log('Success:', values);
+    setInputs({
+      ...inputs,
+      values,
+    });
+    dispatch(registerAC({ user: values, service: { error, loading, uxios } })); 
   };
 
   const onFinishFailed = (errorInfo) => {
@@ -40,6 +63,19 @@ const SignInForm = () => {
       </Form.Item>
 
       <Form.Item
+        label="Useremail"
+        name="email"
+        rules={[
+          {
+            required: true,
+            message: 'Please input your email!',
+          },
+        ]}
+      >
+        <Input />
+      </Form.Item>
+
+      <Form.Item
         label="Password"
         name="password"
         rules={[
@@ -62,8 +98,10 @@ const SignInForm = () => {
           Submit
         </Button>
       </Form.Item>
+      <ErrorComponent message={error} />
+      <Loading loading={loading} />
     </Form>
   );
 };
 
-export default SignInForm;
+export default Signup;

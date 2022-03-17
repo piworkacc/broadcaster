@@ -1,8 +1,10 @@
 import './App.css';
 import {Routes, Route} from 'react-router-dom'
 import Main from "./components/Main/Main";
-import SignInForm from './components/SignInForm/SignInForm';
-import SignUpForm from './components/SignUpForm/SignUpForm';
+import Login from './components/Login/Login';
+import Signup from './components/Signup/Signup';
+import Logout from './components/Logout/Logout';
+
 
 
 
@@ -11,8 +13,9 @@ function App() {
     <div className="App">
       <Routes>
         <Route index element ={<Main/>}/>
-        <Route path="/signin" element={<SignInForm />} />
-        <Route path="/signup" element={<SignUpForm />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/signup" element={<Signup />} />
+        <Route exact path="/logout" element={<Logout />}></Route>
       </Routes>
 
     </div>
