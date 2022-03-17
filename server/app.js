@@ -7,6 +7,25 @@ const logger = require('morgan');
 const session = require('express-session');
 const FileStore = require('session-file-store')(session);
 
+const NodeMediaServer = require('node-media-server');
+
+const config = {
+  rtmp: {
+    port: 1935,
+    chunk_size: 60,
+    gop_cache: true,
+    ping: 30,
+    ping_timeout: 60,
+  },
+  http: {
+    port: 8000,
+    allow_origin: '*',
+  },
+};
+
+const nms = new NodeMediaServer(config);
+nms.run();
+
 const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
 
