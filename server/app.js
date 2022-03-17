@@ -6,6 +6,9 @@ const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const session = require('express-session');
 const FileStore = require('session-file-store')(session);
+const { Server } = require('socket.io');
+
+const http = require('http');
 const nms = require('./mediaServer');
 
 nms.run();
@@ -14,6 +17,13 @@ const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
 
 const app = express();
+const HTTPServer = http.createServer(app);
+const io = new Server(HTTPServer, {
+  cors: {
+    origin: '*',
+    credentials: true,
+  },
+});
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -58,9 +68,13 @@ app.use((err, req, res, next) => {
   res.render('error');
 });
 
-const PORT = process.env.PORT ?? 3001;
-app.listen(PORT, () => {
-  console.log(`Broadcaster started on ${PORT}`);
+const { onConnection } = require('./chat/index');
+
+io.on('connection', (socket) => onConnection(socket, io));
+
+const HTTP_PORT = process.env.HTTP_PORT || 3002;
+HTTPServer.listen(3002, () => {
+  console.log(`HTTPServer started on ${HTTP_PORT}`);
 });
 
-module.exports = app;
+module.exports = HTTPServer;
