@@ -7,13 +7,13 @@ import CategoryList from "../CategoryList/CategoryList.component";
 
 const Main = () => {
 	return (
-			<main>
+			<MainContainer>
 			<TitleScreen>
 				<SideBar/>
 				<CarouselMain />
 			</TitleScreen>
 				<CategoryList/>
-			</main>
+			</MainContainer>
 
 	)
 };
@@ -24,4 +24,9 @@ export default Main;
 const TitleScreen = styled.section`
 	display: flex;
 	margin: 0 auto;
+`
+
+const MainContainer = styled.main`
+  padding-left: 200px;
+
 `
