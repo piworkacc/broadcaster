@@ -1,29 +1,36 @@
 'use strict';
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('Users', {
+    await queryInterface.createTable('Streams', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      name: {
+      user_id: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+        onDelete: 'CASCADE',
+        references: {
+          model: 'Users',
+          key: 'id',
+        },
+      },
+      title: {
         type: Sequelize.STRING,
         allowNull: false,
       },
-      password: {
+      path: {
         type: Sequelize.STRING,
-        allowNull: false,
       },
-      email: {
-        type: Sequelize.STRING,
+      start: {
         allowNull: false,
-        unique: true,
+        type: Sequelize.DATE
       },
-      stream_key: {
-        type: Sequelize.STRING,
-        unique: true,
+      end: {
+        allowNull: false,
+        type: Sequelize.DATE
       },
       createdAt: {
         allowNull: false,
@@ -36,6 +43,6 @@ module.exports = {
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('Users');
+    await queryInterface.dropTable('Streams');
   }
 };

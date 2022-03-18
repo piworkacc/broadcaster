@@ -1,29 +1,30 @@
 'use strict';
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('Users', {
+    await queryInterface.createTable('StreamTags', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      name: {
-        type: Sequelize.STRING,
+      tag_id: {
+        type: Sequelize.INTEGER,
+        references: {
+          model: 'Tags',
+          key: 'id',
+        },
+        onDelete: 'CASCADE',
         allowNull: false,
       },
-      password: {
-        type: Sequelize.STRING,
+      stream_id: {
+        type: Sequelize.INTEGER,
+        references: {
+          model: 'Streams',
+          key: 'id',
+        },
+        onDelete: 'CASCADE',
         allowNull: false,
-      },
-      email: {
-        type: Sequelize.STRING,
-        allowNull: false,
-        unique: true,
-      },
-      stream_key: {
-        type: Sequelize.STRING,
-        unique: true,
       },
       createdAt: {
         allowNull: false,
@@ -36,6 +37,6 @@ module.exports = {
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('Users');
+    await queryInterface.dropTable('StreamTags');
   }
 };
