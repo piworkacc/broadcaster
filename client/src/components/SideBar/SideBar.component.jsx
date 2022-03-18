@@ -1,5 +1,5 @@
 import React from 'react';
-import {menu_icon, subMenu} from "./SideBarStyle";
+import {menu_icon, sideBarContainer__list, subMenu} from "./SideBarStyle";
 import {
 	AliwangwangOutlined,
 	FontSizeOutlined,
@@ -13,7 +13,7 @@ import { sideBarContainer} from "./SideBarStyle";
 const SideBar = () => {
 	return (
 			<div style={sideBarContainer}>
-				<ul>
+				<ul style={sideBarContainer__list}>
 					<li key="2" className='menu-item' style={subMenu}><HomeOutlined style={menu_icon}/><span>Home</span></li>
 					<li key="3 " style={subMenu} ><PlayCircleOutlined style={menu_icon} />Videos</li>
 					<li key="4 " style={subMenu} ><StarOutlined style={menu_icon} />Reviews</li>
