@@ -12,7 +12,7 @@ function Logout() {
   const navigate = useNavigate();
   useEffect(() => {
     (async () => {
-      const data = await uxios('http://localhost:3001/api/users/logout');
+      const data = await uxios('/api/users/logout');
       if (data) {
         dispatch(removeAuth());
         navigate('/');

@@ -7,6 +7,7 @@ const logger = require('morgan');
 const session = require('express-session');
 const FileStore = require('session-file-store')(session);
 const { Server } = require('socket.io');
+require('dotenv').config();
 
 const http = require('http');
 const nms = require('./mediaServer');
@@ -35,7 +36,7 @@ app.use(
     resave: false,
     saveUninitialized: false,
     cookie: { secure: false },
-    name: 'sessionCoockieIvan',
+    name: process.env.COOKIE,
     store: new FileStore(),
   }),
 );
@@ -54,7 +55,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
-app.use('/api', usersRouter);
+app.use('/api/users', usersRouter);
 
 // app.use
 
@@ -65,13 +66,12 @@ app.use((req, res, next) => {
 
 // error handler
 app.use((err, req, res, next) => {
-  // set locals, only providing error in development
-  res.locals.message = err.message;
-  res.locals.error = req.app.get('env') === 'development' ? err : {};
-
-  // render the error page
-  res.status(err.status || 500);
-  res.render('error');
+  if (err) {
+    console.log(err);
+    res.status(err.status || 500).send(err.message);
+  } else {
+    next();
+  }
 });
 
 const { onConnection } = require('./chat/index');

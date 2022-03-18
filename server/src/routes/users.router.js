@@ -5,9 +5,9 @@ const {
   addUser, login, logout, auth,
 } = require('../controller');
 
-router.route('/users').post(addUser);
-router.route('/users/login').post(login);
-router.route('/users/logout').get(logout);
-router.route('/users/auth').get(authenticated, auth);
+router.route('/').post(addUser);
+router.route('/login').post(login);
+router.route('/logout').get(logout);
+router.route('/auth').get(authenticated, auth);
 
 module.exports = router;

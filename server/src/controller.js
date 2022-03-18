@@ -18,10 +18,10 @@ async function addUser(req, res, next) {
     const body = { ...req.body, password: hashIt(req.body.password) };
     const newUser = await User.create(body);
     setSession(req, newUser);
-    res.json({ 
+    res.json({
       name: newUser.name,
       id: newUser.id,
-     });
+    });
   } catch (err) {
     next(err);
   }
@@ -54,9 +54,10 @@ function logout(req, res) {
 }
 
 function auth(req, res) {
-  res.json({ 
+  res.json({
     name: req.session.userName,
-    id: req.session.userId });
+    id: req.session.userId,
+  });
 }
 
 module.exports = {
