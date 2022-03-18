@@ -1,8 +1,32 @@
+<script defer src="/js/script.js"></script>
+
 <h1>{{title}}</h1>
 <p>Welcome to {{title}}</p>
-<div class="input-group mb-3">
-  <input type="text" class="form-control" placeholder="Message" aria-label="WS message"
-    aria-describedby="button-addon2">
-  <button class="btn btn-outline-secondary" type="button" id="button-addon">Send</button>
-</div>
-<script defer src="javascripts/index.js"></script>
+
+<script src="https://cdn.bootcss.com/flv.js/1.5.0/flv.min.js"></script>
+<button id="play">play</button>
+<video id="videoElement"></video>
+<script>
+  const URLparts = window.location.host.split(':');
+  if (URLparts.length > 1) URLparts.pop();
+  const home = URLparts.join(':');
+
+  if (flvjs.isSupported()) {
+    var videoElement = document.getElementById('videoElement');
+    var flvPlayer = flvjs.createPlayer({
+      type: 'flv',
+      url: `ws://${home}:8000/live/a.flv`
+    });
+    flvPlayer.attachMediaElement(videoElement);
+  }
+
+  document.getElementById('play').addEventListener('click', () => {
+    try {
+      flvPlayer.load();
+      flvPlayer.play();
+    } catch (err) {
+      flvPlayer.unload();
+      flvPlayer.pause();
+    }
+  })
+</script>

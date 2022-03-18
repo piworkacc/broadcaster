@@ -1,0 +1,40 @@
+.header {
+    position: sticky;
+    top: 0;
+    width: 100vw;
+    height: 70px;
+    background-color: #000;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 2;
+}
+
+.header__logo {
+    margin-left: 40px;
+    width: 200px;
+    height:40px;
+}
+
+.header__signInBtn {
+    font-family: 'Robert Sans Medium', Arial, sans-serif;
+    color: #fff;
+    margin-right: 30px;
+    width: 100px;
+    height: 40px;
+    background-color: #ee4540;
+    border-radius: 20px;
+    border: none;
+    transition: scale .4s ease;
+}
+
+.header__signInBtn:hover {
+    transform:scale(1.1);
+}
+
+
+
+
+.header__searchBox {
+
+}
