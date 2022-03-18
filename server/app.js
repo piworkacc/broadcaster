@@ -9,8 +9,9 @@ const FileStore = require('session-file-store')(session);
 const { Server } = require('socket.io');
 require('dotenv').config();
 
+// running node media server
 const http = require('http');
-const nms = require('./mediaServer');
+const nms = require('./src/mediaServer');
 
 nms.run();
 
@@ -19,6 +20,7 @@ const usersRouter = require('./src/routes/users.router');
 
 const app = express();
 const HTTPServer = http.createServer(app);
+
 const io = new Server(HTTPServer, {
   cors: {
     origin: '*',

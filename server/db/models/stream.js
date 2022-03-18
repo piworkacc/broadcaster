@@ -20,6 +20,7 @@ module.exports = (sequelize, DataTypes) => {
   }
   Stream.init({
     user_id: DataTypes.INTEGER,
+    broadcast_id: DataTypes.STRING,
     title: DataTypes.STRING,
     start: DataTypes.DATE,
     end: DataTypes.DATE,
