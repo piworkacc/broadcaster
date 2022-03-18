@@ -43,16 +43,18 @@ const Title = styled.h2`
 	font-weight: 900;
 	text-transform: uppercase;
 	letter-spacing: 2px; 
-	border-bottom: 1px solid red;
+	border-bottom: 1px solid #393939;
 	text-align: start;
 	 &:after {
     content: "";
+		 display: block;
     position: relative;
-    height: 4px;
-    width: 50px;
+    height: 20px;
+    width: 280px;
     left: 0;
-    bottom: 1rem;
-    background: #ee4540;
+		 top: 0px;
+		border-bottom: 2px solid  #ee4540;
+		 z-index:2;
   }
 `
 
