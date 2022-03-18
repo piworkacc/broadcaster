@@ -1,11 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState } from 'react';
 import { Form, Input, Button } from 'antd';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import useUxios from "../../hooks/useUxios";
+import useUxios from '../../hooks/useUxios';
 import ErrorComponent from '../ErrorComponent/index';
 import Loading from '../Loading/index';
-import { loginAC } from "../../redux/sagas/sagasAC";
+import { loginAC } from '../../redux/sagas/sagasAC';
 
 const Login = () => {
   const dispatch = useDispatch();
@@ -13,10 +13,10 @@ const Login = () => {
   const navigate = useNavigate();
   const [inputs, setInputs] = useState({});
   const { error, loading, uxios } = useUxios();
-
+  console.log('kukech');
   useEffect(() => {
     if (auth.ok) {
-      navigate('/')
+      navigate('/');
     }
   }, [auth, navigate]);
 
@@ -28,7 +28,6 @@ const Login = () => {
     });
     dispatch(loginAC({ user: values, service: { error, loading, uxios } }));
   };
-
 
   const onFinishFailed = (errorInfo) => {
     console.log('Failed:', errorInfo);

@@ -4,7 +4,7 @@ import { AUTH_REQUESTED } from '../actionTypes/userTypes';
 
 
 function login(payload) {
-  return payload.service.uxios('http://localhost:3001/api/users/login', 'POST', payload.user);
+  return payload.service.uxios('/api/users/login', 'POST', payload.user);
 }
 
 function* loginWorker(action) {
