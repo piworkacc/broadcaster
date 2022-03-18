@@ -12,9 +12,9 @@ module.exports = {
      * }], {});
     */
     await queryInterface.bulkInsert('Users', [{
-      userName: 'React',
-      userPassword: sha256('React'),
-      userEmail: 'React@react.ru',
+      name: '123',
+      password: 'a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3',
+      email: '1@2',
       createdAt: new Date().toISOString(),
       updatedAt: new Date().toISOString(),
     }], {});
