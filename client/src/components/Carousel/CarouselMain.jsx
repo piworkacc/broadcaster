@@ -57,7 +57,7 @@ const Img = styled.img`
 
 
 const StyledSplideSide = styled(SplideSlide)`
-  height: 500px;
+  height: 800px;
   object-fit: cover;
   &:hover {
     transition: .3s;

@@ -5,19 +5,21 @@ export const subMenu = {
 	color:'#fff',
 	display: 'grid',
 	gridTemplateColumns: '40px 100px',
-  alignItems: 'start',
+  alignItems: 'center',
 	padding: '15px',
-	'menuItem:hover': {
-		color: 'blue'
-	},
 	cursor: 'pointer',
 	textAlign:'start',
 }
 
 export const sideBarContainer = {
+	position: 'fixed',
+	left: 0,
+	top: '70px',
 	backgroundColor: '#222222',
 	padding: 0,
 	maxWidth: '200px',
+	height: '100vh',
+	zIndex: 3,
 }
 
 
