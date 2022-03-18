@@ -2,31 +2,46 @@ const sha256 = require('sha256');
 
 module.exports = {
   async up(queryInterface, Sequelize) {
-    /**
-     * Add seed commands here.
-     *
-     * Example:
-     * await queryInterface.bulkInsert('People', [{
-     *   name: 'John Doe',
-     *   isBetaMember: false
-     * }], {});
-    */
-    await queryInterface.bulkInsert('Users', [{
-      userName: 'React',
-      userPassword: sha256('React'),
-      userEmail: 'React@react.ru',
-      createdAt: new Date().toISOString(),
-      updatedAt: new Date().toISOString(),
-    }], {});
+    await queryInterface.bulkInsert('Users', [
+      {
+        name: '123',
+        password: sha256('123'),
+        email: '1@3',
+        createdAt: new Date().toISOString(),
+        updatedAt: new Date().toISOString(),
+      },
+      {
+        name: 'nana',
+        password: sha256('123'),
+        email: 'n@na',
+        createdAt: new Date().toISOString(),
+        updatedAt: new Date().toISOString(),
+      },
+      {
+        name: 'admin',
+        password: sha256('123'),
+        email: 'a@min',
+        createdAt: new Date().toISOString(),
+        updatedAt: new Date().toISOString(),
+      },
+      {
+        name: 'mario',
+        password: sha256('123'),
+        email: 'm@rio',
+        createdAt: new Date().toISOString(),
+        updatedAt: new Date().toISOString(),
+      },
+      {
+        name: 'qwe',
+        password: sha256('123'),
+        email: 'q@we',
+        createdAt: new Date().toISOString(),
+        updatedAt: new Date().toISOString(),
+      },
+    ], {});
   },
 
   async down(queryInterface, Sequelize) {
-    /**
-     * Add commands to revert seed here.
-     *
-     * Example:
-     * await queryInterface.bulkDelete('People', null, {});
-     */
     await queryInterface.bulkDelete('Users', null, {});
   },
 };
