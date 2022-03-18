@@ -1,7 +1,7 @@
 import React from 'react';
 import {Input} from 'antd';
 import {SearchOutlined} from "@ant-design/icons";
-import {searchContainer, searchInput, buttonSearch, noFocus} from './Search'
+import {searchContainer, searchInput, buttonSearch} from './Search'
 
 
 const SearchInput = () => {
