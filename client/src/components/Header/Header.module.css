@@ -22,7 +22,15 @@
     background-color: #ee4540;
     border-radius: 20px;
     border: none;
+    transition: scale .4s ease;
 }
+
+.header__signInBtn:hover {
+    transform:scale(1.1);
+}
+
+
+
 
 .header__searchBox {
 
