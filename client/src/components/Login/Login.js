@@ -7,7 +7,6 @@ import ErrorComponent from '../ErrorComponent/index';
 import Loading from '../Loading/index';
 import { loginAC } from '../../redux/sagas/sagasAC';
 import './Login.css';
-import { searchInput } from '../Search/Search'
 
 const Login = () => {
   const dispatch = useDispatch();
@@ -39,9 +38,9 @@ const Login = () => {
     <div className='container'>
       <Row>
         <Col span={12} offset={6}>
-          <Card 
-          className="login-form-card"
-          style={{ marginTop: '100px' }}
+          <Card
+            className="login-form-card"
+            style={{ marginTop: '100px' }}
           >
             <Form
               name="basic"
@@ -52,8 +51,6 @@ const Login = () => {
               initialValues={{
                 remember: true,
               }}
-
-              // style={{ width: '600px', marginTop: '100px' }}
               onFinish={onFinish}
               onFinishFailed={onFinishFailed}
               autoComplete="off"
@@ -62,7 +59,6 @@ const Login = () => {
                 Войти в Veschatel:
               </div>
               <Form.Item
-                // label="Email"
                 name="email"
                 rules={[
                   {
@@ -73,12 +69,11 @@ const Login = () => {
               >
                 <Input
                   placeholder="email"
-                  style={searchInput}
+                  className='login-input'
                 />
               </Form.Item>
 
               <Form.Item
-                // label="Password"
                 name="password"
                 rules={[
                   {
@@ -90,7 +85,7 @@ const Login = () => {
                 <Input
                   type="password"
                   placeholder="пароль"
-                  style={searchInput}
+                  className='login-input'
                 />
               </Form.Item>
 
