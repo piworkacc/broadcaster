@@ -1,0 +1,38 @@
+.login-form {
+  margin-block: 10px;
+  /* width: 50%;
+  height: 50%; */
+}
+.login-form-button {
+   
+    color: rgb(255, 255, 255);
+    position: relative;
+    background-color: rgb(238, 69, 64);
+    height: 39px;
+    width: 100px;
+    border-radius: 15px;
+    border: none;
+
+}
+
+.loginFormText {
+  color: rgb(255, 255, 255);
+  margin-block: 10px;
+}
+
+.errorText {
+  color: rgb(238, 69, 64);
+  margin-block: 10px;
+}
+
+.login-form-card {
+  background-color:#262626;
+  border-radius: 15px;
+  border-color:#434343;
+}
+
+/* .container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+} */
