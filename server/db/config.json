@@ -1,23 +1,27 @@
 {
   "development": {
-    "username": "elbrus",
-    "password": "qwerty",
-    "database": "broadcaster",
+    "username": "postgres",
+    "password": 8009,
+    "database": "my_own_world",
     "host": "127.0.0.1",
-    "dialect": "postgres"
+    "dialect": "postgres",
+    "seederStorage": "sequelize",
+    "seederStorageTableName": "SequelizeData"
   },
-  "test": {
-    "username": "root",
-    "password": null,
-    "database": "database_test",
+  "test": {    
+    "username": "postgres",
+    "password": 8009,
+    "database": "my_own_world",
     "host": "127.0.0.1",
-    "dialect": "mysql"
+    "dialect": "postgres",
+    "seederStorage": "sequelize",
+    "seederStorageTableName": "SequelizeData"
   },
   "production": {
-    "username": "root",
-    "password": null,
-    "database": "database_production",
+    "username": "postgres",
+    "password": 8009,
+    "database": "my_own_world",
     "host": "127.0.0.1",
-    "dialect": "mysql"
+    "dialect": "postgres"
   }
 }
