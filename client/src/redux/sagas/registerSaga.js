@@ -3,7 +3,7 @@ import { setAuth } from '../actions/userAction';
 import { REGISTER_REQUESTED } from '../actionTypes/userTypes';
 
 function register(payload) {
-  return payload.service.uxios('http://localhost:3001/api/users', 'POST', payload.user);
+  return payload.service.uxios('/api/users', 'POST', payload.user);
 }
 
 function* registerWorker(action) {

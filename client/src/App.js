@@ -31,6 +31,7 @@ function App() {
         <Route index element={<Main />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
+        <Route path="/profile" element={<UserProfile />} />
         <Route exact path="/logout" element={<Logout />}></Route>
       </Routes>
       <Chat socketRef={socketRef} messages={message} />
