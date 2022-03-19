@@ -14,8 +14,15 @@ function setSession(req, user) {
 // USERS
 
 async function addUser(req, res, next) {
+  const { name, email, password } = req.body;
+  const streamKey = hashIt(name + email + password);
+  const body = {
+    name,
+    email,
+    password: hashIt(password),
+    stream_key: streamKey,
+  };
   try {
-    const body = { ...req.body, password: hashIt(req.body.password) };
     const newUser = await User.create(body);
     setSession(req, newUser);
     res.json({

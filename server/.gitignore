@@ -195,5 +195,5 @@ dist
 # End of https://www.toptal.com/developers/gitignore/api/macOS,visualstudiocode,Node
 
 sessions/
-server/
+streams/
 mdn/
