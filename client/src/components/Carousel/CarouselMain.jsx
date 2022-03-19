@@ -6,23 +6,14 @@ import horizon from '../../images/horizon.jpeg'
 import valhalla from '../../images/valhalla.jpeg'
 import styled from 'styled-components'
 import { Splide, SplideSlide } from '@splidejs/react-splide';
-import { Link, useNavigate } from "react-router-dom";
-import {useDispatch, useSelector} from "react-redux";
-import {getAllStreamsAC} from '../../redux/actionCreators/getAllStreamsAC'
+import {Link, useNavigate} from "react-router-dom";
+import {useSelector} from "react-redux";
+import Stream from '../Stream/Stream.component'
+
 
 const CarouselMain = ({id}) => {
-	const nav = useNavigate();
-	//redux
-	const dispatch = useDispatch();
+	const nav = useNavigate()
 	const streams = useSelector(state=> state.streams);
-	const getStreams = () => {
-		dispatch(getAllStreamsAC())
-	}
-
-	useEffect(() => {
-		getStreams()
-	},[])
-	console.log(streams)
 
 	return (
 			<StyledSplide
@@ -30,16 +21,11 @@ const CarouselMain = ({id}) => {
 						rewind: true,
 					} }
 			>
-				<StyledSplideSide>
-					<Img src={horizon} onClick={() => nav(`/streams/${id}`)} alt="Image 1"/>
-					{/*<Link  to={`/streams/${id}`}> a </Link>*/}
-				</StyledSplideSide>
-				<StyledSplideSide>
-					<Img src={valhalla} alt="Image 2"/>
-				</StyledSplideSide>
-				<StyledSplideSide>
-					<Img src={eR} alt="Image 3"/>
-				</StyledSplideSide>
+				{streams.map((el) => (
+						<StyledSplideSide key={el.id}>
+							<Img key={el.id}  src={el.img || horizon} broadcast_id={el.broadcast_id}  onClick={ ()=> nav(`streams/${el.broadcast_id}`)}/>
+						</StyledSplideSide>
+				))}
 			</StyledSplide>
 	);
 }

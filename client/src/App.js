@@ -11,7 +11,7 @@ import UserProfile from './components/UserProfile/UserProfile';
 import StreamPage from "./components/StreamPage/StreamPage.component";
 
 
-const socket = io.connect('http://localhost:3002');
+const socket = io.connect('/');
 
 function App() {
   return (
