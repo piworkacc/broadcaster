@@ -12,6 +12,9 @@ class ActiveStreams {
 
   async startStream(broadcastId, user) {
     try {
+      if (!this.streams.size) {
+        await closeLostStreams();
+      }
       const newStream = await startStream(user, broadcastId);
       this.streams.set(broadcastId, {
         user,
@@ -43,7 +46,7 @@ class ActiveStreams {
     try {
       endStream(broadcastId, filePath);
       if (!this.streams.size) {
-        closeLostStreams();
+        await closeLostStreams();
       }
     } catch (err) {
       console.log(err);

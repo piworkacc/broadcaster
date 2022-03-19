@@ -49,10 +49,35 @@ function getAllUserStreams(userId) {
   return Stream.findAll({ where: { user_id: userId } });
 }
 
+function getActiveStreams() {
+  return Stream.findAll({
+    attributes: ['id', 'broadcast_id', 'title', 'start'],
+    include: {
+      model: User,
+      attributes: ['stream_key'],
+    },
+    where: {
+      end: { [Op.is]: null },
+    },
+  });
+}
+
+function getUserFinishedStreams(userId) {
+  return Stream.findAll({
+    attributes: ['id', 'broadcast_id', 'title', 'start', 'path'],
+    where: {
+      path: { [Op.not]: null },
+      user_id: userId,
+    },
+  });
+}
+
 module.exports = {
   getUserByStreamKey,
   startStream,
   endStream,
   closeLostStreams,
   getAllUserStreams,
+  getActiveStreams,
+  getUserFinishedStreams,
 };
