@@ -1,16 +1,30 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import SideBar from "../SideBar/SideBar.component";
 import CarouselMain from "../Carousel/CarouselMain";
 import styled from 'styled-components'
 import CategoryList from "../CategoryList/CategoryList.component";
+import {useDispatch} from "react-redux";
+import {getAllStreamsAC} from '../../redux/actionCreators/getAllStreamsAC'
 
 
 const Main = () => {
+	const dispatch = useDispatch();
+	const getStreams = () => {
+		dispatch(getAllStreamsAC())
+	}
+
+	useEffect(() => {
+		getStreams()
+	},[])
+
+
+
+
 	return (
 			<MainContainer>
 			<TitleScreen>
 				<SideBar/>
-				<CarouselMain />
+				<CarouselMain/>
 			</TitleScreen>
 				<CategoryList/>
 			</MainContainer>

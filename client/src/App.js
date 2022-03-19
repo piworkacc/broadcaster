@@ -8,8 +8,10 @@ import Logout from './components/Logout/Logout';
 import Header from "./components/Header/Header.component";
 import UserProfile from './components/UserProfile/UserProfile';
 // import Chat from './components/Chat';
+import StreamPage from "./components/StreamPage/StreamPage.component";
 
-const socket = io.connect('http://localhost:3002');
+
+const socket = io.connect('/');
 
 function App() {
   return (
@@ -20,7 +22,8 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/profile" element={<UserProfile />} />
-        <Route exact path="/logout" element={<Logout />}></Route>
+        <Route exact path="/logout" element={<Logout />}/>
+        <Route path="/streams/:streamId" element={<StreamPage />} />
       </Routes>
 
     </div>

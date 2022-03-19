@@ -29,7 +29,6 @@ const Category = ({title}) => {
 					<SlideContainer><Img src={horizon} alt="Image 1"/></SlideContainer>
 					<SlideContainer><Img src={horizon} alt="Image 1"/></SlideContainer>
 					<SlideContainer><Img src={horizon} alt="Image 1"/></SlideContainer>
-
 				</Splide>
 			</CatergoryLi>
 	)
