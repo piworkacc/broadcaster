@@ -22,7 +22,6 @@ const Signup = () => {
   }, [auth, navigate]);
 
   const onFinish = (values) => {
-    console.log('Success:', values);
     setInputs({
       ...inputs,
       values,
