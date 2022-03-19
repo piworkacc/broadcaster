@@ -13,6 +13,8 @@ export const buttonSearch = {
 	color: '#fff', position: 'relative',
 	right: '50px', backgroundColor: '#ee4540', height: '45px', width: '50px',
 	borderBottomRightRadius: '15px', borderTopRightRadius: '15px',
-	border: 'none'
+	border: 'none', '&:hover':{
+		transform: 'scale(1.1)'
+	}
 }
 
