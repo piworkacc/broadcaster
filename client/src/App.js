@@ -10,6 +10,7 @@ import UserProfile from './components/UserProfile/UserProfile';
 // import Chat from './components/Chat';
 import StreamPage from "./components/StreamPage/StreamPage.component";
 
+
 const socket = io.connect('http://localhost:3002');
 
 function App() {

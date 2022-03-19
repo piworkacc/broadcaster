@@ -11,10 +11,11 @@ const { Server } = require('socket.io');
 const nms = require('./src/mediaServer');
 require('dotenv').config();
 
-// nms.run();
+nms.run();
 
 const indexRouter = require('./src/routes/index.router');
 const usersRouter = require('./src/routes/users.router');
+const streamsRouter = require('./src/routes/streams.router');
 const messagesRouter = require('./src/routes/messages.routes');
 
 const app = express();
@@ -57,6 +58,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
 app.use('/api/users', usersRouter);
+app.use('/api/streams', streamsRouter);
 app.use('/messages', messagesRouter);
 
 // catch 404 and forward to error handler
@@ -79,7 +81,7 @@ const { onConnection } = require('./chat/index');
 io.on('connection', (socket) => onConnection(socket, io));
 
 const HTTP_PORT = process.env.HTTP_PORT || 3002;
-HTTPServer.listen(3002, () => {
+HTTPServer.listen(HTTP_PORT, () => {
   console.log(`HTTPServer started on ${HTTP_PORT}`);
 });
 
