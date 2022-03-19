@@ -45,7 +45,7 @@ const Particle = () => {
 									quantity: 4,
 								},
 								repulse: {
-									distance: 200,
+									distance: 100,
 									duration: 0.4,
 								},
 							},
@@ -55,10 +55,10 @@ const Particle = () => {
 								value: 'rgb(238, 69, 64)',
 							},
 							links: {
-								color: "#ffffff",
-								distance: 150,
+								color: "#fff",
+								distance: 100,
 								enable: true,
-								opacity: 0.2,
+								opacity: 0.4,
 								width: 1,
 							},
 							collisions: {
@@ -68,8 +68,8 @@ const Particle = () => {
 								direction: "none",
 								enable: true,
 								outMode: "bounce",
-								random: false,
-								speed: 10,
+								random: true,
+								speed: 3,
 								straight: false,
 							},
 							number: {
@@ -77,17 +77,17 @@ const Particle = () => {
 									enable: true,
 									area: 800,
 								},
-								value: 80,
+								value: 100,
 							},
 							opacity: {
 								value: 0.5,
 							},
 							shape: {
-								type: "circle",
+								type: "triangle",
 							},
 							size: {
 								random: true,
-								value: 5,
+								value: 6,
 							},
 						},
 						detectRetina: true,

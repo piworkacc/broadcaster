@@ -7,6 +7,7 @@ import ErrorComponent from '../ErrorComponent/index';
 import Loading from '../Loading/index';
 import { loginAC } from '../../redux/sagas/sagasAC';
 import './Login.css';
+import Particle from "../Particles/Particles.component";
 
 const Login = () => {
   const dispatch = useDispatch();
@@ -36,6 +37,7 @@ const Login = () => {
 
   return (
     <div className='container'>
+      <Particle />
       <Row>
         <Col span={12} offset={6}>
           <Card
