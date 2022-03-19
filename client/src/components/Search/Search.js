@@ -4,7 +4,7 @@ export const searchContainer =
 export const searchInput = {
 	backgroundColor: '#1c1c1c',
 	color: '#fff',
-	width: '300px',
+	width: '500px',
 	border: '1px solid #3c3c3c',
 	padding: '10px 10px 10px 40px',
 	borderRadius: '15px',

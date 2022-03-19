@@ -1,16 +1,29 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import '@splidejs/splide/dist/css/splide.min.css';
 
 import eR from '../../images/elden_ring.jpeg'
 import horizon from '../../images/horizon.jpeg'
 import valhalla from '../../images/valhalla.jpeg'
 import styled from 'styled-components'
-
-
-
 import { Splide, SplideSlide } from '@splidejs/react-splide';
+import { Link, useNavigate } from "react-router-dom";
+import {useDispatch, useSelector} from "react-redux";
+import {getAllStreamsAC} from '../../redux/actionCreators/getAllStreamsAC'
 
-const CarouselMain = () => {
+const CarouselMain = ({id}) => {
+	const nav = useNavigate();
+	//redux
+	const dispatch = useDispatch();
+	const streams = useSelector(state=> state.streams);
+	const getStreams = () => {
+		dispatch(getAllStreamsAC())
+	}
+
+	useEffect(() => {
+		getStreams()
+	},[])
+	console.log(streams)
+
 	return (
 			<StyledSplide
 					options={ {
@@ -18,7 +31,8 @@ const CarouselMain = () => {
 					} }
 			>
 				<StyledSplideSide>
-					<Img src={horizon} alt="Image 1"/>
+					<Img src={horizon} onClick={() => nav(`/streams/${id}`)} alt="Image 1"/>
+					{/*<Link  to={`/streams/${id}`}> a </Link>*/}
 				</StyledSplideSide>
 				<StyledSplideSide>
 					<Img src={valhalla} alt="Image 2"/>
@@ -33,10 +47,25 @@ const CarouselMain = () => {
 export default CarouselMain;
 
 
+const StyledLink = styled(Link)`
+  &:before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: .7;
+    z-index: 2;
+  }
+`
+
+
 const Img = styled.img`
 	object-fit: cover;
 	width: 100%;
 	height: 100%;
+	cursor:pointer;
   &:hover {
     transition: .4s ease-in-out;
     opacity: .3;

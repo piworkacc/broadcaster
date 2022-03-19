@@ -4,11 +4,12 @@ import createSagaMiddleware from 'redux-saga';
 
 import rootSaga from './sagas/rootSaga';
 import rootReducer from './reducers/rootReducer';
+import thunk from 'redux-thunk'
 
 const sagaMiddleware = createSagaMiddleware();
 const store = createStore(
   rootReducer,
-  composeWithDevTools(applyMiddleware(sagaMiddleware)),
+  composeWithDevTools(applyMiddleware(thunk,sagaMiddleware)),
 );
 
 sagaMiddleware.run(rootSaga);

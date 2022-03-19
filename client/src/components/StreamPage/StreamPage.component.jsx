@@ -17,6 +17,5 @@ const StreamPage = ({url}) => {
 export default StreamPage;
 
 const Wrapper = styled.div`
-display: fixed;
 	
 `
