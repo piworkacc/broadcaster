@@ -28,6 +28,7 @@
     transition: scale .4s ease;
 }
 
+
 .header__signInBtn:hover {
     transform:scale(1.1);
 }
@@ -37,4 +38,10 @@
 
 .header__searchBox {
 
+}
+
+.signContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }

@@ -57,9 +57,9 @@ const Signup = () => {
               onFinishFailed={onFinishFailed}
               autoComplete="off"
             >
-              <div className='signupFormText'>
-                Зарегистрироваться в Veschatel:
-              </div>
+              <h2 className='signupFormText'>
+                Зарегистрироваться в <span className='veshatel'>Veschatel</span>
+              </h2>
               <Form.Item
                 name="name"
                 rules={[
