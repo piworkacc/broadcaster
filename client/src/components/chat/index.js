@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import './styles.css'
 
-
-
 export default function Chat({ socket }) {
 
   const [chatMessages, setChatMessages] = useState([]);
@@ -10,6 +8,10 @@ export default function Chat({ socket }) {
   useEffect(() => {
 
     socket.on('message:send', (msg) => {
+      setChatMessages((prev) => [...prev, msg]);
+    })
+
+    socket.on('message:get', (msg) => {
       setChatMessages((prev) => [...prev, msg]);
     })
 
