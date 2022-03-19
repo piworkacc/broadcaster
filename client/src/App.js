@@ -1,4 +1,5 @@
 import './App.css';
+import { io } from 'socket.io-client';
 import { Routes, Route } from 'react-router-dom'
 import Main from "./components/Main/Main";
 import Login from './components/Login/Login';
@@ -7,8 +8,6 @@ import Logout from './components/Logout/Logout';
 import Header from "./components/Header/Header.component";
 import UserProfile from './components/UserProfile/UserProfile';
 // import Chat from './components/Chat';
-
-import { io } from 'socket.io-client';
 
 const socket = io.connect('http://localhost:3002');
 
