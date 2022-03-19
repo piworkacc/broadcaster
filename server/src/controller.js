@@ -98,12 +98,19 @@ async function streams(req, res, next) {
   }
 }
 
+const makeStreamLink = (id) => `/api/streams/${id}`;
+
 async function userFinishedStreams(req, res, next) {
   try {
-    const results = await getUserFinishedStreams([req.params.userId]);
-    if (!results) {
+    const foundStreams = await getUserFinishedStreams([req.params.userId]);
+    if (!foundStreams) {
       res.json([]);
     }
+    const results = foundStreams.map((el) => {
+      const obj = el.dataValues;
+      obj.link = makeStreamLink(el.id);
+      return obj;
+    });
     res.json(results);
   } catch (err) {
     next(err);
@@ -136,7 +143,7 @@ async function streamsSelection(req, res, next) {
         if (structure[el][i] && result.length < amount) {
           added = true;
           const obj = structure[el][i];
-          obj.link = `/api/streams/${obj.id}`;
+          obj.link = makeStreamLink(obj.id);
           result.push(obj);
         }
       });
