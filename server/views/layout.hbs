@@ -62,7 +62,6 @@
 </head>
 
 <body>
-  {{{body}}}
   <ul id="messages"></ul>
   <form id="form" action="">
     <input id="input" autocomplete="off" /><button>Send</button>
@@ -78,13 +77,12 @@
     form.addEventListener('submit', function (e) {
       e.preventDefault();
       if (input.value) {
-        socket.emit('message:add', { message: input.value });
+        socket.emit('chat message', input.value);
         input.value = '';
       }
     });
 
-    socket.on('message:add', function (msg) {
-      console.log('Я здесь')
+    socket.on('chat message', function (msg) {
       var item = document.createElement('li');
       item.textContent = msg;
       messages.appendChild(item);
