@@ -1,0 +1,27 @@
+{
+  "development": {
+    "username": "postgres",
+    "password": 8009,
+    "database": "my_own_world",
+    "host": "127.0.0.1",
+    "dialect": "postgres",
+    "seederStorage": "sequelize",
+    "seederStorageTableName": "SequelizeData"
+  },
+  "test": {    
+    "username": "postgres",
+    "password": 8009,
+    "database": "my_own_world",
+    "host": "127.0.0.1",
+    "dialect": "postgres",
+    "seederStorage": "sequelize",
+    "seederStorageTableName": "SequelizeData"
+  },
+  "production": {
+    "username": "postgres",
+    "password": 8009,
+    "database": "my_own_world",
+    "host": "127.0.0.1",
+    "dialect": "postgres"
+  }
+}
