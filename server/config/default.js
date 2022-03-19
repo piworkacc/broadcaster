@@ -1,3 +1,6 @@
+require('dotenv').config();
+
+const ffmpegPath = process.env.FFMPEG_PATH;
 const config = {
   server: {
     secret: 'kjVkuti2xAyF3JGCzSZTk0YWM5JhI9mgQW4rytXc',
@@ -17,7 +20,7 @@ const config = {
       allow_origin: '*',
     },
     trans: {
-      ffmpeg: '/usr/bin/ffmpeg',
+      ffmpeg: ffmpegPath || '/usr/bin/ffmpeg',
       tasks: [
         // {
         //   app: 'live',
