@@ -11,7 +11,7 @@ const { Server } = require('socket.io');
 const nms = require('./src/mediaServer');
 require('dotenv').config();
 
-nms.run();
+// nms.run();
 
 const indexRouter = require('./src/routes/index.router');
 const usersRouter = require('./src/routes/users.router');
