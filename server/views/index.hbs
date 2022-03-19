@@ -6,6 +6,11 @@
 <script src="https://cdn.bootcss.com/flv.js/1.5.0/flv.min.js"></script>
 <button id="play">play</button>
 <video id="videoElement"></video>
+<video id="movie" controls width="460" height="306" preload autoplay>
+  <source src="/api/streams/62" type="video/mp4" />
+  <!-- HERE THE CODE FOR THE ALTERNATIVE PLAYER (FLASH) WILL BE! -->
+</video>
+
 <script>
   const URLparts = window.location.host.split(':');
   if (URLparts.length > 1) URLparts.pop();
@@ -45,4 +50,5 @@
   }
 
   go();
+
 </script>
