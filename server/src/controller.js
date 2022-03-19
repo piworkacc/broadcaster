@@ -1,6 +1,7 @@
 const crypto = require('crypto');
 require('dotenv').config();
 const { User } = require('../db/models');
+const { getActiveStreams, getUserFinishedStreams } = require('./model');
 
 function hashIt(str) {
   return crypto.createHash('sha256').update(str).digest('hex');
@@ -67,9 +68,46 @@ function auth(req, res) {
   });
 }
 
+// STREAMS
+
+async function streams(req, res, next) {
+  try {
+    const result = await getActiveStreams();
+    res.json(
+      result.map((el) => ({
+        id: el.id,
+        broadcast_id: el.broadcast_id,
+        title: el.title,
+        start: el.start,
+        link: `/live/${el.User.stream_key}.flv`,
+      })),
+    );
+  } catch (err) {
+    next(err);
+  }
+}
+
+async function userFinishedStreams(req, res, next) {
+  try {
+    res.json(await getUserFinishedStreams(req.params.userId));
+  } catch (err) {
+    next(err);
+  }
+}
+
+async function streamsSelection(req, res, next) {
+  try {
+  } catch (err) {
+    next(err);
+  }
+}
+
 module.exports = {
   addUser,
   login,
   logout,
   auth,
+  streams,
+  userFinishedStreams,
+  streamsSelection,
 };
