@@ -40,7 +40,7 @@ const Signup = () => {
       <Row>
         <Col span={12} offset={6}>
           <Card
-            className="login-form-card"
+            className="signup-form-card"
             style={{ marginTop: '100px' }}
           >
             <Form
@@ -112,14 +112,18 @@ const Signup = () => {
                   span: 8,
                 }}
               >
-                <Button
-                  type="primary"
-                  htmlType="submit"
-                  className="signup-form-button"
-                >
-                  Отправить
-                </Button>
-
+                <div className="subContainer">
+                  <Button
+                    type="primary"
+                    htmlType="submit"
+                    className="signup-form-button"
+                  >
+                    Отправить
+                  </Button>
+                  <div className='signupFormTextBottom'>
+                    Или <Link to="/login">войдите в свой аккаунт</Link>
+                  </div>
+                </div>
               </Form.Item>
               <div className='errorText'>
                 <ErrorComponent message={error} />
