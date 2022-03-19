@@ -95,6 +95,13 @@ async function userFinishedStreams(req, res, next) {
   }
 }
 
+async function streamsSelection(req, res, next) {
+  try {
+  } catch (err) {
+    next(err);
+  }
+}
+
 module.exports = {
   addUser,
   login,
@@ -102,4 +109,5 @@ module.exports = {
   auth,
   streams,
   userFinishedStreams,
+  streamsSelection,
 };
