@@ -22,7 +22,6 @@ const Login = () => {
   }, [auth, navigate]);
 
   const onFinish = (values) => {
-    console.log('OnFinish success:', values);
     setInputs({
       ...inputs,
       values,

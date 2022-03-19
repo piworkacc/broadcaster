@@ -9,7 +9,7 @@ function register(payload) {
 function* registerWorker(action) {
   const data = yield call(register, action.payload);
   if (data) {
-    yield put(setAuth(data.name));
+    yield put(setAuth(data));
   }
 }
 

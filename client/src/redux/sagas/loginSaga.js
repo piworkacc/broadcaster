@@ -10,7 +10,7 @@ function login(payload) {
 function* loginWorker(action) {
   const data = yield call(login, action.payload);
   if (data) {
-    yield put(setAuth(data.name));
+    yield put(setAuth(data));
   }
 }
 

@@ -12,12 +12,14 @@ const Header = () => {
 
 	return (
 			<header className={style.header}>
+				<Link to='/'>
 				<img  className={style.header__logo} src={logo} alt="logo"/>
+				</Link>
 				<SearchInput />
 				<div className='signContainer'>
 				{auth.ok
-						? <Link to='/logout'> <button className={style.header__signInBtn}><LogoutIcon />Выйти</button></Link>
-						: 	 <Link to='/login'><button className={style.header__signInBtn}><UserOutlined/> Войти</button>	</Link>
+						? <Link to='/logout'><button className={style.header__signInBtn}><LogoutIcon />Выйти</button></Link>
+						: <Link to='/login'><button className={style.header__signInBtn}><UserOutlined/> Войти</button>	</Link>
 				}
 				{auth.ok && <Link to='/profile'><button className={style.header__signInBtn}>Профиль</button></Link>}
 				</div>
