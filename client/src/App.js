@@ -6,7 +6,7 @@ import Signup from './components/Signup/Signup';
 import Logout from './components/Logout/Logout';
 import Header from "./components/Header/Header.component";
 import UserProfile from './components/UserProfile/UserProfile';
-import Chat from './components/Chat';
+// import Chat from './components/Chat';
 
 import { io } from 'socket.io-client';
 
