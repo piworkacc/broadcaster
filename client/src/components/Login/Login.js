@@ -7,6 +7,7 @@ import ErrorComponent from '../ErrorComponent/index';
 import Loading from '../Loading/index';
 import { loginAC } from '../../redux/sagas/sagasAC';
 import './Login.css';
+import Particle from "../Particles/Particles.component";
 
 const Login = () => {
   const dispatch = useDispatch();
@@ -35,6 +36,7 @@ const Login = () => {
 
   return (
     <div className='container'>
+      <Particle />
       <Row>
         <Col span={12} offset={6}>
           <Card
@@ -54,9 +56,9 @@ const Login = () => {
               onFinishFailed={onFinishFailed}
               autoComplete="off"
             >
-              <div className='loginFormText'>
-                Войти в Veschatel:
-              </div>
+              <h2 className='loginFormText'>
+                Войти в <span className='veshatel'>Veschatel</span>
+              </h2>
               <Form.Item
                 name="email"
                 rules={[
@@ -94,6 +96,7 @@ const Login = () => {
                   span: 8,
                 }}
               >
+                <div className="subContainer">
                 <Button
                   type="primary"
                   htmlType="submit"
@@ -102,7 +105,9 @@ const Login = () => {
                   Войти
                 </Button>
                 <div className='loginFormText'>
-                  Или <Link to="/signup">зарегестрируйтесь сейчас!</Link>
+                  Или <Link to="/signup">зарегистрируйтесь сейчас!</Link>
+                </div>
+
                 </div>
 
               </Form.Item>
