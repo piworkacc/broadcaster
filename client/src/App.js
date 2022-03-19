@@ -4,24 +4,26 @@ import Main from "./components/Main/Main";
 import Login from './components/Login/Login';
 import Signup from './components/Signup/Signup';
 import Logout from './components/Logout/Logout';
+import Header from "./components/Header/Header.component";
+import UserProfile from './components/UserProfile/UserProfile';
+import Chat from './components/Chat';
 
 import { io } from 'socket.io-client';
-import Chat from './components/Chat';
 
 const socket = io.connect('http://localhost:3002');
 
 function App() {
   return (
     <div className="App">
-      {/* <Header /> */}
-      <Chat socket={socket} />
+      <Header />
       <Routes>
         <Route index element={<Main />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
-        {/* <Route path="/profile" element={<UserProfile />} /> */}
+        <Route path="/profile" element={<UserProfile />} />
         <Route exact path="/logout" element={<Logout />}></Route>
       </Routes>
+
     </div>
   );
 }
