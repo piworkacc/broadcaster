@@ -15,6 +15,7 @@ nms.run();
 
 const indexRouter = require('./src/routes/index.router');
 const usersRouter = require('./src/routes/users.router');
+const streamsRouter = require('./src/routes/streams.router');
 
 const app = express();
 const HTTPServer = http.createServer(app);
@@ -56,6 +57,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
 app.use('/api/users', usersRouter);
+app.use('/api/streams', streamsRouter);
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {
@@ -77,7 +79,7 @@ const { onConnection } = require('./chat/index');
 io.on('connection', (socket) => onConnection(socket, io));
 
 const HTTP_PORT = process.env.HTTP_PORT || 3002;
-HTTPServer.listen(3002, () => {
+HTTPServer.listen(HTTP_PORT, () => {
   console.log(`HTTPServer started on ${HTTP_PORT}`);
 });
 

@@ -11,22 +11,38 @@
   if (URLparts.length > 1) URLparts.pop();
   const home = URLparts.join(':');
 
-  if (flvjs.isSupported()) {
-    var videoElement = document.getElementById('videoElement');
-    var flvPlayer = flvjs.createPlayer({
-      type: 'flv',
-      url: `ws://${home}:8000/live/a.flv`
-    });
-    flvPlayer.attachMediaElement(videoElement);
+  async function go() {
+    if (!flvjs.isSupported()) return;
+
+    const streams = await fetch(`${window.location.origin}/api/streams/`);
+    const data = await streams.json();
+    if (data.length) {
+
+      const urlParts = [];
+      urlParts.push('ws://');
+      urlParts.push(home);
+      urlParts.push(':8000');
+      urlParts.push(data[0].link)
+
+      var videoElement = document.getElementById('videoElement');
+      var flvPlayer = flvjs.createPlayer({
+        type: 'flv',
+        url: urlParts.join(''),
+      });
+      flvPlayer.attachMediaElement(videoElement);
+    } else {
+      alert('no one is streaming');
+    }
+    document.getElementById('play').addEventListener('click', () => {
+      try {
+        flvPlayer.load();
+        flvPlayer.play();
+      } catch (err) {
+        flvPlayer.unload();
+        flvPlayer.pause();
+      }
+    })
   }
 
-  document.getElementById('play').addEventListener('click', () => {
-    try {
-      flvPlayer.load();
-      flvPlayer.play();
-    } catch (err) {
-      flvPlayer.unload();
-      flvPlayer.pause();
-    }
-  })
+  go();
 </script>
