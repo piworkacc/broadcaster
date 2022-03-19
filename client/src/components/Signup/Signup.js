@@ -7,6 +7,7 @@ import ErrorComponent from '../ErrorComponent/index';
 import Loading from '../Loading/index';
 import { registerAC } from '../../redux/sagas/sagasAC';
 import './Signup.css';
+import Particle from "../Particles/Particles.component";
 
 const Signup = () => {
   const dispatch = useDispatch();
@@ -35,6 +36,7 @@ const Signup = () => {
 
   return (
     <div className='container'>
+      <Particle />
       <Row>
         <Col span={12} offset={6}>
           <Card
@@ -54,9 +56,9 @@ const Signup = () => {
               onFinishFailed={onFinishFailed}
               autoComplete="off"
             >
-              <div className='signupFormText'>
-                Зарегистрироваться в Veschatel:
-              </div>
+              <h2 className='signupFormText'>
+                Зарегистрироваться в <span className='veshatel'>Veschatel</span>
+              </h2>
               <Form.Item
                 name="name"
                 rules={[
