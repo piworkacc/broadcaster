@@ -76,7 +76,7 @@ app.use((err, req, res, next) => {
   }
 });
 
-const { onConnection } = require('./Chat/index');
+const { onConnection } = require('./chat/index');
 
 io.on('connection', (socket) => onConnection(socket, io));
 
