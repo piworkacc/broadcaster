@@ -14,7 +14,6 @@ const Login = () => {
   const navigate = useNavigate();
   const [inputs, setInputs] = useState({});
   const { error, loading, uxios } = useUxios();
-  console.log('kukech');
   useEffect(() => {
     if (auth.ok) {
       navigate('/');
@@ -103,7 +102,7 @@ const Login = () => {
                   Войти
                 </Button>
                 <div className='loginFormText'>
-                  Или <Link to="/signin">зарегестрируйтесь сейчас!</Link>
+                  Или <Link to="/signup">зарегестрируйтесь сейчас!</Link>
                 </div>
 
               </Form.Item>
