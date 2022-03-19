@@ -1,16 +1,39 @@
-const WS_PORT = 3002;
+import React, { useEffect, useState } from 'react'
+import './styles.css'
 
-const WebSockket = require('ws');
+export default function Chat({ socket }) {
 
-const WSS = new WebSockket.Server({ port: WS_PORT });
+  const [chatMessages, setChatMessages] = useState([]);
 
-console.log(`Web socket server started on ${WS_PORT}`);
+  useEffect(() => {
 
-const WSHandler = (stream) => {
-  console.log('Client connected');
-  stream.on('message', (data) => {
-    console.log(JSON.parse(data));
-  });
-};
+    socket.on('message:send', (msg) => {
+      setChatMessages((prev) => [...prev, msg]);
+    })
 
-module.exports = { WSS, WSHandler };
+    socket.on('message:get', (msg) => {
+      setChatMessages((prev) => [...prev, msg]);
+    })
+
+    return () => {
+      socket.disconnect();
+    }
+  }, [socket])
+
+
+  const [inputValue, setInputValue] = useState('')
+
+  const onClickHandler = () => {
+    console.log('Отправка сообщения');
+    // socket.emit('message:send', { message: inputValue, id: 123 })
+    socket.emit('message:send', { message: inputValue })
+  }
+
+  return (
+    <>
+      <input type="text" onChange={(e) => setInputValue(e.target.value)} value={inputValue} />
+      <button type='button' onClick={onClickHandler}>Отправить</button>
+      {chatMessages.map((element) => <div className='chatMessage'>{element.message}</div>)}
+    </>
+  )
+}

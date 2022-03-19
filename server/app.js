@@ -11,10 +11,11 @@ const { Server } = require('socket.io');
 const nms = require('./src/mediaServer');
 require('dotenv').config();
 
-nms.run();
+// nms.run();
 
 const indexRouter = require('./src/routes/index.router');
 const usersRouter = require('./src/routes/users.router');
+const messagesRouter = require('./src/routes/messages.routes');
 
 const app = express();
 const HTTPServer = http.createServer(app);
@@ -56,6 +57,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
 app.use('/api/users', usersRouter);
+app.use('/messages', messagesRouter);
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {
