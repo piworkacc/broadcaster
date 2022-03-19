@@ -1,9 +1,9 @@
 import { ADD_USER, AUTH, UNAUTH } from "../actionTypes/userTypes";
 
-export const setAuth = (name) => {
+export const setAuth = (payload) => {
   return {
     type: AUTH,
-    payload: name,
+    payload,
   };
 };
 

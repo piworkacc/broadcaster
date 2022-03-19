@@ -9,7 +9,7 @@ import { useSelector } from 'react-redux';
 const { Header, Content, Footer, Sider } = Layout;
 
 const UserProfile = () => {
-
+  
   const [selectedMenuItem, setSelectedMenuItem] = useState('item1');
   const auth = useSelector((store) => store.auth);
   const navigate = useNavigate();
