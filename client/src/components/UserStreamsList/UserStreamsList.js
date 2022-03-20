@@ -7,22 +7,25 @@ import { getUserVideos } from '../../redux/actions/videoAction';
 import { getUserVideosAC } from '../../redux/sagas/sagasAC';
 
 const UserStreamsList = () => {
+  console.log('UserStreamsList');
   const dispatch = useDispatch();
-  const videos = useSelector((state) => state.videos);
   const auth = useSelector((state) => state.auth);
-  const { error, loading, uxios } = useUxios();
   const currUserId = auth.id;
+  const userVideos = useSelector((state) => {
+    return state.videos.filter(el => el.user_id === currUserId)
+  });
+  console.log(userVideos);
+  // const { error, loading, uxios } = useUxios();
 
-  useEffect(() => {
-    dispatch(getUserVideosAC({ currUserId, services: { error, loading, uxios }}))
-}, [currUserId, dispatch]);
+//   useEffect(() => {
+//     dispatch(getUserVideosAC({ currUserId: currUserId, services: { error, loading, uxios }}))
+// }, []);
 
 return (
   <DivContainer>
-    <UserStreamCard />
-    {/* {videos?.map((el) => (
-      <UserStreamCard key={el.id} id={el.id} title={el.title} preview={el.preview} />
-    ))} */}
+    {userVideos?.map((el) => (
+      <UserStreamCard key={el.id} id={el.id} title={el.title} preview={el.preview} stream_key={el.stream_key}/>
+    ))}
   </DivContainer>
 );
 }
