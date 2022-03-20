@@ -1,7 +1,8 @@
-import React, { useEffect, useState } from 'react'
-import './styles.css'
+import React, {useEffect, useState} from 'react'
+import './styles.css';
+import {UserOutlined} from '@ant-design/icons'
 
-export default function Chat({ socket, stream_id = 1, user = 'Global' }) {
+export default function Chat({socket, stream_id = 1, user = 'Global'}) {
 
   const [chatMessages, setChatMessages] = useState([{}]);
 
@@ -12,6 +13,7 @@ export default function Chat({ socket, stream_id = 1, user = 'Global' }) {
       const data = await response.json();
       setChatMessages((prev) => [...prev, ...data])
     }
+
     fetchData();
 
   }, [socket, stream_id, user])
@@ -20,7 +22,7 @@ export default function Chat({ socket, stream_id = 1, user = 'Global' }) {
 
     socket.on('message:send', (msg) => {
       console.log('Обработал message:send...', msg, user);
-      setChatMessages((prev) => [...prev, { message: msg, user }]);
+      setChatMessages((prev) => [...prev, {message: msg, user}]);
     })
 
     return () => {
@@ -33,22 +35,32 @@ export default function Chat({ socket, stream_id = 1, user = 'Global' }) {
 
   const onClickHandler = () => {
     console.log('Отправка сообщения');
-    socket.emit('message:send', { message: inputValue, room: stream_id })
+    socket.emit('message:send', {message: inputValue, room: stream_id})
+    setInputValue('')
+  }
+
+  const submitHandler = (e) => {
+    e.preventDefault();
+    console.log('Отправка сообщения');
+    socket.emit('message:send', {message: inputValue, room: stream_id})
+    setInputValue('')
   }
 
   return (
-    <div className='ChatList'>
-      <div className='chat-messages'>
-        {chatMessages.map((element) => (
-          <div key={element.id} className="containerMessage">
-            <img src="/w3images/bandmember.jpg" alt="Avatar" />
-            <p>{element.message}</p>
-            <span className="time-right">{Date.now().toLocaleString}</span>
-          </div>
-        ))}
+      <div className='ChatList'>
+        <div className='chat-messages'>
+          {chatMessages.map((element) => (
+              <div key={element.id} className="containerMessage">
+                <UserOutlined/>
+                <p>{element.message}</p>
+                <span className="time-right">{Date.now().toLocaleString}</span>
+              </div>
+          ))}
+        </div>
+        <form className='chat__form' onSubmit={(e) => submitHandler(e)}>
+          <input className='chat__input' placeholder='Введите сообщение...' type="text" onChange={(e) => setInputValue(e.target.value)} value={inputValue}/>
+          <button className='chat__sendMsgButton' type='button' onClick={onClickHandler}>Отправить</button>
+        </form>
       </div>
-      <input type="text" onChange={(e) => setInputValue(e.target.value)} value={inputValue} />
-      <button type='button' onClick={onClickHandler}>Отправить</button>
-    </div>
   )
 }
