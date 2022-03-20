@@ -14,15 +14,22 @@ const StreamPage = () => {
 	});
 
 	useEffect(() => {
-		if(currStream.length === 1) {
-			setStream(currStream[0].stream)
+		if(currStream) {
+		setStream(currStream)
 		}
-	}, [currStream.length && currStream[0].stream]);
+	}, [stream]);
+
+
+
+
+	console.log(currStream, 'stream')
+	console.log(urlForStream(stream), 'URL')
+
 
 	return (
 			<Wrapper>
-				{/*<ReactPlayer  url='https://www.youtube.com/watch?v=ysz5S6PUM-U' />*/}
-			<ReactPlayer  url={urlForStream(stream.source)} playing controls config={{file:{forceFLV:true}}}/>
+
+			<ReactPlayer width={'80vw'} height={'80vh'}   url={urlForStream(stream.source)} playing controls config={{file:{forceFLV:true}}}/>
 			</Wrapper>
 
 	)
@@ -31,12 +38,6 @@ const StreamPage = () => {
 export default StreamPage;
 
 const Wrapper = styled.div`
-
+	width: 500px;
+	height:100vh;
 `
-
-
-//config={{
-// 				file:{
-// 					forceFLV: true,
-// 				}
-// 			}}
