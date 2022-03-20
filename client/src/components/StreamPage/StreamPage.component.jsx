@@ -1,19 +1,28 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {useParams} from 'react-router-dom'
 import ReactPlayer from 'react-player/lazy';
 import styled from 'styled-components'
 import {useSelector} from "react-redux";
 import {urlForStream} from '../../utils/fetchPath'
-import Chat from '../Chat';
+// import Chat from '../Chat'
 
-const StreamPage = ({socket}) => {
+const StreamPage = () => {
+	const [stream, setStream] = useState('')
 	const { streamId } = useParams();
-	const stream = useSelector(state => state.streams)
-	const currStream = stream.filter(el => el.broadcast_id === streamId)[0]
+	const currStream = useSelector(state => {
+					const streamRedux = state.streams;
+					return streamRedux.filter(el => el.broadcast_id === streamId)[0]
+	});
+
+	useEffect(() => {
+		if(currStream) {
+		setStream(currStream)
+		}
+	}, [stream]);
+
 	return (
 			<Wrapper>
-			<ReactPlayer url={ urlForStream(currStream.link)}/>
-      <Chat stream_id={streamId} socket={socket}/>
+			<ReactPlayer width={'80vw'} height={'80vh'}   url={urlForStream(stream.source)} playing controls config={{file:{forceFLV:true}}}/>
 			</Wrapper>
 	)
 };
@@ -21,5 +30,6 @@ const StreamPage = ({socket}) => {
 export default StreamPage;
 
 const Wrapper = styled.div`
-	position: ;
+	width: 500px;
+	height:100vh;
 `
