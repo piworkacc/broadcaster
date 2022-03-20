@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Button, Form, Input, Layout, Menu, Modal } from 'antd';
+import { Select, Form, Input, Layout, Menu, Modal } from 'antd';
 import { UploadOutlined, UserOutlined, VideoCameraOutlined } from '@ant-design/icons';
 import './UserProfile.css';
 import styled from 'styled-components';
@@ -10,9 +10,18 @@ import UserStreamList from '../UserStreamsList/UserStreamsList';
 import UserAccount from '../UserAccount/UserAccount';
 
 const { Header, Content, Footer, Sider } = Layout;
+const { Option } = Select;
 
 const CollectionCreateForm = ({ visible, onCreate, onCancel }) => {
   const [form] = Form.useForm();
+  const children = [];
+  for (let i = 10; i < 36; i++) {
+    children.push(<Option key={i.toString(36) + i}>{i.toString(36) + i}</Option>);
+  }
+
+  function handleChange(value) {
+    console.log(`selected ${value}`);
+  }
   return (
     <Modal
       visible={visible}
@@ -46,30 +55,50 @@ const CollectionCreateForm = ({ visible, onCreate, onCancel }) => {
           rules={[
             {
               required: true,
-              message: 'Введите название вашего стрима!',
+              message: 'Введите название вашего стрима',
             },
           ]}
         >
           <Input />
         </Form.Item>
         <Form.Item
-        name="preview"
-        label="Обложка"
-        rules={[
-          {
-            required: true,
-            message: 'Введите ссылку на изображение для обложки!',
-          },
-        ]}
+          name="preview"
+          label="Обложка"
+          rules={[
+            {
+              required: true,
+              message: 'Введите ссылку на изображение для обложки',
+            },
+          ]}
         >
           <Input type="textarea" />
         </Form.Item>
         <Form.Item
-        name="stream_key"
+          name="tag"
+          label="Теги"
+          rules={[
+            {
+              required: true,
+              message: 'Выберите минимум один тег',
+            },
+          ]}
         >
-        <GenerateStreamKeyButton>
-        Сгенерировать ключ
-        </GenerateStreamKeyButton>
+          <Select
+            
+            mode="tags"
+            style={{ width: '100%' }}
+            placeholder="Выберите теги"
+            onChange={handleChange}
+          >
+            {children}
+          </Select>
+        </Form.Item>
+        <Form.Item
+          name="stream_key"
+        >
+          <GenerateStreamKeyButton>
+            Сгенерировать ключ
+          </GenerateStreamKeyButton>
         </Form.Item>
       </Form>
     </Modal>
@@ -168,7 +197,7 @@ const UserProfile = () => {
                   onClick={() => {
                     setVisible(true);
                   }}
-                  >
+                >
                   Начать стрим
                 </StartStreamButton>
                 <div>
@@ -182,7 +211,7 @@ const UserProfile = () => {
                     }}
                   />
                 </div>
-                
+
               </DivContainer>
               {!selectedMenuItem && <UserStreamList />}
               {componentsSwitch(selectedMenuItem)}
