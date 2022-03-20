@@ -10,6 +10,7 @@ import UserStreamList from '../UserStreamsList/UserStreamsList';
 import UserAccount from '../UserAccount/UserAccount';
 import { getAllTagsAC } from '../../redux/actionCreators/getAllTagsAC';
 import { getNewKeyAC } from '../../redux/actionCreators/getNewKeyAC';
+import { createNewStreamAC } from '../../redux/actionCreators/createNewStreamAC';
 
 const { Header, Content, Footer, Sider } = Layout;
 
@@ -23,6 +24,7 @@ const CollectionCreateForm = ({ visible, onCreate, onCancel, tags }) => {
   useEffect(() => {
     generateKey();
   }, []);
+
   function handleChange(selectedTags) {
     setselectedTags(selectedTags);
   }
@@ -122,6 +124,12 @@ const UserProfile = () => {
 
   const onCreate = (values) => {
     console.log('Received values of form: ', values);
+    dispatch(createNewStreamAC({
+      user_id: auth.id,
+      stream_key: keys.key,
+      title: values.title,
+      preview: values.preview,
+    }))
     setVisible(false);
   };
 
@@ -208,6 +216,7 @@ const UserProfile = () => {
                 >
                   Начать стрим
                 </StartStreamButton>
+                <p style={{ color: 'white' }}>Stream key: {keys.key}</p>
                 <div>
                   <CollectionCreateForm
                     visible={visible}
