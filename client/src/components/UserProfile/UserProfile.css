@@ -60,3 +60,57 @@
   background: #141414;
   
 }
+
+.ant-modal-content {
+  background: #262626;
+  color: #fff;
+
+}
+
+.ant-modal-header {
+  background: #262626;
+  border: none;
+}
+
+.ant-modal-body {
+  background: #262626;
+  
+}
+
+.ant-modal-title {
+  color: #fff;
+}
+
+.ant-modal-footer {
+  color: #fff;
+  border: none;
+}
+
+.ant-btn-default {
+  font-family: 'Robert Sans Medium', Arial, sans-serif;
+    color: #fff;
+    margin-right: 10px;
+    margin-bottom: 10px;
+    margin-top: 10px;
+    width: 150px;
+    height: 40px;
+    background-color: #141414;
+    border-radius: 20px;
+    border: none;
+    transition: scale .4s ease;
+
+}
+
+.ant-btn-primary {
+  font-family: 'Robert Sans Medium', Arial, sans-serif;
+  color: #fff;
+  margin-right: 10px;
+  margin-bottom: 10px;
+  margin-top: 10px;
+  width: 150px;
+  height: 40px;
+  background-color: #ee4540;
+  border-radius: 20px;
+  border: none;
+  transition: scale .4s ease;
+}

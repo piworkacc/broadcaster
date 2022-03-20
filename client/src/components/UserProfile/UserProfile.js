@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Layout, Menu } from 'antd';
+import { Layout, Menu, Modal } from 'antd';
 import { UploadOutlined, UserOutlined, VideoCameraOutlined } from '@ant-design/icons';
 import './UserProfile.css';
 import styled from 'styled-components';
@@ -9,11 +9,12 @@ import UserStats from '../UserStats/UserStats';
 import UserStreamList from '../UserStreamsList/UserStreamsList';
 import UserAccount from '../UserAccount/UserAccount';
 
-const { Content, Footer, Sider } = Layout;
+const { Header, Content, Footer, Sider } = Layout;
 
 const UserProfile = () => {
 
   const [selectedMenuItem, setSelectedMenuItem] = useState();
+  const [isModalVisible, setIsModalVisible] = useState(false);
   const auth = useSelector((store) => store.auth);
   const navigate = useNavigate();
 
@@ -23,15 +24,27 @@ const UserProfile = () => {
     }
   }, [auth, navigate]);
 
+  const showModal = () => {
+    setIsModalVisible(true);
+  };
+
+  const handleOk = () => {
+    setIsModalVisible(false);
+  };
+
+  const handleCancel = () => {
+    setIsModalVisible(false);
+  };
+
   const componentsSwitch = (key) => {
     switch (key) {
       case '1':
         return (
-          <UserAccount />
+          <UserStreamList />
         );
       case '2':
         return (
-          <UserStreamList />
+          <UserAccount />
         );
       case '3':
         return (
@@ -67,35 +80,51 @@ const UserProfile = () => {
           >
             <Menu.Item
               key="1"
+              icon={<VideoCameraOutlined />}
+            >
+              <span>Стримы</span>
+            </Menu.Item>
+            <Menu.Item
+              key="2"
               icon={<UserOutlined />}
             >
               <span>Аккаунт</span>
               {/* <Link to="settings" /> */}
             </Menu.Item>
-            <Menu.Item 
-            key="2"
-            icon={<VideoCameraOutlined/>}
-            >
-              <span>Стримы</span>
-            </Menu.Item>
             <Menu.Item
-            key="3"
-            icon={<UploadOutlined />}
+              key="3"
+              icon={<UploadOutlined />}
             >
               <span>Статистика</span>
             </Menu.Item>
           </Menu>
         </Sider>
         <Layout>
-          {/* <Header className="site-layout-sub-header-background" style={{ padding: 0 }} /> */}
+          <Header className="site-layout-sub-header-background" style={{ padding: 0 }} />
           <Content style={{ margin: '24px 16px 0' }}>
-            {/* <div className="site-layout-background" style={{ padding: 24, minHeight: 360 }}> */}
-            <DivContainer>
-                <StartStreamButton>Начать стрим</StartStreamButton>
+            <div className="site-layout-background" style={{ padding: 24, minHeight: 360 }}>
+              <DivContainer>
+                <StartStreamButton
+                  type="button"
+                  onClick={showModal}>
+                  Начать стрим
+                </StartStreamButton>
+                <Modal
+                  title="Basic Modal"
+                  visible={isModalVisible}
+                  onOk={handleOk}
+                  onCancel={handleCancel}
+                  okText="Сохранить"
+                  cancelText="Отмена"
+                >
+                  <p>Some contents...</p>
+                  <p>Some contents...</p>
+                  <p>Some contents...</p>
+                </Modal>
               </DivContainer>
               {!selectedMenuItem && <UserStreamList />}
               {componentsSwitch(selectedMenuItem)}
-            {/* </div> */}
+            </div>
           </Content>
           <Footer style={{ textAlign: 'center' }}>Veschatel ©2022</Footer>
         </Layout>
