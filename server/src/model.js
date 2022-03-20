@@ -81,7 +81,7 @@ function getAllUserStreams(userId) {
 
 function getActiveStreams() {
   return Stream.findAll({
-    attributes: ['id', 'broadcast_id', 'title', 'start', 'stream_key'],
+    attributes: ['id', 'broadcast_id', 'title', 'start', 'stream_key', 'preview'],
     // include: {
     //   model: User,
     //   attributes: ['stream_key'],
@@ -94,7 +94,7 @@ function getActiveStreams() {
 
 function getUserFinishedStreams(userId) {
   return Stream.findAll({
-    attributes: ['id', 'broadcast_id', 'title', 'start', 'path', 'user_id'],
+    attributes: ['id', 'broadcast_id', 'title', 'start', 'path', 'user_id', 'preview'],
     where: {
       path: { [Op.not]: null },
       user_id: { [Op.in]: userId },
