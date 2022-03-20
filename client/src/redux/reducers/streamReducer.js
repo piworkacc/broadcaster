@@ -1,5 +1,6 @@
 import { GET_ALL_STREAMS } from "../actionTypes/streamTypes";
 
+
 const cache = window.localStorage.getItem('state');
 const preloadedState = JSON.parse(cache).streams;
 

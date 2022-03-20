@@ -6,7 +6,6 @@ export const getAllStreamsAC = () => {
 		try {
 			const response = await fetch(streamPath)
 			const streams = await response.json();
-			console.log(streams)
 			dispatch(allStreams(streams))
 		} catch(err) {
 			throw (new Error(err))
