@@ -1,11 +1,11 @@
 import React from 'react';
 import { Card } from 'antd';
-import { LikeOutlined, EyeOutlined } from '@ant-design/icons';
+import { LikeOutlined, EyeOutlined, CommentOutlined } from '@ant-design/icons';
 import './UserStreamCard.css';
 import styled from 'styled-components';
-const {Meta} = Card;
+const { Meta } = Card;
 
-const UserStreamCard = () => {
+const UserStreamCard = ({ id, title, preview, stream_key }) => {
 
   return (
     <Card
@@ -13,20 +13,26 @@ const UserStreamCard = () => {
       cover={
         <img
           alt="example"
-          src="https://cdnn21.img.ria.ru/images/155869/17/1558691754_161:0:1121:720_1920x0_80_0_0_06556eade8f6b713f733c22a16e04f7f.jpg"
+          src={preview || "https://static-asset-delivery.hasbroapps.com/5d7b4adf060f3d11eb9e4b5f9308b71d76daa602/00cfe4aebd9c884acccb8da569176b8e.png"}
         />
       }
     >
       <Meta
-        title="Мой стрим"
+        title={title}
       />
       <DivContainer>
         <ul className='streamStatsUl'>
+          <li>
+            Stream_key: {stream_key}
+          </li>
           <li>
             <EyeOutlined /> <span>1000</span>
           </li>
           <li>
             <LikeOutlined /> <span>100</span>
+          </li>
+          <li>
+            <CommentOutlined /> <span>10</span>
           </li>
         </ul>
       </DivContainer>

@@ -110,8 +110,8 @@ async function streams(req, res, next) {
         broadcast_id: el.broadcast_id,
         title: el.title,
         start: el.start,
-        source: `/live/${el.stream_key}.flv`,
         preview: el.preview,
+        source: `/live/${el.stream_key}.flv`,
       })),
     );
   } catch (err) {
