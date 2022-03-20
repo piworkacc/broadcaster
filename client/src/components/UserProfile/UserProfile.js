@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Layout, Menu, Modal } from 'antd';
+import { Button, Form, Input, Layout, Menu, Modal } from 'antd';
 import { UploadOutlined, UserOutlined, VideoCameraOutlined } from '@ant-design/icons';
 import './UserProfile.css';
 import styled from 'styled-components';
@@ -11,10 +11,81 @@ import UserAccount from '../UserAccount/UserAccount';
 
 const { Header, Content, Footer, Sider } = Layout;
 
+const CollectionCreateForm = ({ visible, onCreate, onCancel }) => {
+  const [form] = Form.useForm();
+  return (
+    <Modal
+      visible={visible}
+      title="Создать новый стрим"
+      okText="Сохранить"
+      cancelText="Отмена"
+      onCancel={onCancel}
+      onOk={() => {
+        form
+          .validateFields()
+          .then((values) => {
+            form.resetFields();
+            onCreate(values);
+          })
+          .catch((info) => {
+            console.log('Validate Failed:', info);
+          });
+      }}
+    >
+      <Form
+        form={form}
+        layout="vertical"
+        name="form_in_modal"
+        initialValues={{
+          modifier: 'public',
+        }}
+      >
+        <Form.Item
+          name="title"
+          label="Название"
+          rules={[
+            {
+              required: true,
+              message: 'Введите название вашего стрима!',
+            },
+          ]}
+        >
+          <Input />
+        </Form.Item>
+        <Form.Item
+        name="preview"
+        label="Обложка"
+        rules={[
+          {
+            required: true,
+            message: 'Введите ссылку на изображение для обложки!',
+          },
+        ]}
+        >
+          <Input type="textarea" />
+        </Form.Item>
+        <Form.Item
+        name="stream_key"
+        >
+        <GenerateStreamKeyButton>
+        Сгенерировать ключ
+        </GenerateStreamKeyButton>
+        </Form.Item>
+      </Form>
+    </Modal>
+  );
+};
+
 const UserProfile = () => {
 
+  const [visible, setVisible] = useState(false);
+
+  const onCreate = (values) => {
+    console.log('Received values of form: ', values);
+    setVisible(false);
+  };
+
   const [selectedMenuItem, setSelectedMenuItem] = useState();
-  const [isModalVisible, setIsModalVisible] = useState(false);
   const auth = useSelector((store) => store.auth);
   const navigate = useNavigate();
 
@@ -23,18 +94,6 @@ const UserProfile = () => {
       navigate('/login');
     }
   }, [auth, navigate]);
-
-  const showModal = () => {
-    setIsModalVisible(true);
-  };
-
-  const handleOk = () => {
-    setIsModalVisible(false);
-  };
-
-  const handleCancel = () => {
-    setIsModalVisible(false);
-  };
 
   const componentsSwitch = (key) => {
     switch (key) {
@@ -106,21 +165,24 @@ const UserProfile = () => {
               <DivContainer>
                 <StartStreamButton
                   type="button"
-                  onClick={showModal}>
+                  onClick={() => {
+                    setVisible(true);
+                  }}
+                  >
                   Начать стрим
                 </StartStreamButton>
-                <Modal
-                  title="Basic Modal"
-                  visible={isModalVisible}
-                  onOk={handleOk}
-                  onCancel={handleCancel}
-                  okText="Сохранить"
-                  cancelText="Отмена"
-                >
-                  <p>Some contents...</p>
-                  <p>Some contents...</p>
-                  <p>Some contents...</p>
-                </Modal>
+                <div>
+                  <CollectionCreateForm
+                    visible={visible}
+                    okText="Сохранить"
+                    cancelText="Отмена"
+                    onCreate={onCreate}
+                    onCancel={() => {
+                      setVisible(false);
+                    }}
+                  />
+                </div>
+                
               </DivContainer>
               {!selectedMenuItem && <UserStreamList />}
               {componentsSwitch(selectedMenuItem)}
@@ -146,7 +208,6 @@ const HelloUserName = styled.div`
 const StartStreamButton = styled.button`
     font-family: 'Robert Sans Medium', Arial, sans-serif;
     color: #fff;
-    margin-right: 30px;
     margin-bottom: 30px;
     width: 150px;
     height: 40px;
@@ -162,4 +223,19 @@ const DivContainer = styled.div`
 &:hover ${StartStreamButton} {
     transform: scale(1.1);
   }
+`
+const GenerateStreamKeyButton = styled.button`
+    font-family: 'Robert Sans Medium', Arial, sans-serif;
+    color: #fff;
+    margin-right: 30px;
+    // margin-bottom: 30px;
+    width: 250px;
+    height: 40px;
+    background-color: #ee4540;
+    border-radius: 20px;
+    border: none;
+    transition: scale .4s ease;
+    &hover: {
+      transform:scale(1.1)
+    }
 `

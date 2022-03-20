@@ -1,6 +1,6 @@
 import React from 'react';
 import { Card } from 'antd';
-import { LikeOutlined, EyeOutlined } from '@ant-design/icons';
+import { LikeOutlined, EyeOutlined, CommentOutlined } from '@ant-design/icons';
 import './UserStreamCard.css';
 import styled from 'styled-components';
 const {Meta} = Card;
@@ -27,6 +27,9 @@ const UserStreamCard = () => {
           </li>
           <li>
             <LikeOutlined /> <span>100</span>
+          </li>
+          <li>
+            <CommentOutlined /> <span>10</span>
           </li>
         </ul>
       </DivContainer>
