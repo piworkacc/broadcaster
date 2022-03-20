@@ -90,7 +90,7 @@ async function streams(req, res, next) {
         broadcast_id: el.broadcast_id,
         title: el.title,
         start: el.start,
-        link: `/live/${el.User.stream_key}.flv`,
+        source: `/live/${el.User.stream_key}.flv`,
       })),
     );
   } catch (err) {
@@ -98,7 +98,7 @@ async function streams(req, res, next) {
   }
 }
 
-const makeStreamLink = (id) => `/api/streams/${id}`;
+const makeStreamSource = (id) => `/api/streams/${id}`;
 
 async function userFinishedStreams(req, res, next) {
   try {
@@ -108,7 +108,7 @@ async function userFinishedStreams(req, res, next) {
     }
     const results = foundStreams.map((el) => {
       const obj = el.dataValues;
-      obj.link = makeStreamLink(el.id);
+      obj.source = makeStreamSource(el.id);
       return obj;
     });
     res.json(results);
@@ -143,7 +143,7 @@ async function streamsSelection(req, res, next) {
         if (structure[el][i] && result.length < amount) {
           added = true;
           const obj = structure[el][i];
-          obj.link = makeStreamLink(obj.id);
+          obj.source = makeStreamSource(obj.id);
           result.push(obj);
         }
       });
