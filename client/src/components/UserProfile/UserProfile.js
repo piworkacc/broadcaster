@@ -9,17 +9,22 @@ import UserStats from '../UserStats/UserStats';
 import UserStreamList from '../UserStreamsList/UserStreamsList';
 import UserAccount from '../UserAccount/UserAccount';
 import { getAllTagsAC } from '../../redux/actionCreators/getAllTagsAC';
+import { getNewKeyAC } from '../../redux/actionCreators/getNewKeyAC';
 
 const { Header, Content, Footer, Sider } = Layout;
 
 const CollectionCreateForm = ({ visible, onCreate, onCancel, tags }) => {
+  const dispatch = useDispatch();
   const [form] = Form.useForm();
-  const [selectedItems, setselectedItems] = useState([]);
-
-  const filteredOptions = tags.filter((el) => !selectedItems.includes(el));
-
-  function handleChange(selectedItems) {
-    setselectedItems(selectedItems);
+  const [selectedTags, setselectedTags] = useState([]);
+  const generateKey = () => {
+    dispatch(getNewKeyAC());
+  }
+  useEffect(() => {
+    generateKey();
+  }, []);
+  function handleChange(selectedTags) {
+    setselectedTags(selectedTags);
   }
 
   return (
@@ -74,7 +79,7 @@ const CollectionCreateForm = ({ visible, onCreate, onCancel, tags }) => {
           <Input type="textarea" />
         </Form.Item>
         <Form.Item
-          name="tag"
+          name="tag_id"
           label="Категория"
           rules={[
             {
@@ -86,12 +91,12 @@ const CollectionCreateForm = ({ visible, onCreate, onCancel, tags }) => {
           <Select
             mode="multiple"
             placeholder="Выберите категории"
-            value={selectedItems}
+            value={selectedTags}
             onChange={handleChange}
             style={{ width: '100%' }}
           >
-            {filteredOptions.map(item => (
-              <Select.Option key={item.id} id={item.id} value={item.tag}>
+            {tags.map(item => (
+              <Select.Option key={item.id} value={item.id}>
                 {item.tag}
               </Select.Option>
             ))}
@@ -108,6 +113,7 @@ const UserProfile = () => {
   const [selectedMenuItem, setSelectedMenuItem] = useState();
   const auth = useSelector((store) => store.auth);
   const tags = useSelector((store) => store.tags);
+  const keys = useSelector((store) => store.keys);
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const getTags = () => {
@@ -125,6 +131,7 @@ const UserProfile = () => {
     }
     getTags();
   }, [auth, navigate]);
+
 
   const componentsSwitch = (key) => {
     switch (key) {
@@ -179,7 +186,6 @@ const UserProfile = () => {
               icon={<UserOutlined />}
             >
               <span>Аккаунт</span>
-              {/* <Link to="settings" /> */}
             </Menu.Item>
             <Menu.Item
               key="3"
