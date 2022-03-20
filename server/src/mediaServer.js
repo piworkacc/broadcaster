@@ -1,5 +1,5 @@
 const NodeMediaServer = require('node-media-server');
-const { getUserByStreamKey } = require('./model');
+const { getStreamByStreamKey } = require('./model');
 const ActiveStreams = require('./ActiveStreams');
 const config = require('../config/default').rtmp_server;
 
@@ -18,8 +18,8 @@ nms.on('prePublish', async (id, StreamPath, args) => {
   );
   // checking user
   const streamKey = getStreamKeyFromStreamPath(StreamPath);
-  const user = await getUserByStreamKey(streamKey);
-  if (!user) {
+  const stream = await getStreamByStreamKey(streamKey);
+  if (!stream) {
     console.error(
       `REJECTED: id=${id} StreamPath=${StreamPath} args=${JSON.stringify(
         args,
@@ -29,7 +29,7 @@ nms.on('prePublish', async (id, StreamPath, args) => {
     session.reject();
   } else {
     // start stream info
-    await activeStreams.startStream(id, user);
+    await activeStreams.startStream(id, stream);
   }
 });
 

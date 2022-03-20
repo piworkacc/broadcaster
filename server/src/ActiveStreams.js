@@ -11,7 +11,7 @@ async function getStreamPathName(currStream) {
   kuk.push(mfs(currStream.start.getMinutes(), 2));
   kuk.push(mfs(currStream.start.getSeconds(), 2));
 
-  let filePath = `./streams/media/live/${currStream.user.streamKey}/${kuk.join(
+  let filePath = `./streams/media/live/${currStream.stream_key}/${kuk.join(
     '-',
   )}.mp4`;
   try {
@@ -27,16 +27,13 @@ class ActiveStreams {
     this.streams = streams;
   }
 
-  async startStream(broadcastId, user) {
+  async startStream(broadcastId, stream) {
     try {
       if (!this.streams.size) {
         await closeLostStreams(getStreamPathName);
       }
-      const newStream = await startStream(user, broadcastId);
-      this.streams.set(broadcastId, {
-        user,
-        start: newStream.start,
-      });
+      const updatedStream = await startStream(broadcastId, stream);
+      this.streams.set(broadcastId, updatedStream);
     } catch (err) {
       console.error(err);
     }
