@@ -1,6 +1,9 @@
 const crypto = require('crypto');
 const fs = require('fs');
 const path = require('path');
+const { makeStreamSource, changeExtension } = require('./miscellaneous');
+const util = require('util');
+const exec = util.promisify(require('child_process').exec);
 
 require('dotenv').config();
 const { User } = require('../db/models');
@@ -99,8 +102,6 @@ async function streams(req, res, next) {
   }
 }
 
-const makeStreamSource = (id) => `/api/streams/${id}`;
-
 async function userFinishedStreams(req, res, next) {
   try {
     const foundStreams = await getUserFinishedStreams([req.params.userId]);
@@ -198,19 +199,20 @@ async function preview(req, res, next) {
   try {
     const { id } = req.params;
     const stream = await getStreamById(id);
-
     if (!stream) {
       throw new Error('stream not found');
     }
 
-    const previewPath = path.join(
-      process.env.PWD,
-      'streams',
-      'media',
-      'live',
-      'photo_2022-03-20_10-01-24.jpg',
-    );
-    res.sendFile(previewPath);
+    if (!stream.path) {
+      throw new Error('stream path not found');
+    }
+    const previewPath = changeExtension(stream.path, 'jpg');
+    const fullPreviewPath = path.join(process.env.PWD, previewPath.slice(1));
+    if (!fs.existsSync(fullPreviewPath)) {
+      const execPath = `ffmpeg -ss 01:00:10 -y -i ${stream.path} -frames:v 1 -q:v 2 ${previewPath}`;
+      await exec(execPath);
+    }
+    res.sendFile(fullPreviewPath);
   } catch (err) {
     next(err);
   }
