@@ -19,9 +19,9 @@ const CollectionCreateForm = ({ visible, onCreate, onCancel }) => {
     children.push(<Option key={i.toString(36) + i}>{i.toString(36) + i}</Option>);
   }
 
-  function handleChange(value) {
-    console.log(`selected ${value}`);
-  }
+  // function handleChange(value) {
+  //   console.log(`selected ${value}`);
+  // }
   return (
     <Modal
       visible={visible}
@@ -89,18 +89,18 @@ const CollectionCreateForm = ({ visible, onCreate, onCancel }) => {
             allowClear
             style={{ width: '100%' }}
             // defaultValue={['a10', 'c12']}
-            onChange={handleChange}
+            // onChange={handleChange}
           >
           {children}
         </Select>
       </Form.Item>
-      <Form.Item
+      {/* <Form.Item
         name="stream_key"
       >
         <GenerateStreamKeyButton>
           Сгенерировать ключ
         </GenerateStreamKeyButton>
-      </Form.Item>
+      </Form.Item> */}
     </Form>
     </Modal >
   );

@@ -132,7 +132,8 @@
 }
 
 .ant-select-selector {
-  background-color: #1c1c1c;
+  border-color: #ff4d4f;
+  color:#fff;
 }
 .ant-select-selection-item {
   background: #1c1c1c;
@@ -145,6 +146,7 @@
 
 .ant-select:not(.ant-select-customize-input) .ant-select-selector {
   background-color: #1c1c1c;
+  border-color: #ff4d4f;
 }
 
 .ant-select-multiple .ant-select-selection-item {
@@ -166,5 +168,13 @@
 }
 
 .ant-select-clear {
+  background-color: #1c1c1c;
+}
+
+.ant-select ant-select-multiple ant-select-allow-clear ant-select-show-search {
+  border-color: #ff4d4f;
+}
+
+.ant-select-dropdown ant-select-dropdown-placement-bottomLeft ant-select-dropdown-hidden {
   background-color: #1c1c1c;
 }

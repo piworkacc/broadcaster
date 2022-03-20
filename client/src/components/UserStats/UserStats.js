@@ -8,10 +8,10 @@ const UserStats = () => {
     <DivContainer>
       <Row gutter={16}>
         <Col span={12}>
-          <Statistic title="Лайки" value={1128} prefix={<LikeOutlined />} />
+          <Statistic title="Лайки" value={111128} prefix={<LikeOutlined />} />
         </Col>
         <Col span={12}>
-          <Statistic title="Просмотры" value={112893} />
+          <Statistic title="Просмотры" value={112893} prefix={<EyeOutlined />}/>
         </Col>
       </Row>
     </DivContainer>
