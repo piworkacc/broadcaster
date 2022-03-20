@@ -11,7 +11,8 @@ import Chat from './components/Chat';
 import StreamPage from './components/StreamPage/StreamPage.component';
 import VideoPage from './components/VideoPage/VideoPage.component';
 
-const socket = io.connect('http://192.168.1.103:3002');
+const socket = io.connect('/');
+
 
 function App() {
   return (
