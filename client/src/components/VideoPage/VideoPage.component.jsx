@@ -25,7 +25,7 @@ const VideoPage = () => {
       <ReactPlayer
         width={'80vw'}
         height={'80vh'}
-        url='http://localhost:3002/api/streams/17'
+        url={video.source}
         playing
         controls
       />
