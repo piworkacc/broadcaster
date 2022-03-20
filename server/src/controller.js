@@ -1,11 +1,15 @@
 const crypto = require('crypto');
 const fs = require('fs');
 const path = require('path');
-const { makeStreamSource, changeExtension } = require('./miscellaneous');
 const util = require('util');
 const exec = util.promisify(require('child_process').exec);
 
 require('dotenv').config();
+const {
+  makeStreamSource,
+  changeExtension,
+  randomString,
+} = require('./miscellaneous');
 const { User } = require('../db/models');
 const {
   getActiveStreams,
@@ -27,12 +31,12 @@ function setSession(req, user) {
 
 async function addUser(req, res, next) {
   const { name, email, password } = req.body;
-  const streamKey = hashIt(name + email + password);
+  // const streamKey = hashIt(name + email + password);
   const body = {
     name,
     email,
     password: hashIt(password),
-    stream_key: streamKey,
+    // stream_key: streamKey,
   };
   try {
     const newUser = await User.create(body);
@@ -79,6 +83,12 @@ function auth(req, res) {
   });
 }
 
+// KEYS
+
+function newKey(req, res) {
+  res.json({ key: randomString() + randomString() });
+}
+
 // STREAMS
 
 async function streams(req, res, next) {
@@ -94,7 +104,7 @@ async function streams(req, res, next) {
         broadcast_id: el.broadcast_id,
         title: el.title,
         start: el.start,
-        source: `/live/${el.User.stream_key}.flv`,
+        source: `/live/${el.stream_key}.flv`,
       })),
     );
   } catch (err) {
@@ -228,4 +238,5 @@ module.exports = {
   streamsSelection,
   sendStream,
   preview,
+  newKey,
 };

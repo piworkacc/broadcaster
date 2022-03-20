@@ -7,7 +7,10 @@ const changeExtension = (fileName, newExtension) => {
   return parts.join('.');
 };
 
+const randomString = () => Math.random().toString(32).replace('.', '');
+
 module.exports = {
   makeStreamSource,
   changeExtension,
+  randomString,
 };

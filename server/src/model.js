@@ -55,7 +55,7 @@ async function closeLostStreams(getStreamPathName) {
 
   const currStreams = streams.map((el) => ({
     id: el.id,
-    user: { streamKey: el.User.stream_key },
+    user: { streamKey: el.stream_key },
     start: el.start,
   }));
   const prms = [];
@@ -83,11 +83,11 @@ function getAllUserStreams(userId) {
 
 function getActiveStreams() {
   return Stream.findAll({
-    attributes: ['id', 'broadcast_id', 'title', 'start'],
-    include: {
-      model: User,
-      attributes: ['stream_key'],
-    },
+    attributes: ['id', 'broadcast_id', 'title', 'start', 'stream_key'],
+    // include: {
+    //   model: User,
+    //   attributes: ['stream_key'],
+    // },
     where: {
       end: { [Op.is]: null },
     },
