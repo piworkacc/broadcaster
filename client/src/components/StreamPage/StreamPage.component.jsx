@@ -4,14 +4,10 @@ import ReactPlayer from 'react-player/lazy';
 import styled from 'styled-components'
 import {useSelector} from "react-redux";
 import {urlForStream} from '../../utils/fetchPath'
-import Chat from '../Chat';
+// import Chat from '../Chat'
 
-<<<<<<< HEAD
 const StreamPage = () => {
 	const [stream, setStream] = useState('')
-=======
-const StreamPage = ({socket}) => {
->>>>>>> development
 	const { streamId } = useParams();
 	const currStream = useSelector(state => {
 					const streamRedux = state.streams;
@@ -23,13 +19,6 @@ const StreamPage = ({socket}) => {
 		setStream(currStream)
 		}
 	}, [stream]);
-
-
-
-
-	console.log(currStream, 'stream')
-	console.log(urlForStream(stream), 'URL')
-
 
 	return (
 			<Wrapper>
