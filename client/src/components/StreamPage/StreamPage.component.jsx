@@ -4,9 +4,14 @@ import ReactPlayer from 'react-player/lazy';
 import styled from 'styled-components'
 import {useSelector} from "react-redux";
 import {urlForStream} from '../../utils/fetchPath'
+import Chat from '../Chat';
 
+<<<<<<< HEAD
 const StreamPage = () => {
 	const [stream, setStream] = useState('')
+=======
+const StreamPage = ({socket}) => {
+>>>>>>> development
 	const { streamId } = useParams();
 	const currStream = useSelector(state => {
 					const streamRedux = state.streams;
@@ -28,10 +33,8 @@ const StreamPage = () => {
 
 	return (
 			<Wrapper>
-
 			<ReactPlayer width={'80vw'} height={'80vh'}   url={urlForStream(stream.source)} playing controls config={{file:{forceFLV:true}}}/>
 			</Wrapper>
-
 	)
 };
 
