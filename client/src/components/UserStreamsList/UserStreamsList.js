@@ -1,25 +1,15 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import UserStreamCard from '../UserStreamCard/UserStreamCard';
 import styled from 'styled-components';
-import { useDispatch, useSelector } from 'react-redux';
-import useUxios from '../../hooks/useUxios';
-import { getUserVideos } from '../../redux/actions/videoAction';
-import { getUserVideosAC } from '../../redux/sagas/sagasAC';
+import { useSelector } from 'react-redux';
 
 const UserStreamsList = () => {
-  console.log('UserStreamsList');
-  const dispatch = useDispatch();
+  console.log('UserStreamsList rendered');
   const auth = useSelector((state) => state.auth);
   const currUserId = auth.id;
   const userVideos = useSelector((state) => {
     return state.videos.filter(el => el.user_id === currUserId)
   });
-  console.log(userVideos);
-  // const { error, loading, uxios } = useUxios();
-
-//   useEffect(() => {
-//     dispatch(getUserVideosAC({ currUserId: currUserId, services: { error, loading, uxios }}))
-// }, []);
 
 return (
   <DivContainer>

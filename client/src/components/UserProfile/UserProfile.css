@@ -164,7 +164,7 @@
 }
 
 .ant-select-item-option-active:not(.ant-select-item-option-disabled) {
-  background-color: #1c1c1c;
+  background-color: #bfbfbf;
 }
 
 .ant-select-clear {
@@ -176,5 +176,14 @@
 }
 
 .ant-select-dropdown ant-select-dropdown-placement-bottomLeft ant-select-dropdown-hidden {
-  background-color: #1c1c1c;
+  background-color:  #8c8c8c;
 }
+
+.rc-virtual-list {
+  background-color:  #8c8c8c;
+}
+
+.ant-select-dropdown {
+  background-color:  #8c8c8c;
+}
+

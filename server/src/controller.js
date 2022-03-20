@@ -112,7 +112,6 @@ async function streams(req, res, next) {
         start: el.start,
         preview: el.preview,
         source: `/live/${el.stream_key}.flv`,
-        preview: el.preview,
       })),
     );
   } catch (err) {

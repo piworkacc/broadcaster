@@ -4,24 +4,24 @@ import { UploadOutlined, UserOutlined, VideoCameraOutlined } from '@ant-design/i
 import './UserProfile.css';
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import UserStats from '../UserStats/UserStats';
 import UserStreamList from '../UserStreamsList/UserStreamsList';
 import UserAccount from '../UserAccount/UserAccount';
+import { getAllTagsAC } from '../../redux/actionCreators/getAllTagsAC';
 
 const { Header, Content, Footer, Sider } = Layout;
-const { Option } = Select;
 
-const CollectionCreateForm = ({ visible, onCreate, onCancel }) => {
+const CollectionCreateForm = ({ visible, onCreate, onCancel, tags }) => {
   const [form] = Form.useForm();
-  const children = [];
-  for (let i = 10; i < 36; i++) {
-    children.push(<Option key={i.toString(36) + i}>{i.toString(36) + i}</Option>);
+  const [selectedItems, setselectedItems] = useState([]);
+
+  const filteredOptions = tags.filter((el) => !selectedItems.includes(el));
+
+  function handleChange(selectedItems) {
+    setselectedItems(selectedItems);
   }
 
-  // function handleChange(value) {
-  //   console.log(`selected ${value}`);
-  // }
   return (
     <Modal
       visible={visible}
@@ -84,24 +84,20 @@ const CollectionCreateForm = ({ visible, onCreate, onCancel }) => {
           ]}
         >
           <Select
-            placeholder="Выберите категории"
             mode="multiple"
-            allowClear
+            placeholder="Выберите категории"
+            value={selectedItems}
+            onChange={handleChange}
             style={{ width: '100%' }}
-            // defaultValue={['a10', 'c12']}
-            // onChange={handleChange}
           >
-          {children}
-        </Select>
-      </Form.Item>
-      {/* <Form.Item
-        name="stream_key"
-      >
-        <GenerateStreamKeyButton>
-          Сгенерировать ключ
-        </GenerateStreamKeyButton>
-      </Form.Item> */}
-    </Form>
+            {filteredOptions.map(item => (
+              <Select.Option key={item.id} id={item.id} value={item.tag}>
+                {item.tag}
+              </Select.Option>
+            ))}
+          </Select>
+        </Form.Item>
+      </Form>
     </Modal >
   );
 };
@@ -109,20 +105,25 @@ const CollectionCreateForm = ({ visible, onCreate, onCancel }) => {
 const UserProfile = () => {
 
   const [visible, setVisible] = useState(false);
+  const [selectedMenuItem, setSelectedMenuItem] = useState();
+  const auth = useSelector((store) => store.auth);
+  const tags = useSelector((store) => store.tags);
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const getTags = () => {
+    dispatch(getAllTagsAC());
+  }
 
   const onCreate = (values) => {
     console.log('Received values of form: ', values);
     setVisible(false);
   };
 
-  const [selectedMenuItem, setSelectedMenuItem] = useState();
-  const auth = useSelector((store) => store.auth);
-  const navigate = useNavigate();
-
   useEffect(() => {
     if (!auth.ok) {
       navigate('/login');
     }
+    getTags();
   }, [auth, navigate]);
 
   const componentsSwitch = (key) => {
@@ -150,12 +151,12 @@ const UserProfile = () => {
         <Sider
           breakpoint="lg"
           collapsedWidth="0"
-          // onBreakpoint={broken => {
-          //   console.log(broken);
-          // }}
-          // onCollapse={(collapsed, type) => {
-          //   console.log(collapsed, type);
-          // }}
+        // onBreakpoint={broken => {
+        //   console.log(broken);
+        // }}
+        // onCollapse={(collapsed, type) => {
+        //   console.log(collapsed, type);
+        // }}
         >
           <HelloUserName className="logo" >
             <span>Привет, Username!</span>
@@ -210,6 +211,7 @@ const UserProfile = () => {
                     onCancel={() => {
                       setVisible(false);
                     }}
+                    tags={tags}
                   />
                 </div>
 
