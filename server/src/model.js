@@ -1,6 +1,7 @@
 const {
   User,
   Stream,
+  StreamTag,
   Sequelize: { Op, fn, col },
 } = require('../db/models');
 
@@ -102,6 +103,23 @@ function getUserFinishedStreams(userId) {
   });
 }
 
+function createStream(fields) {
+  return Stream.create(fields);
+}
+
+async function addTagsToStream(stream, tags) {
+  if (!(tags && tags.length)) {
+    return;
+  }
+  const prms = [];
+  tags.forEach((el) => {
+    if (el.id) {
+      prms.push(StreamTag.create({ stream_id: stream.id, tag_id: el.id }));
+    }
+  });
+  await Promise.all(prms);
+}
+
 module.exports = {
   getStreamByStreamKey,
   startStream,
@@ -112,4 +130,6 @@ module.exports = {
   getUserFinishedStreams,
   getUsersWithStreams,
   getStreamById,
+  createStream,
+  addTagsToStream,
 };

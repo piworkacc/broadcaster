@@ -5,17 +5,22 @@ const util = require('util');
 const exec = util.promisify(require('child_process').exec);
 
 require('dotenv').config();
+
+const { User } = require('../db/models');
+
 const {
   makeStreamSource,
   changeExtension,
   randomString,
 } = require('./miscellaneous');
-const { User } = require('../db/models');
+
 const {
   getActiveStreams,
   getUserFinishedStreams,
   getUsersWithStreams,
   getStreamById,
+  createStream,
+  addTagsToStream,
 } = require('./model');
 
 function hashIt(str) {
@@ -228,6 +233,16 @@ async function preview(req, res, next) {
   }
 }
 
+async function addStream(req, res, next) {
+  try {
+    const { tag, ...fields } = req.body;
+    const newStream = await createStream(fields);
+    await addTagsToStream(newStream, tag);
+  } catch (err) {
+    next(err);
+  }
+}
+
 module.exports = {
   addUser,
   login,
@@ -239,4 +254,5 @@ module.exports = {
   sendStream,
   preview,
   newKey,
+  addStream,
 };
