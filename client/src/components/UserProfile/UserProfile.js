@@ -1,27 +1,41 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Layout, Menu } from 'antd';
 import { UploadOutlined, UserOutlined, VideoCameraOutlined } from '@ant-design/icons';
 import './UserProfile.css';
+import styled from 'styled-components';
+import { useNavigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import UserStats from '../UserStats/UserStats';
+import UserStreamList from '../UserStreamsList/UserStreamsList';
+import UserAccount from '../UserAccount/UserAccount';
 
-const { Header, Content, Footer, Sider } = Layout;
+const { Content, Footer, Sider } = Layout;
 
 const UserProfile = () => {
 
-  const [selectedMenuItem, setSelectedMenuItem] = useState('item1');
+  const [selectedMenuItem, setSelectedMenuItem] = useState();
+  const auth = useSelector((store) => store.auth);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!auth.ok) {
+      navigate('/login');
+    }
+  }, [auth, navigate]);
 
   const componentsSwitch = (key) => {
     switch (key) {
       case '1':
         return (
-        <h1>item1</h1>
+          <UserAccount />
         );
       case '2':
         return (
-        <h1>item2</h1>
+          <UserStreamList />
         );
       case '3':
         return (
-        <h3>item3</h3>
+          <UserStats />
         );
       default:
         break;
@@ -41,35 +55,47 @@ const UserProfile = () => {
             console.log(collapsed, type);
           }}
         >
-          <div className="logo" />
+          <HelloUserName className="logo" >
+            <span>Привет, Username!</span>
+          </HelloUserName>
           <Menu
             theme="dark"
             mode="inline"
             selectedKeys={selectedMenuItem}
             onClick={(e) =>
               setSelectedMenuItem(e.key)}
-            >
+          >
             <Menu.Item
               key="1"
               icon={<UserOutlined />}
             >
-              nav 1
+              <span>Аккаунт</span>
+              {/* <Link to="settings" /> */}
             </Menu.Item>
-            <Menu.Item key="2" icon={<VideoCameraOutlined />}>
-              nav 2
+            <Menu.Item 
+            key="2"
+            icon={<VideoCameraOutlined/>}
+            >
+              <span>Стримы</span>
             </Menu.Item>
-            <Menu.Item key="3" icon={<UploadOutlined />}>
-              nav 3
+            <Menu.Item
+            key="3"
+            icon={<UploadOutlined />}
+            >
+              <span>Статистика</span>
             </Menu.Item>
           </Menu>
         </Sider>
         <Layout>
-          <Header className="site-layout-sub-header-background" style={{ padding: 0 }} />
+          {/* <Header className="site-layout-sub-header-background" style={{ padding: 0 }} /> */}
           <Content style={{ margin: '24px 16px 0' }}>
-            <div className="site-layout-background" style={{ padding: 24, minHeight: 360 }}>
-              content
+            {/* <div className="site-layout-background" style={{ padding: 24, minHeight: 360 }}> */}
+            <DivContainer>
+                <StartStreamButton>Начать стрим</StartStreamButton>
+              </DivContainer>
+              {!selectedMenuItem && <UserStreamList />}
               {componentsSwitch(selectedMenuItem)}
-            </div>
+            {/* </div> */}
           </Content>
           <Footer style={{ textAlign: 'center' }}>Veschatel ©2022</Footer>
         </Layout>
@@ -79,3 +105,32 @@ const UserProfile = () => {
 }
 
 export default UserProfile;
+
+const HelloUserName = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-items: center;
+  justify-content: center;
+  align-items: center;
+  color: white;
+`
+const StartStreamButton = styled.button`
+    font-family: 'Robert Sans Medium', Arial, sans-serif;
+    color: #fff;
+    margin-right: 30px;
+    margin-bottom: 30px;
+    width: 150px;
+    height: 40px;
+    background-color: #ee4540;
+    border-radius: 20px;
+    border: none;
+    transition: scale .4s ease;
+    &hover: {
+      transform:scale(1.1)
+    }
+`
+const DivContainer = styled.div`
+&:hover ${StartStreamButton} {
+    transform: scale(1.1);
+  }
+`

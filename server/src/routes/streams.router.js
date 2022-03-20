@@ -1,9 +1,15 @@
 const router = require('express').Router();
 
-const { streams, userFinishedStreams } = require('../controller');
+const {
+  streams,
+  userFinishedStreams,
+  streamsSelection,
+  sendStream,
+} = require('../controller');
 
 router.get('/', streams);
 router.get('/user/:userId', userFinishedStreams);
-// router.get('/user/:streamId')
+router.get('/selection/:amount', streamsSelection);
+router.get('/:id', sendStream);
 
 module.exports = router;

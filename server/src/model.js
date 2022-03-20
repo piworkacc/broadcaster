@@ -1,8 +1,21 @@
 const {
   User,
   Stream,
-  Sequelize: { Op },
+  Sequelize: { Op, fn, col },
 } = require('../db/models');
+
+function getUsersWithStreams(limit) {
+  return Stream.findAll({
+    attributes: [[fn('DISTINCT', col('user_id')), 'id']],
+    limit,
+    where: { path: { [Op.not]: null } },
+    // order: [['updatedAt', 'DESC']],
+  });
+}
+
+function getStreamById(id) {
+  return Stream.findOne({ where: { id } });
+}
 
 async function getUserByStreamKey(streamKey) {
   const user = await User.findOne({ where: { stream_key: streamKey } });
@@ -32,17 +45,36 @@ function endStream(broadcastId, filePath) {
   );
 }
 
-function closeLostStreams() {
-  Stream.update(
-    {
-      end: new Date(),
+async function closeLostStreams(getStreamPathName) {
+  const streams = await Stream.findAll({
+    where: {
+      end: { [Op.is]: null },
     },
-    {
-      where: {
-        end: { [Op.is]: null },
-      },
-    },
-  );
+    include: User,
+  });
+
+  const currStreams = streams.map((el) => ({
+    id: el.id,
+    user: { streamKey: el.User.stream_key },
+    start: el.start,
+  }));
+  const prms = [];
+  currStreams.forEach((el) => {
+    prms.push(getStreamPathName(el));
+  });
+
+  const paths = await Promise.all(prms);
+
+  prms.splice();
+
+  currStreams.forEach((el, ind) => {
+    const prm = Stream.update(
+      { end: new Date(), path: paths[ind] },
+      { where: { id: el.id } },
+    );
+    prms.push(prm);
+  });
+  return Promise.all(prms);
 }
 
 function getAllUserStreams(userId) {
@@ -64,11 +96,12 @@ function getActiveStreams() {
 
 function getUserFinishedStreams(userId) {
   return Stream.findAll({
-    attributes: ['id', 'broadcast_id', 'title', 'start', 'path'],
+    attributes: ['id', 'broadcast_id', 'title', 'start', 'path', 'user_id'],
     where: {
       path: { [Op.not]: null },
-      user_id: userId,
+      user_id: { [Op.in]: userId },
     },
+    order: [['updatedAt', 'DESC']],
   });
 }
 
@@ -80,4 +113,6 @@ module.exports = {
   getAllUserStreams,
   getActiveStreams,
   getUserFinishedStreams,
+  getUsersWithStreams,
+  getStreamById,
 };
