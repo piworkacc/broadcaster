@@ -1,51 +1,69 @@
 'use strict';
 
 module.exports = {
-  async up (queryInterface, Sequelize) {
-    await queryInterface.bulkInsert('Views', [
+  async up(queryInterface, Sequelize) {
+    const users = await queryInterface.sequelize.query(
+      'select * from "Users" ',
       {
-        user_id: 2,
-        stream_id: 1,
-        time_joined: new Date().toISOString(),
-        time_left: new Date().toISOString(),
-        createdAt: new Date().toISOString(),
-        updatedAt: new Date().toISOString(),
+        type: queryInterface.sequelize.QueryTypes.SELECT,
       },
+    );
+    const streams = await queryInterface.sequelize.query(
+      'select * from "Streams" ',
       {
-        user_id: 3,
-        stream_id: 1,
-        time_joined: new Date().toISOString(),
-        time_left: new Date().toISOString(),
-        createdAt: new Date().toISOString(),
-        updatedAt: new Date().toISOString(),
+        type: queryInterface.sequelize.QueryTypes.SELECT,
       },
-      {
-        user_id: 2,
-        stream_id: 2,
-        time_joined: new Date().toISOString(),
-        time_left: new Date().toISOString(),
-        createdAt: new Date().toISOString(),
-        updatedAt: new Date().toISOString(),
-      },
-      {
-        stream_id: 1,
-        time_joined: new Date().toISOString(),
-        time_left: new Date().toISOString(),
-        createdAt: new Date().toISOString(),
-        updatedAt: new Date().toISOString(),
-      },
-      {
-        user_id: 2,
-        stream_id: 3,
-        time_joined: new Date().toISOString(),
-        time_left: new Date().toISOString(),
-        createdAt: new Date().toISOString(),
-        updatedAt: new Date().toISOString(),
-      },
-    ], {});
+    );
+
+    await queryInterface.bulkInsert(
+      'Views',
+      [
+        {
+          user_id: users[1].id,
+          stream_id: streams[0].id,
+          time_joined: new Date().toISOString(),
+          time_left: new Date().toISOString(),
+          createdAt: new Date().toISOString(),
+          updatedAt: new Date().toISOString(),
+        },
+        {
+          user_id: users[2].id,
+          stream_id: streams[0].id,
+          time_joined: new Date().toISOString(),
+          time_left: new Date().toISOString(),
+          createdAt: new Date().toISOString(),
+          updatedAt: new Date().toISOString(),
+        },
+        {
+          user_id: users[2].id,
+          stream_id: streams[1].id,
+          time_joined: new Date().toISOString(),
+          time_left: new Date().toISOString(),
+          createdAt: new Date().toISOString(),
+          updatedAt: new Date().toISOString(),
+        },
+        {
+          user_id: users[1].id,
+          stream_id: streams[1].id,
+          time_joined: new Date().toISOString(),
+          time_left: new Date().toISOString(),
+          createdAt: new Date().toISOString(),
+          updatedAt: new Date().toISOString(),
+        },
+        {
+          user_id: users[2].id,
+          stream_id: streams[2].id,
+          time_joined: new Date().toISOString(),
+          time_left: new Date().toISOString(),
+          createdAt: new Date().toISOString(),
+          updatedAt: new Date().toISOString(),
+        },
+      ],
+      {},
+    );
   },
 
-  async down (queryInterface, Sequelize) {
+  async down(queryInterface, Sequelize) {
     await queryInterface.bulkDelete('Views', null, {});
-  }
+  },
 };

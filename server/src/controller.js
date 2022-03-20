@@ -1,7 +1,15 @@
 const crypto = require('crypto');
 const fs = require('fs');
-const config = require('../config/default');
+const path = require('path');
+const util = require('util');
+const exec = util.promisify(require('child_process').exec);
+
 require('dotenv').config();
+const {
+  makeStreamSource,
+  changeExtension,
+  randomString,
+} = require('./miscellaneous');
 const { User } = require('../db/models');
 const {
   getActiveStreams,
@@ -23,12 +31,12 @@ function setSession(req, user) {
 
 async function addUser(req, res, next) {
   const { name, email, password } = req.body;
-  const streamKey = hashIt(name + email + password);
+  // const streamKey = hashIt(name + email + password);
   const body = {
     name,
     email,
     password: hashIt(password),
-    stream_key: streamKey,
+    // stream_key: streamKey,
   };
   try {
     const newUser = await User.create(body);
@@ -75,6 +83,12 @@ function auth(req, res) {
   });
 }
 
+// KEYS
+
+function newKey(req, res) {
+  res.json({ key: randomString() + randomString() });
+}
+
 // STREAMS
 
 async function streams(req, res, next) {
@@ -90,15 +104,13 @@ async function streams(req, res, next) {
         broadcast_id: el.broadcast_id,
         title: el.title,
         start: el.start,
-        source: `/live/${el.User.stream_key}.flv`,
+        source: `/live/${el.stream_key}.flv`,
       })),
     );
   } catch (err) {
     next(err);
   }
 }
-
-const makeStreamSource = (id) => `/api/streams/${id}`;
 
 async function userFinishedStreams(req, res, next) {
   try {
@@ -193,6 +205,29 @@ async function sendStream(req, res, next) {
   }
 }
 
+async function preview(req, res, next) {
+  try {
+    const { id } = req.params;
+    const stream = await getStreamById(id);
+    if (!stream) {
+      throw new Error('stream not found');
+    }
+
+    if (!stream.path) {
+      throw new Error('stream path not found');
+    }
+    const previewPath = changeExtension(stream.path, 'jpg');
+    const fullPreviewPath = path.join(process.env.PWD, previewPath.slice(1));
+    if (!fs.existsSync(fullPreviewPath)) {
+      const execPath = `ffmpeg -ss 01:00:10 -y -i ${stream.path} -frames:v 1 -q:v 2 ${previewPath}`;
+      await exec(execPath);
+    }
+    res.sendFile(fullPreviewPath);
+  } catch (err) {
+    next(err);
+  }
+}
+
 module.exports = {
   addUser,
   login,
@@ -202,4 +237,6 @@ module.exports = {
   userFinishedStreams,
   streamsSelection,
   sendStream,
+  preview,
+  newKey,
 };
