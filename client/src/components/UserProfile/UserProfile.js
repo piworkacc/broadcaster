@@ -254,18 +254,18 @@ const DivContainer = styled.div`
     transform: scale(1.1);
   }
 `
-const GenerateStreamKeyButton = styled.button`
-    font-family: 'Robert Sans Medium', Arial, sans-serif;
-    color: #fff;
-    margin-right: 30px;
-    // margin-bottom: 30px;
-    width: 250px;
-    height: 40px;
-    background-color: #ee4540;
-    border-radius: 20px;
-    border: none;
-    transition: scale .4s ease;
-    &hover: {
-      transform:scale(1.1)
-    }
-`
+// const GenerateStreamKeyButton = styled.button`
+//     font-family: 'Robert Sans Medium', Arial, sans-serif;
+//     color: #fff;
+//     margin-right: 30px;
+//     // margin-bottom: 30px;
+//     width: 250px;
+//     height: 40px;
+//     background-color: #ee4540;
+//     border-radius: 20px;
+//     border: none;
+//     transition: scale .4s ease;
+//     &hover: {
+//       transform:scale(1.1)
+//     }
+// `
