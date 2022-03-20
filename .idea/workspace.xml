@@ -5,15 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="349ca0e4-9e4d-46ba-bfcb-b03f1f363015" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/client/src/App.css" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/App.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/components/Header/Header.component.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/Header/Header.component.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/components/Header/Header.module.css" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/Header/Header.module.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/components/Login/Login.css" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/Login/Login.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/components/Login/Login.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/Login/Login.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/components/Particles/Particles.component.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/Particles/Particles.component.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/components/Search/Search.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/Search/Search.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/components/Signup/Signup.css" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/Signup/Signup.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/components/Signup/Signup.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/Signup/Signup.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -28,6 +20,7 @@
   </component>
   <component name="ProjectId" id="26bU861W5F4e7gPkfUFl2lcPYKU" />
   <component name="ProjectViewState">
+    <option name="compactDirectories" value="true" />
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
@@ -35,6 +28,7 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="node.js.selected.package.tslint" value="(autodetect)" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="vue.rearranger.settings.migration" value="true" />
@@ -48,6 +42,7 @@
       <option name="presentableId" value="Default" />
       <updated>1647691617436</updated>
       <workItem from="1647691619445" duration="29000" />
+      <workItem from="1647782173901" duration="57000" />
     </task>
     <servers />
   </component>
