@@ -5,6 +5,7 @@ import styled from 'styled-components'
 import CategoryList from "../CategoryList/CategoryList.component";
 import {useDispatch} from "react-redux";
 import {getAllStreamsAC} from '../../redux/actionCreators/getAllStreamsAC'
+import {getAllVideosAC} from "../../redux/actionCreators/getAllVideosAC";
 
 
 const Main = () => {
@@ -13,8 +14,13 @@ const Main = () => {
 		dispatch(getAllStreamsAC())
 	}
 
+	const getVideos = () => {
+		dispatch(getAllVideosAC())
+	}
+
 	useEffect(() => {
 		getStreams()
+		getVideos()
 	},[])
 
 
