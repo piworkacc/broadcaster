@@ -1,1 +1,3 @@
 export const GET_TAG_VIDEOS = 'GET_TAG_VIDEOS';
+
+export const GET_USER_VIDEOS = 'GET_USER_VIDEOS';

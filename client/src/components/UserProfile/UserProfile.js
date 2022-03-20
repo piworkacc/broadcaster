@@ -150,12 +150,12 @@ const UserProfile = () => {
         <Sider
           breakpoint="lg"
           collapsedWidth="0"
-          onBreakpoint={broken => {
-            console.log(broken);
-          }}
-          onCollapse={(collapsed, type) => {
-            console.log(collapsed, type);
-          }}
+          // onBreakpoint={broken => {
+          //   console.log(broken);
+          // }}
+          // onCollapse={(collapsed, type) => {
+          //   console.log(collapsed, type);
+          // }}
         >
           <HelloUserName className="logo" >
             <span>Привет, Username!</span>

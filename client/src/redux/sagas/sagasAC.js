@@ -3,6 +3,7 @@ import {
   REGISTER_REQUESTED,
   UNAUTH_REQUESTED,
 } from '../actionTypes/userTypes';
+import { GET_USER_VIDEOS } from '../actionTypes/videoTypes';
 
 export function loginAC(payload) {
   return {
@@ -21,6 +22,13 @@ export function registerAC(payload) {
 export function unauthAC(payload) {
   return {
     type: UNAUTH_REQUESTED,
+    payload,
+  };
+}
+
+export function getUserVideosAC(payload) {
+  return {
+    type: GET_USER_VIDEOS,
     payload,
   };
 }

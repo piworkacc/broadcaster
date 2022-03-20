@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import './styles.css'
+// import './styles.css'
 
 export default function Chat({ socket, stream_id = 1, user = 'Global' }) {
 
