@@ -1,20 +1,26 @@
+const { Message } = require('../db/models');
+
 const onConnection = (socket, io) => {
   const { handshake } = socket;
   const { headers } = handshake;
 
   console.log('User connected', headers.host);
 
-  socket.on('message:send', ({ message, room }) => {
-    console.log(`User: ${headers.host} - Отправил сообщение " ${message} " в комнату:`, room);
-
+  socket.on('message:send', async ({ message, room, user }) => {
     socket.join(room);
-    io.to(room).emit('message:send', message);
+    try {
+      const newMessage = await Message.create(
+        { stream_id: room, user_id: user, message },
+      );
+      io.to(room).emit('message:get', {
+        chatMessage: newMessage, room, user, error: null,
+      });
+      console.log(`User: ${headers.host} ${user} - Отправил сообщение " ${message} " в комнату:`, room);
+    } catch (error) {
+      io.to(room).emit('message:error', { message, error });
+      console.log(`User: ${headers.host} ${user} - ошибка сообщение " ${message} " ошибка:`, error);
+    }
   });
-
-  // socket.on('message:send', (msg) => {
-  //   console.log(`Отправил сообщение " ${msg.message} " в комнату: ${msg.room}`);
-  //   io.emit('message:send', msg);
-  // });
 };
 
 module.exports = { onConnection };
