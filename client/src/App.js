@@ -11,7 +11,7 @@ import Chat from './components/Chat';
 import StreamPage from "./components/StreamPage/StreamPage.component";
 
 
-const socket = io.connect('/');
+const socket = io.connect('http://192.168.1.103:3002');
 
 function App() {
   return (
@@ -24,7 +24,7 @@ function App() {
         <Route path="/profile" element={<UserProfile />} />
         <Route exact path="/chat" element={<Chat socket={socket} />}></Route>
         <Route exact path="/logout" element={<Logout />} />
-        <Route path="/streams/:streamId" element={<StreamPage />} />
+        <Route path="/streams/:streamId" element={<StreamPage socket={socket} />} />
       </Routes>
 
     </div>
