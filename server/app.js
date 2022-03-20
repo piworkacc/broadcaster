@@ -17,6 +17,7 @@ const indexRouter = require('./src/routes/index.router');
 const usersRouter = require('./src/routes/users.router');
 const streamsRouter = require('./src/routes/streams.router');
 const messagesRouter = require('./src/routes/messages.routes');
+const streamkeysRouter = require('./src/routes/streamkeys.router');
 
 const app = express();
 const HTTPServer = http.createServer(app);
@@ -59,6 +60,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', indexRouter);
 app.use('/api/users', usersRouter);
 app.use('/api/streams', streamsRouter);
+app.use('/api/keys', streamkeysRouter);
 app.use('/messages', messagesRouter);
 
 // catch 404 and forward to error handler

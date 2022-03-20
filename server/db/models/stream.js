@@ -21,6 +21,10 @@ module.exports = (sequelize, DataTypes) => {
   }
   Stream.init(
     {
+      stream_key: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
       user_id: DataTypes.INTEGER,
       broadcast_id: DataTypes.STRING,
       title: DataTypes.STRING,

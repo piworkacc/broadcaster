@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
-import './styles.css'
+import './styles.css';
+import { UserOutlined } from '@ant-design/icons'
 
 export default function Chat({ socket, stream_id = 1, user = 1 }) {
 
@@ -13,6 +14,7 @@ export default function Chat({ socket, stream_id = 1, user = 1 }) {
       console.log(data);
       setChatMessages((prev) => [...prev, ...data])
     }
+
     fetchData();
 
   }, [socket, stream_id, user])
@@ -35,20 +37,32 @@ export default function Chat({ socket, stream_id = 1, user = 1 }) {
 
   const onClickHandler = () => {
     console.log('Отправка сообщения');
-    socket.emit('message:send', { message: inputValue, room: stream_id, user })
+    socket.emit('message:send', { message: inputValue, room: stream_id })
+    setInputValue('')
+  }
+
+  const submitHandler = (e) => {
+    e.preventDefault();
+    console.log('Отправка сообщения');
+    socket.emit('message:send', { message: inputValue, room: stream_id })
+    setInputValue('')
   }
 
   return (
     <div className='ChatList'>
-      {chatMessages.map((element) => (
-        <div key={element.id.toString()} className="containerMessage">
-          <p>{element.message}</p>
-          <span className="time-right">{Date.now().toLocaleString}</span>
-        </div>
-      ))}
-      <input type="text" onChange={(e) => setInputValue(e.target.value)} value={inputValue} />
-      <button type='button' onClick={onClickHandler}>Отправить</button>
+      <div className='chat-messages'>
+        {chatMessages.map((element) => (
+          <div key={element.id} className="containerMessage">
+            <UserOutlined />
+            <p>{element.message}</p>
+            <span className="time-right">{Date.now().toLocaleString}</span>
+          </div>
+        ))}
+      </div>
+      <form className='chat__form' onSubmit={(e) => submitHandler(e)}>
+        <input className='chat__input' placeholder='Введите сообщение...' type="text" onChange={(e) => setInputValue(e.target.value)} value={inputValue} />
+        <button className='chat__sendMsgButton' type='button' onClick={onClickHandler}>Отправить</button>
+      </form>
     </div>
-
   )
 }

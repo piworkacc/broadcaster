@@ -21,12 +21,19 @@ module.exports = {
           key: 'id',
         },
       },
+      stream_key: {
+        type: Sequelize.STRING,
+        unique: true,
+      },
       title: {
         type: Sequelize.STRING,
         allowNull: false,
       },
       path: {
         type: Sequelize.STRING,
+      },
+      preview: {
+        type: Sequelize.TEXT,
       },
       start: {
         allowNull: false,
