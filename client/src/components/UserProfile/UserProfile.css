@@ -164,3 +164,7 @@
 .ant-select-item-option-active:not(.ant-select-item-option-disabled) {
   background-color: #1c1c1c;
 }
+
+.ant-select-clear {
+  background-color: #1c1c1c;
+}

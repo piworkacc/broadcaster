@@ -75,33 +75,34 @@ const CollectionCreateForm = ({ visible, onCreate, onCancel }) => {
         </Form.Item>
         <Form.Item
           name="tag"
-          label="Теги"
+          label="Категория"
           rules={[
             {
               required: true,
-              message: 'Выберите минимум один тег',
+              message: 'Выберите минимум одну категорию',
             },
           ]}
         >
           <Select
-            
-            mode="tags"
+            placeholder="Выберите категории"
+            mode="multiple"
+            allowClear
             style={{ width: '100%' }}
-            placeholder="Выберите теги"
+            // defaultValue={['a10', 'c12']}
             onChange={handleChange}
           >
-            {children}
-          </Select>
-        </Form.Item>
-        <Form.Item
-          name="stream_key"
-        >
-          <GenerateStreamKeyButton>
-            Сгенерировать ключ
-          </GenerateStreamKeyButton>
-        </Form.Item>
-      </Form>
-    </Modal>
+          {children}
+        </Select>
+      </Form.Item>
+      <Form.Item
+        name="stream_key"
+      >
+        <GenerateStreamKeyButton>
+          Сгенерировать ключ
+        </GenerateStreamKeyButton>
+      </Form.Item>
+    </Form>
+    </Modal >
   );
 };
 
