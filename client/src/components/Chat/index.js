@@ -1,9 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import './styles.css'
 
-export default function Chat({ socket, stream_id = 1 }) {
-
-  console.log('Создана комната', stream_id);
+export default function Chat({ socket, stream_id = 1, user = 'Global' }) {
 
   const [chatMessages, setChatMessages] = useState([{}]);
 
@@ -16,20 +14,19 @@ export default function Chat({ socket, stream_id = 1 }) {
     }
     fetchData();
 
-  }, [])
+  }, [socket, stream_id, user])
 
   useEffect(() => {
 
     socket.on('message:send', (msg) => {
-      // socket.join(stream_id);
-      console.log('Обработал message:send...', msg);
-      setChatMessages((prev) => [...prev, { message: msg }]);
+      console.log('Обработал message:send...', msg, user);
+      setChatMessages((prev) => [...prev, { message: msg, user }]);
     })
 
     return () => {
       socket.disconnect();
     }
-  }, [socket])
+  }, [socket, user])
 
 
   const [inputValue, setInputValue] = useState('')
@@ -40,10 +37,18 @@ export default function Chat({ socket, stream_id = 1 }) {
   }
 
   return (
-    <>
+    <div className='ChatList'>
+      <div className='chat-messages'>
+        {chatMessages.map((element) => (
+          <div key={element.id} className="containerMessage">
+            <img src="/w3images/bandmember.jpg" alt="Avatar" />
+            <p>{element.message}</p>
+            <span className="time-right">{Date.now().toLocaleString}</span>
+          </div>
+        ))}
+      </div>
       <input type="text" onChange={(e) => setInputValue(e.target.value)} value={inputValue} />
       <button type='button' onClick={onClickHandler}>Отправить</button>
-      {chatMessages.map((element) => <div key={element?.id} className='chatMessage'>{element.message}</div>)}
-    </>
+    </div>
   )
 }
