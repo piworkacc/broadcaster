@@ -17,20 +17,17 @@ function getStreamById(id) {
   return Stream.findOne({ where: { id } });
 }
 
-async function getUserByStreamKey(streamKey) {
-  const user = await User.findOne({ where: { stream_key: streamKey } });
-  if (!user) return undefined;
-  return { id: user.id, name: user.name, streamKey };
+function getStreamByStreamKey(streamKey) {
+  return Stream.findOne({ where: { stream_key: streamKey } });
 }
 
-function startStream(user, broadcastId) {
-  const title = `stream_${Math.random().toString(32).replace('.', '')}`;
-  return Stream.create({
-    user_id: user.id,
-    broadcast_id: broadcastId,
-    title,
-    start: new Date(),
-  });
+async function startStream(broadcastId, stream) {
+  await Stream.update(
+    { start: new Date(), broadcast_id: broadcastId },
+    { where: { id: stream.id } },
+  );
+
+  return Stream.findOne({ where: { id: stream.id } });
 }
 
 function endStream(broadcastId, filePath) {
@@ -46,18 +43,18 @@ function endStream(broadcastId, filePath) {
 }
 
 async function closeLostStreams(getStreamPathName) {
-  const streams = await Stream.findAll({
+  const currStreams = await Stream.findAll({
     where: {
       end: { [Op.is]: null },
     },
-    include: User,
+    // include: User,
   });
 
-  const currStreams = streams.map((el) => ({
-    id: el.id,
-    user: { streamKey: el.stream_key },
-    start: el.start,
-  }));
+  // const currStreams = streams.map((el) => ({
+  //   id: el.id,
+  //   user: { streamKey: el.stream_key },
+  //   start: el.start,
+  // }));
   const prms = [];
   currStreams.forEach((el) => {
     prms.push(getStreamPathName(el));
@@ -106,7 +103,7 @@ function getUserFinishedStreams(userId) {
 }
 
 module.exports = {
-  getUserByStreamKey,
+  getStreamByStreamKey,
   startStream,
   endStream,
   closeLostStreams,
