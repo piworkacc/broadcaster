@@ -1,6 +1,7 @@
 const crypto = require('crypto');
 const fs = require('fs');
-const config = require('../config/default');
+const path = require('path');
+
 require('dotenv').config();
 const { User } = require('../db/models');
 const {
@@ -193,6 +194,28 @@ async function sendStream(req, res, next) {
   }
 }
 
+async function preview(req, res, next) {
+  try {
+    const { id } = req.params;
+    const stream = await getStreamById(id);
+
+    if (!stream) {
+      throw new Error('stream not found');
+    }
+
+    const previewPath = path.join(
+      process.env.PWD,
+      'streams',
+      'media',
+      'live',
+      'photo_2022-03-20_10-01-24.jpg',
+    );
+    res.sendFile(previewPath);
+  } catch (err) {
+    next(err);
+  }
+}
+
 module.exports = {
   addUser,
   login,
@@ -202,4 +225,5 @@ module.exports = {
   userFinishedStreams,
   streamsSelection,
   sendStream,
+  preview,
 };
