@@ -1,5 +1,7 @@
 const router = require('express').Router();
 
+const { authenticated } = require('../middleware/middlewares');
+
 const {
   streams,
   userFinishedStreams,
@@ -14,6 +16,6 @@ router.get('/user/:userId', userFinishedStreams);
 router.get('/selection/:amount', streamsSelection);
 router.get('/:id', sendStream);
 router.get('/:id/preview', preview);
-router.post('/', addStream);
+router.post('/', authenticated, addStream);
 
 module.exports = router;

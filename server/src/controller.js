@@ -21,6 +21,7 @@ const {
   getStreamById,
   createStream,
   addTagsToStream,
+  tags,
 } = require('./model');
 
 function hashIt(str) {
@@ -244,6 +245,15 @@ async function addStream(req, res, next) {
   }
 }
 
+async function getTags(req, res, next) {
+  try {
+    const foundTags = await tags();
+    res.send(foundTags);
+  } catch (err) {
+    next(err);
+  }
+}
+
 module.exports = {
   addUser,
   login,
@@ -256,4 +266,5 @@ module.exports = {
   preview,
   newKey,
   addStream,
+  getTags,
 };

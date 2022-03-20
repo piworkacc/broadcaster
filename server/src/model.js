@@ -1,7 +1,7 @@
 const {
-  User,
   Stream,
   StreamTag,
+  Tag,
   Sequelize: { Op, fn, col },
 } = require('../db/models');
 
@@ -81,7 +81,14 @@ function getAllUserStreams(userId) {
 
 function getActiveStreams() {
   return Stream.findAll({
-    attributes: ['id', 'broadcast_id', 'title', 'start', 'stream_key', 'preview'],
+    attributes: [
+      'id',
+      'broadcast_id',
+      'title',
+      'start',
+      'stream_key',
+      'preview',
+    ],
     // include: {
     //   model: User,
     //   attributes: ['stream_key'],
@@ -94,7 +101,15 @@ function getActiveStreams() {
 
 function getUserFinishedStreams(userId) {
   return Stream.findAll({
-    attributes: ['id', 'broadcast_id', 'title', 'start', 'path', 'user_id', 'preview'],
+    attributes: [
+      'id',
+      'broadcast_id',
+      'title',
+      'start',
+      'path',
+      'user_id',
+      'preview',
+    ],
     where: {
       path: { [Op.not]: null },
       user_id: { [Op.in]: userId },
@@ -106,6 +121,8 @@ function getUserFinishedStreams(userId) {
 function createStream(fields) {
   return Stream.create(fields);
 }
+
+// TAGS
 
 async function addTagsToStream(stream, tags) {
   if (!(tags && tags.length)) {
@@ -120,6 +137,10 @@ async function addTagsToStream(stream, tags) {
   await Promise.all(prms);
 }
 
+function tags() {
+  return Tag.findAll();
+}
+
 module.exports = {
   getStreamByStreamKey,
   startStream,
@@ -132,4 +153,5 @@ module.exports = {
   getStreamById,
   createStream,
   addTagsToStream,
+  tags,
 };
