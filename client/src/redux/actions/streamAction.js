@@ -7,3 +7,4 @@ export const allStreams = (payload) => {
 		payload,
 	};
 };
+

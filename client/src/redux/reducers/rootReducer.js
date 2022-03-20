@@ -4,7 +4,7 @@ import videoReducer from "./videoReducer";
 import streamReducer from "./streamReducer";
 
 
-const rootReducer = combineReducers({ auth: authReducer, video: videoReducer, streams: streamReducer });
+const rootReducer = combineReducers({ auth: authReducer, videos: videoReducer, streams: streamReducer });
 
 export default rootReducer;
 
