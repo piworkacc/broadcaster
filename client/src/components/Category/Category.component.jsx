@@ -15,15 +15,15 @@ const Category = ({title}) => {
         <Title>{title}</Title>
         <Splide
             options={{
-              perPage: 6,
+              perPage: 4,
               rewind: true,
-              maxWidth: '100%',
+              maxWidth: '2000px',
               gap: 40,
             }}>
           {videos?.map((el) => (
               <SlideContainer key={el.id}>
                 <StyledStreamTitle>{el.title}</StyledStreamTitle>
-                <StyledUser>@{el.User.name}</StyledUser>
+                <StyledUser>@ {el.User.name}</StyledUser>
                 <Img
                     key={el.broadcast_id}
                     src={el.preview ?? viking}
@@ -48,6 +48,7 @@ const Title = styled.h2`
   letter-spacing: 2px;
   border-bottom: 1px solid #393939;
   text-align: start;
+  margin-top: 50px;
 
   &:after {
     content: '';
@@ -63,7 +64,7 @@ const Title = styled.h2`
 `;
 
 const SlideContainer = styled(SplideSlide)`
-  width: 250px;
+  width: 300px;
   height: 200px;
   margin: 20px;
 
@@ -91,7 +92,7 @@ const SlideContainer = styled(SplideSlide)`
   }
 `;
 const Img = styled.img`
-  max-width: 230px;
+  max-width: 100%;
   height: 200px;
   object-fit: cover;
   border-radius: 5px;
@@ -144,8 +145,7 @@ const StyledUser = styled.span`
   right:40%;
   top: 75%;
   z-index:2;
-  font-weight: 800;
-  letter-spacing: 5px;
+  font-weight: 600;
 `
 
 const StyledLike = styled.div`
@@ -156,7 +156,7 @@ const StyledLike = styled.div`
 	position: relative;
 	top: -80px;
 	left: 85%;
-	width: 60px;
+	width: 70px;
   background-color: #222;
   font-size: 20px;
 	border: 1px solid #ee4540;
@@ -177,4 +177,5 @@ const StyledLikeIcon = styled(HeartOutlined)`
     font-size: 15px;
     color: #ee4540;
     z-index:3;
+  margin-right: 10px;
 `
