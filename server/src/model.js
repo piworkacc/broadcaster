@@ -25,6 +25,7 @@ function getStreamById(id) {
         attributes: ['tag'],
         through: { model: StreamTag, attributes: [] },
       },
+      { model: User, attributes: ['id', 'name'] },
     ],
   });
 }
