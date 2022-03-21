@@ -63,7 +63,7 @@ export default function Chat({ socket, stream, user }) {
         {chatMessages.map((element) => (
           <div key={element.id} className="containerMessage">
             <UserOutlined />
-            <p>{element.userName || element.User.name} {element.message} {element.createdAt.toLocaleString('en-US')}</p>
+            <p>{element.userName || element.User?.name} {element.message} {element.createdAt.toLocaleString('en-US')}</p>
             <span className="time-right">{Date.now().toLocaleString}</span>
           </div>
         ))}

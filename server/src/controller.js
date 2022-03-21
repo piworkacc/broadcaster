@@ -99,10 +99,11 @@ function newKey(req, res) {
 async function latestStreamKey(req, res, next) {
   try {
     const foundKey = await getLatestStreamKeyByUserId(req.session.userId);
-    if(!foundKey) {
-      throw new Error('No stream key found');
+    if (!foundKey) {
+      res.json({ stream_key: '' });
+    } else {
+      res.json(foundKey);
     }
-    return res.json(foundKey);
   } catch (err) {
     next(err);
   }

@@ -15,13 +15,9 @@ const StreamPage = ({socket}) => {
 	});
 
   const auth  = useSelector(state => state.auth);
-	console.log(auth)
-
 	useEffect(() => {
 		if(currStream) {
 		setStream(currStream)
-			console.log(stream)
-
 		}
 	}, [stream, currStream]);
 
