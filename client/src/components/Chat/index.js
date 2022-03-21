@@ -1,10 +1,11 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useRef } from 'react'
 import './styles.css';
 import { UserOutlined } from '@ant-design/icons'
 
 export default function Chat({ socket, stream, user }) {
 
   const [chatMessages, setChatMessages] = useState([]);
+  const bottomRef = useRef()
 
   useEffect(() => {
 
@@ -17,14 +18,24 @@ export default function Chat({ socket, stream, user }) {
 
     fetchData();
 
+    if (socket.disconnected) {
+      socket.connect('/');
+    }
+
   }, [socket, stream, user])
+
+  useEffect(() => {
+    bottomRef.current.scrollIntoView({
+      behavior: 'smooth'
+    })
+  }, [chatMessages])
 
   useEffect(() => {
 
     socket.on('message:get', (msg) => {
-      const { chatMessage, room, user, error } = msg;
-      console.log('Обработал message:get...', msg, chatMessage);
-      setChatMessages((prev) => [...prev, chatMessage]);
+      const { newMessage, name, room, error } = msg;
+      console.log('Обработал message:get...', msg, newMessage);
+      setChatMessages((prev) => [...prev, newMessage]);
     })
 
     return () => {
@@ -36,15 +47,13 @@ export default function Chat({ socket, stream, user }) {
   const [inputValue, setInputValue] = useState('')
 
   const onClickHandler = () => {
-    console.log('Отправка сообщения');
-    socket.emit('message:send', { message: inputValue, room: stream })
+    socket.emit('message:send', { message: inputValue, room: stream, user })
     setInputValue('')
   }
 
   const submitHandler = (e) => {
     e.preventDefault();
-    console.log('Отправка сообщения');
-    socket.emit('message:send', { message: inputValue, room: stream })
+    socket.emit('message:send', { message: inputValue, room: stream, user })
     setInputValue('')
   }
 
@@ -54,10 +63,11 @@ export default function Chat({ socket, stream, user }) {
         {chatMessages.map((element) => (
           <div key={element.id} className="containerMessage">
             <UserOutlined />
-            <p>{element.message}</p>
+            <p>{element.userName || element.User.name} {element.message} {element.createdAt.toLocaleString('en-US')}</p>
             <span className="time-right">{Date.now().toLocaleString}</span>
           </div>
         ))}
+        <p ref={bottomRef}></p>
       </div>
       <form className='chat__form' onSubmit={(e) => submitHandler(e)}>
         <input className='chat__input' placeholder='Введите сообщение...' type="text" onChange={(e) => setInputValue(e.target.value)} value={inputValue} />
