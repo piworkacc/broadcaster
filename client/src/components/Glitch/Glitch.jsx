@@ -19,7 +19,6 @@ const GlitchStyled = styled.div`
     color: white;
     font-size: 35px;
     position: relative;
-    width: 330px;
     margin: 0 auto;
 		cursor:pointer;
   @keyframes noise-anim {

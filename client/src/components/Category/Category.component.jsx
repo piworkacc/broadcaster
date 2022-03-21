@@ -2,41 +2,44 @@ import React from 'react';
 import styled from 'styled-components';
 import {Splide, SplideSlide} from '@splidejs/react-splide';
 import '@splidejs/splide/dist/css/splide.min.css';
-import viking from '../../images/valhalla.jpeg';
 import {useSelector} from 'react-redux';
 import {useNavigate} from 'react-router-dom';
 import {HeartOutlined} from "@ant-design/icons";
 
 const Category = ({title}) => {
-  const videos = useSelector((state) => state.videos);
-  const nav = useNavigate();
-  return (
-      <CatergoryLi>
-        <Title>{title}</Title>
-        <Splide
-            options={{
-              perPage: 4,
-              rewind: true,
-              maxWidth: '2000px',
-              gap: 40,
-            }}>
-          {videos?.map((el) => (
-              <SlideContainer key={el.id}>
-                <StyledStreamTitle>{el.title}</StyledStreamTitle>
-                <StyledUser>@ {el.User.name}</StyledUser>
-                <Img
-                    key={el.broadcast_id}
-                    src={el.preview ?? viking}
-                    broadcast_id={el.broadcast_id}
-                    onClick={() => nav(`videos/${el.broadcast_id}`)}
-                />
-                <StyledLike><StyledLikeIcon /> 78</StyledLike>
-              </SlideContainer>
-          ))}
-          1
-        </Splide>
-      </CatergoryLi>
-  );
+	const videos = useSelector((state) => state.videos);
+	const tags = useSelector(state => state.tags);
+	const nav = useNavigate();
+	const videosToRender = videos.filter((el) => el.Tags[0].tag === title)
+  console.log(videosToRender)
+	return (
+			<CatergoryLi>
+				<Title>{title}</Title>
+				<Splide
+						options={{
+							perPage: 4,
+							rewind: true,
+							maxWidth: '2000px',
+							gap: 40,
+						}}>
+					{videosToRender?.map((el) => (
+									<SlideContainer key={el.id}>
+										<StyledStreamTitle>{el.title}</StyledStreamTitle>
+										<StyledUser>@ {el.User.name}</StyledUser>
+										<Img
+												key={el.broadcast_id}
+												src={el.preview ?? 'https://twizz.ru/wp-content/uploads/2016/06/%D0%BF%D1%80%D0%B5%D0%B2%D1%8C%D1%8E-19.jpg'}
+												broadcast_id={el.broadcast_id}
+												onClick={() => nav(`videos/${el.broadcast_id}`)}
+										/>
+										<StyledLike><StyledLikeIcon/> 78</StyledLike>
+									</SlideContainer>
+								)
+
+					)}
+				</Splide>
+			</CatergoryLi>
+	);
 };
 
 export default Category;
@@ -57,7 +60,7 @@ const Title = styled.h2`
     height: 20px;
     width: 280px;
     left: 0;
-    top: 0px;
+    top: 0;
     border-bottom: 2px solid #ee4540;
     z-index: 2;
   }
@@ -128,54 +131,54 @@ const StyledStreamTitle = styled.h3`
   z-index: 1;
   font-weight: 800;
   letter-spacing: 5px;
-  background-color: #000;
-  background-position: center;
+  background: rgba(34, 34, 34, .7);
 `
 
 
 const StyledUser = styled.span`
   font-size: 20px;
   line-height: 24px;
-  background-color: #222;
+  background: rgba(34, 34, 34, .7);
   padding: 5px;
   border: 1px solid #222;
   border-radius: 10px;
   color: #fff;
   position: relative;
-  right:40%;
+  right: 40%;
   top: 75%;
-  z-index:2;
+  z-index: 2;
   font-weight: 600;
 `
 
 const StyledLike = styled.div`
-	padding: 0 10px;
-	display: flex;
-	justify-content: space-between;
-	align-items: center;
-	position: relative;
-	top: -80px;
-	left: 85%;
-	width: 70px;
-  background-color: #222;
+  padding: 0 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: relative;
+  top: -80px;
+  left: 85%;
+  width: 70px;
+  background: rgba(34, 34, 34, .5);
   font-size: 20px;
-	border: 1px solid #ee4540;
-	border-radius: 25px;
-	color: #fff;
-	transition: 0.4s transform ease;
-  z-index:3;
+  border: 1px solid #ee4540;
+  border-radius: 25px;
+  color: #fff;
+  transition: 0.4s transform ease;
+  z-index: 3;
+
   &:hover {
-		cursor: pointer;
-		transform: scale(1.15);
-	}
+    cursor: pointer;
+    transform: scale(1.15);
+  }
 `
 
 const StyledLikeIcon = styled(HeartOutlined)`
-	padding:0;
-    position: relative;
-		width: 40px;
-    font-size: 15px;
-    color: #ee4540;
-    z-index:3;
+  padding: 0;
+  position: relative;
+  width: 40px;
+  font-size: 15px;
+  color: #ee4540;
+  z-index: 3;
   margin-right: 10px;
 `

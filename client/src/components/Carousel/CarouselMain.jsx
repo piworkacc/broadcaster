@@ -20,10 +20,10 @@ const CarouselMain = ({id}) => {
 					} }
 			>
 				{streams.map((el) => (
-						<StyledSplideSide key={el.id}>
-							<StyledStreamTitle>{el.title}</StyledStreamTitle>
-							<StyledUser>@{el.User.name}</StyledUser>
-							<Img key={el.id}  src={el.preview || horizon} broadcast_id={el.broadcast_id}  onClick={ ()=> nav(`streams/${el.broadcast_id}`)}/>
+						<StyledSplideSide key={el?.id}>
+							<StyledStreamTitle>{el?.title}</StyledStreamTitle>
+							<StyledUser>@{el?.User.name}</StyledUser>
+							<Img key={el?.id}  src={el?.preview || horizon} broadcast_id={el?.broadcast_id}  onClick={ ()=> nav(`streams/${el.broadcast_id}`)}/>
 							<StyledLike><StyledLikeIcon /> 78</StyledLike>
 						</StyledSplideSide>
 				))}
@@ -32,20 +32,6 @@ const CarouselMain = ({id}) => {
 }
 
 export default CarouselMain;
-
-
-const StyledLink = styled(Link)`
-  &:before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    opacity: .7;
-    z-index: 2;
-  }
-`
 
 
 const Img = styled.img`
@@ -73,7 +59,8 @@ const Img = styled.img`
 
 
 const StyledSplideSide = styled(SplideSlide)`
-  height: 800px;
+  height: 500px;
+	max-width: 100%;
   object-fit: cover;
   &:hover {
     transition: .3s;
@@ -100,7 +87,9 @@ const StyledSplideSide = styled(SplideSlide)`
 `
 
 const StyledSplide = styled(Splide)`
-height: 100%;
+	width: 100%;
+  height: 100%;
+
 `
 const StyledStreamTitle = styled.h3`
 	font-size: 30px;
@@ -112,6 +101,7 @@ const StyledStreamTitle = styled.h3`
 	z-index:2;
 	font-weight: 800;
 	letter-spacing: 5px;
+  text-shadow: -5px -5px 10px #ee4540;
 `
 const StyledUser = styled.span`
   font-size: 20px;
@@ -123,10 +113,11 @@ const StyledUser = styled.span`
   z-index:2;
   font-weight: 800;
   letter-spacing: 5px;
+  text-shadow: 5px -5px 10px #ee4540;
 `
 
 const StyledLike = styled.div`
-	padding: 0 10px;
+	padding: 0 15px;
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
@@ -148,7 +139,7 @@ const StyledLike = styled.div`
 `
 
 const StyledLikeIcon = styled(HeartOutlined)`
-	padding:0;
+		padding:0;
     position: relative;
 		width: 50px;
     font-size: 20px;
