@@ -1,13 +1,13 @@
 const express = require('express');
 
 const router = express.Router();
-const { Message } = require('../../db/models');
+const { Message, User } = require('../../db/models');
 
 /* GET home page. */
 router.get('/:stream_id', async (req, res, next) => {
   try {
     const chatMessages = await Message.findAll({
-      raw: true,
+      include: { model: User, as: 'User' },
       where: {
         stream_id: req.params.stream_id,
       },
