@@ -1,6 +1,8 @@
 module.exports = {
   authenticated(req, res, next) {
     if (req.session.userId) return next();
-    return res.sendStatus(401);
+    const err = new Error('Unauthorized');
+    err.status = 401;
+    throw err;
   },
 };

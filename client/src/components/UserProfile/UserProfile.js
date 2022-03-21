@@ -15,6 +15,7 @@ import UserAccount from '../UserAccount/UserAccount';
 import { getAllTagsAC } from '../../redux/actionCreators/getAllTagsAC';
 import { createNewStreamAC } from '../../redux/actionCreators/createNewStreamAC';
 import { getLatestKeyAC } from '../../redux/actionCreators/getLatestKeyAC';
+import { removeAuth } from '../../redux/actions/userAction';
 import useUxios from '../../hooks/useUxios';
 import UserNewStreamModal from '../UserNewStreamModal/UserNewStreamModal';
 
@@ -23,9 +24,6 @@ const { Header, Content, Footer, Sider } = Layout;
 const UserProfile = () => {
   const [visible, setVisible] = useState(false);
   const [selectedMenuItem, setSelectedMenuItem] = useState();
-  // const auth = useSelector((store) => store.auth);
-  // const tags = useSelector((store) => store.tags);
-  // const keys = useSelector((store) => store.keys);
   const [keys, auth, tags, streams] = useSelector((store) => [
     store.keys,
     store.auth,
@@ -55,6 +53,12 @@ const UserProfile = () => {
     );
     setVisible(false);
   };
+
+  useEffect(() => {
+    if (error && error.status === 401) {
+      dispatch(removeAuth());
+    }
+  }, [error]);
 
   useEffect(() => {
     getTags();

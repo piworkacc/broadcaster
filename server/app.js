@@ -42,15 +42,11 @@ app.use(
     cookie: { secure: false },
     name: process.env.COOKIE,
     store: new FileStore(),
+    expires: new Date(Date.now() + 5 * 86400 * 1000),
   }),
 );
 
 app.use(cors());
-
-// app.use(cors({
-//   credentials: true,
-//   origin: 'http://localhost:3000/'
-// }));
 
 app.use(logger('dev'));
 app.use(express.json());
@@ -73,8 +69,15 @@ app.use((req, res, next) => {
 // error handler
 app.use((err, req, res, next) => {
   if (err) {
+    const errObj = {};
+    errObj.name = err.name;
+    errObj.status = err.status || 500;
+    errObj.message = err.message;
+    if (err.stack) {
+      errObj.stack = err.stack;
+    }
     console.log(err);
-    res.status(err.status || 500).send(err.message);
+    res.status(errObj.status).json(errObj);
   } else {
     next();
   }

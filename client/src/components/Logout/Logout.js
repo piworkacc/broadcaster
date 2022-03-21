@@ -23,7 +23,7 @@ function Logout() {
     <>
       <div>Logging out...</div>
       <Loading loading={loading} />
-      <ErrorComponent message={error} />
+      <ErrorComponent error={error} />
     </>
   );
 }

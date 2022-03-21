@@ -1,16 +1,17 @@
 import React from 'react';
 import styled from 'styled-components'
 import Category from '../Category/Category.component';
+import {useSelector} from "react-redux";
+
 
 
 const CategoryList = () => {
+	const tags = useSelector(state => state.tags)
 	return (
 			<ListContainer>
-				<Category key={1} title={'Игры'}/>
-				<Category key={2} title={'Музыка'}/>
-				<Category key={3} title={'Образование'}/>
-				<Category key={4} title={'Путешествия'}/>
-
+				{tags?.map((el) => (
+						<Category key={el.id} title={el.tag} />
+				))}
 			</ListContainer>
 	)
 };
@@ -23,6 +24,3 @@ const ListContainer = styled.ul`
 		padding: 0;
 		margin-top: 90px;
 		`
-const StyledCategory = styled(Category)`
-	margin-top: 50px;
-`

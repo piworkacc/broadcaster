@@ -3,9 +3,10 @@ import SideBar from "../SideBar/SideBar.component";
 import CarouselMain from "../Carousel/CarouselMain";
 import styled from 'styled-components'
 import CategoryList from "../CategoryList/CategoryList.component";
-import {useDispatch} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {getAllStreamsAC} from '../../redux/actionCreators/getAllStreamsAC'
 import {getAllVideosAC} from "../../redux/actionCreators/getAllVideosAC";
+import Glitch from "../Glitch/Glitch";
 
 
 const Main = () => {
@@ -23,14 +24,14 @@ const Main = () => {
 		getVideos()
 	},[])
 
-
+	const streams = useSelector(state => state.streams)
 
 
 	return (
 			<MainContainer>
 			<TitleScreen>
 				<SideBar/>
-				<CarouselMain/>
+				{streams.length > 0 ? <CarouselMain/> : <Glitch/>}
 			</TitleScreen>
 				<CategoryList/>
 			</MainContainer>
@@ -47,5 +48,5 @@ const TitleScreen = styled.section`
 `
 
 const MainContainer = styled.main`
-padding: 200px;
+padding-left: 200px;
 `
