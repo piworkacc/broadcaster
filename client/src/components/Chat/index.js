@@ -37,8 +37,8 @@ export default function Chat({ socket, stream, user }) {
     })
 
     socket.on('message:error', (msg) => {
-      const { newMessage, name, room, error } = msg;
-      setChatMessages((prev) => [...prev, newMessage]);
+      // const { newMessage, name, room, error } = msg;
+      // setChatMessages((prev) => [...prev, newMessage]);
     })
 
     return () => {
