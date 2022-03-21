@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import { removeAuth } from '../redux/actions/userAction';
 
 function useUxios() {
   const [error, setError] = useState(null);

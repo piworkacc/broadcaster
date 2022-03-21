@@ -15,6 +15,7 @@ import UserAccount from '../UserAccount/UserAccount';
 import { getAllTagsAC } from '../../redux/actionCreators/getAllTagsAC';
 import { createNewStreamAC } from '../../redux/actionCreators/createNewStreamAC';
 import { getLatestKeyAC } from '../../redux/actionCreators/getLatestKeyAC';
+import { removeAuth } from '../../redux/actions/userAction';
 import useUxios from '../../hooks/useUxios';
 import UserNewStreamModal from '../UserNewStreamModal/UserNewStreamModal';
 
@@ -52,6 +53,12 @@ const UserProfile = () => {
     );
     setVisible(false);
   };
+
+  useEffect(() => {
+    if (error && error.status === 401) {
+      dispatch(removeAuth());
+    }
+  }, [error]);
 
   useEffect(() => {
     getTags();
