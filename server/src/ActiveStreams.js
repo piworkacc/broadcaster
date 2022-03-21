@@ -2,6 +2,9 @@ const fs = require('fs/promises');
 const { startStream, endStream, closeLostStreams } = require('./model');
 
 async function getStreamPathName(currStream) {
+  if (!currStream.start) {
+    return null;
+  }
   const mfs = (str, length) => `00000000${str}`.slice(-length);
   const kuk = [];
   kuk.push(mfs(currStream.start.getFullYear(), 4));

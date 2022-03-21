@@ -24,7 +24,7 @@ function getStreamByStreamKey(streamKey) {
 
 async function startStream(broadcastId, stream) {
   await Stream.update(
-    { start: new Date(), broadcast_id: broadcastId },
+    { start: new Date(), end: null, broadcast_id: broadcastId },
     { where: { id: stream.id } },
   );
 
@@ -48,14 +48,8 @@ async function closeLostStreams(getStreamPathName) {
     where: {
       end: { [Op.is]: null },
     },
-    // include: User,
   });
 
-  // const currStreams = streams.map((el) => ({
-  //   id: el.id,
-  //   user: { streamKey: el.stream_key },
-  //   start: el.start,
-  // }));
   const prms = [];
   currStreams.forEach((el) => {
     prms.push(getStreamPathName(el));
@@ -89,10 +83,6 @@ function getActiveStreams() {
       'stream_key',
       'preview',
     ],
-    // include: {
-    //   model: User,
-    //   attributes: ['stream_key'],
-    // },
     where: {
       end: { [Op.is]: null },
     },
@@ -119,6 +109,8 @@ function getUserFinishedStreams(userId) {
 }
 
 function createStream(fields) {
+  console.log(fields);
+
   return Stream.create(fields);
 }
 

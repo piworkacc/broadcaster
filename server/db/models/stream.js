@@ -28,6 +28,7 @@ module.exports = (sequelize, DataTypes) => {
       user_id: DataTypes.INTEGER,
       broadcast_id: DataTypes.STRING,
       title: DataTypes.STRING,
+      preview: DataTypes.TEXT,
       start: DataTypes.DATE,
       end: DataTypes.DATE,
       path: DataTypes.STRING,
