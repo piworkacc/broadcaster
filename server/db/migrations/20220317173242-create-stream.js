@@ -9,7 +9,7 @@ module.exports = {
         type: Sequelize.INTEGER,
       },
       broadcast_id: {
-        allowNull: false,
+        // allowNull: false,
         type: Sequelize.STRING,
       },
       user_id: {
@@ -36,7 +36,7 @@ module.exports = {
         type: Sequelize.TEXT,
       },
       start: {
-        allowNull: false,
+        // allowNull: false,
         type: Sequelize.DATE,
       },
       end: {
