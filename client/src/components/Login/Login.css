@@ -21,12 +21,20 @@
 
 .loginFormText {
   color: rgb(255, 255, 255);
-  margin-bottom: 50px;
+  margin-top: 10px;
+  margin-bottom: 40px;
 }
 
-.errorText {
+.loginErrorAndLoadingArea {
   color: rgb(238, 69, 64);
-  margin-block: 10px;
+  margin-top: 10px;
+  display: flex;
+    flex-direction: column;
+    width: 300px;
+    height: 20px;
+    align-content: center;
+    align-items: center;
+    
 }
 
 .login-form-card {
@@ -34,15 +42,18 @@
   border-radius: 15px;
   border-color:#434343;
   z-index: 99999;
-  height: 100%;
-  width: 100%;
+  /* height: 100%; */
+  /* width: 100%; */
   box-shadow: 0 15px 50px #434343;
+}
+.loginFormRegisterText {
+  color: #fff;
 }
 
 .login-input {
   background-color: #1c1c1c;
 	color: #fff;
-	width: 220px;
+	width: 260px;
 	border: 1px solid #3c3c3c;
   border-color: #ff4d4f;
 	border-radius: 5px;
@@ -52,16 +63,27 @@
     color: rgb(238, 69, 64);
 }
 
-.subContainer{
-    height: 100px;
-    margin-top: 100px;
+.loginSubContainer{
+    height: 50px;
+    margin-top: 5px;
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 20px;
+    /* gap: 20px; */
 }
 
 .ant-input-status-error:not(.ant-input-disabled):not(.ant-input-borderless).ant-input, .ant-input-status-error:not(.ant-input-disabled):not(.ant-input-borderless).ant-input:hover {
   background-color: #1c1c1c;
   border-color: #ff4d4f;
+}
+
+.ant-card {
+  max-width: fit-content;
+  padding: 40px;
+}
+
+.loginContainer {
+  place-items: center;
+    display: flex;
+    justify-content: center;
 }

@@ -34,13 +34,13 @@ const Login = () => {
   };
 
   return (
-    <div className='container'>
+    <div className='loginContainer'>
       <Particle />
-      <Row>
-        <Col span={12} offset={6}>
+      {/* <Row>
+        <Col span={12} offset={6}> */}
           <Card
             className="login-form-card"
-            style={{ marginTop: '100px' }}
+            style={{ marginTop: '200px' }}
           >
             <Form
               name="basic"
@@ -89,35 +89,43 @@ const Login = () => {
                 />
               </Form.Item>
 
-              <Form.Item
+              {/* <Form.Item
                 wrapperCol={{
                   offset: 8,
                   span: 8,
                 }}
               >
-                <div className="subContainer">
-                <Button
-                  type="primary"
-                  htmlType="submit"
-                  className="login-form-button"
-                >
-                  Войти
-                </Button>
-                <div className='loginFormText'>
-                  Или <Link to="/signup">зарегистрируйтесь сейчас!</Link>
-                </div>
+                
 
+              </Form.Item> */}
+              <div className="loginSubContainer">
+                  <Button
+                    type="primary"
+                    htmlType="submit"
+                    className="login-form-button"
+                  >
+                    Войти
+                  </Button>
+                  <div className='loginFormRegisterText'>
+                    Или <Link to="/signup">зарегистрируйтесь сейчас!</Link>
+                  </div>
                 </div>
-
-              </Form.Item>
-              <div className='errorText'>
-                <ErrorComponent message={error} />
-                <Loading loading={loading} />
-              </div>
+                <div className='loginErrorAndLoadingArea'>
+                  <ErrorComponent message={error} />
+                  <Loading loading={loading} />
+                </div>
+              {/* <Form.Item
+                wrapperCol={{
+                  offset: 8,
+                  span: 8,
+                }}
+              >
+                
+              </Form.Item> */}
             </Form>
           </Card>
-        </Col>
-      </Row>
+        {/* </Col>
+      </Row> */}
     </div>
   );
 };
