@@ -125,6 +125,7 @@ async function streams(req, res, next) {
         title: el.title,
         start: el.start,
         preview: el.preview,
+        User: el.User,
         source: `/live/${el.stream_key}.flv`,
         Tags: el.Tags,
         // comments: el.Comments,
