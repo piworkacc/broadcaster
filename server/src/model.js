@@ -25,6 +25,7 @@ function getStreamById(id) {
         attributes: ['tag'],
         through: { model: StreamTag, attributes: [] },
       },
+      { model: User, attributes: ['id', 'name'] },
     ],
   });
 }
@@ -58,6 +59,8 @@ async function closeLostStreams(getStreamPathName) {
   const currStreams = await Stream.findAll({
     where: {
       end: { [Op.is]: null },
+      start: { [Op.not]: null },
+      broadcast_id: { [Op.not]: null },
     },
   });
 
@@ -110,6 +113,8 @@ function getActiveStreams() {
     ],
     where: {
       end: { [Op.is]: null },
+      start: { [Op.not]: null },
+      broadcast_id: { [Op.not]: null },
     },
   });
 }
@@ -172,8 +177,8 @@ async function addTagsToStream(stream, tagsArr) {
   }
   const prms = [];
   tagsArr.forEach((el) => {
-    if (el.id) {
-      prms.push(StreamTag.create({ stream_id: stream.id, tag_id: el.id }));
+    if (el) {
+      prms.push(StreamTag.create({ stream_id: stream.id, tag_id: el }));
     }
   });
   await Promise.all(prms);

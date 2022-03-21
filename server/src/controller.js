@@ -100,9 +100,10 @@ async function latestStreamKey(req, res, next) {
   try {
     const foundKey = await getLatestStreamKeyByUserId(req.session.userId);
     if (!foundKey) {
-      throw new Error('No stream key found');
+      res.json({ stream_key: '' });
+    } else {
+      res.json(foundKey);
     }
-    return res.json(foundKey);
   } catch (err) {
     next(err);
   }
@@ -128,7 +129,7 @@ async function streams(req, res, next) {
         source: `/live/${el.stream_key}.flv`,
         Tags: el.Tags,
         // comments: el.Comments,
-      }))
+      })),
     );
   } catch (err) {
     next(err);
@@ -257,7 +258,7 @@ async function addStream(req, res, next) {
     fields.user_id = req.session.userId;
     const newStream = await createStream(fields);
     await addTagsToStream(newStream, tagsArr);
-    res.send(newStream);
+    res.send(await getStreamById(newStream.id));
   } catch (err) {
     next(err);
   }
