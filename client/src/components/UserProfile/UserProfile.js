@@ -1,6 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { Layout, Menu } from 'antd';
-import { UploadOutlined, UserOutlined, VideoCameraOutlined } from '@ant-design/icons';
+import {
+  UploadOutlined,
+  UserOutlined,
+  VideoCameraOutlined,
+} from '@ant-design/icons';
 import './UserProfile.css';
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
@@ -11,109 +15,98 @@ import UserAccount from '../UserAccount/UserAccount';
 import { getAllTagsAC } from '../../redux/actionCreators/getAllTagsAC';
 import { createNewStreamAC } from '../../redux/actionCreators/createNewStreamAC';
 import { getLatestKeyAC } from '../../redux/actionCreators/getLatestKeyAC';
-import useUxios from '../../hooks/useUxios'
+import useUxios from '../../hooks/useUxios';
 import UserNewStreamModal from '../UserNewStreamModal/UserNewStreamModal';
 
 const { Header, Content, Footer, Sider } = Layout;
 
 const UserProfile = () => {
-  console.log('UserProfile rendered');
 
   const [visible, setVisible] = useState(false);
   const [selectedMenuItem, setSelectedMenuItem] = useState();
   const auth = useSelector((store) => store.auth);
   const tags = useSelector((store) => store.tags);
   const keys = useSelector((store) => store.keys);
+  const { error, loading, uxios } = useUxios();
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const getTags = () => {
     dispatch(getAllTagsAC());
-  }
+  };
+
   const getLatestKey = () => {
-    dispatch(getLatestKeyAC(auth.id));
-  }
+    dispatch(getLatestKeyAC({ error, loading, uxios }));
+  };
 
-
-  const { error, loading, uxios } = useUxios();
   const onCreate = (values) => {
-    dispatch(createNewStreamAC({
-      user_id: auth.id,
-      title: values.title,
-      preview: values.preview,
-      tags: values.tags,
-      service: { error, loading, uxios }
-    }))
+    dispatch(
+      createNewStreamAC({
+        user_id: auth.id,
+        title: values.title,
+        preview: values.preview,
+        tags: values.tags,
+        service: { error, loading, uxios },
+      }),
+    );
+    getLatestKey();
     setVisible(false);
   };
 
   useEffect(() => {
+    getTags();
+    getLatestKey();
     if (!auth.ok) {
       navigate('/login');
     }
-    getTags();
-    getLatestKey();
-  }, [auth, keys, navigate, dispatch]);
+  }, [auth, keys, navigate]);
 
   const componentsSwitch = (key) => {
     switch (key) {
       case '1':
-        return (
-          <UserStreamList />
-        );
+        return <UserStreamList />;
       case '2':
-        return (
-          <UserAccount />
-        );
+        return <UserAccount />;
       case '3':
-        return (
-          <UserStats />
-        );
+        return <UserStats />;
       default:
         break;
     }
   };
 
   return (
-    <div className='container'>
+    <div className="container">
       <Layout>
-        <Sider
-          breakpoint="lg"
-          collapsedWidth="0"
-        >
-          <HelloUserName className="logo" >
+        <Sider breakpoint="lg" collapsedWidth="0">
+          <HelloUserName className="logo">
             <span>Привет, Username!</span>
           </HelloUserName>
           <Menu
             theme="dark"
             mode="inline"
             selectedKeys={selectedMenuItem}
-            onClick={(e) =>
-              setSelectedMenuItem(e.key)}
+            onClick={(e) => setSelectedMenuItem(e.key)}
           >
-            <Menu.Item
-              key="1"
-              icon={<VideoCameraOutlined />}
-            >
+            <Menu.Item key="1" icon={<VideoCameraOutlined />}>
               <span>Стримы</span>
             </Menu.Item>
-            <Menu.Item
-              key="2"
-              icon={<UserOutlined />}
-            >
+            <Menu.Item key="2" icon={<UserOutlined />}>
               <span>Аккаунт</span>
             </Menu.Item>
-            <Menu.Item
-              key="3"
-              icon={<UploadOutlined />}
-            >
+            <Menu.Item key="3" icon={<UploadOutlined />}>
               <span>Статистика</span>
             </Menu.Item>
           </Menu>
         </Sider>
         <Layout>
-          <Header className="site-layout-sub-header-background" style={{ padding: 0 }} />
+          <Header
+            className="site-layout-sub-header-background"
+            style={{ padding: 0 }}
+          />
           <Content style={{ margin: '24px 16px 0' }}>
-            <div className="site-layout-background" style={{ padding: 24, minHeight: 360 }}>
+            <div
+              className="site-layout-background"
+              style={{ padding: 24, minHeight: 360 }}
+            >
               <DivContainer>
                 <StartStreamButton
                   type="button"
@@ -139,7 +132,6 @@ const UserProfile = () => {
                     loading={loading}
                   />
                 </div>
-
               </DivContainer>
               {!selectedMenuItem && <UserStreamList />}
               {componentsSwitch(selectedMenuItem)}
@@ -150,7 +142,7 @@ const UserProfile = () => {
       </Layout>
     </div>
   );
-}
+};
 
 export default UserProfile;
 
@@ -161,23 +153,23 @@ const HelloUserName = styled.div`
   justify-content: center;
   align-items: center;
   color: white;
-`
+`;
 const StartStreamButton = styled.button`
-    font-family: 'Robert Sans Medium', Arial, sans-serif;
-    color: #fff;
-    margin-bottom: 30px;
-    width: 200px;
-    height: 40px;
-    background-color: #ee4540;
-    border-radius: 20px;
-    border: none;
-    transition: scale .4s ease;
-    &hover: {
-      transform:scale(1.1)
-    }
-`
-const DivContainer = styled.div`
-&:hover ${StartStreamButton} {
+  font-family: 'Robert Sans Medium', Arial, sans-serif;
+  color: #fff;
+  margin-bottom: 30px;
+  width: 200px;
+  height: 40px;
+  background-color: #ee4540;
+  border-radius: 20px;
+  border: none;
+  transition: scale 0.4s ease;
+  &hover: {
     transform: scale(1.1);
   }
-`
+`;
+const DivContainer = styled.div`
+  &:hover ${StartStreamButton} {
+    transform: scale(1.1);
+  }
+`;
