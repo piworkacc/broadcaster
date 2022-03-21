@@ -11,7 +11,6 @@ const { Sider } = Layout;
  const SideBar = () => {
 
 	return (
-			<Layout>
 				<StyledSider
 						breakpoint="lg"
 						collapsedWidth="0"
@@ -22,7 +21,7 @@ const { Sider } = Layout;
 							console.log(collapsed, type);
 						}}
 				>
-					<Menu theme="dark" mode="inline" defaultSelectedKeys={['4']}>
+					<Menu theme="dark" mode="inline" defaultSelectedKeys={['1']}>
 						<Menu.Item key="1" icon={<UserOutlined/>}>
 							<Link to='/'> На Главную </Link>
 						</Menu.Item>
@@ -37,10 +36,6 @@ const { Sider } = Layout;
 						</Menu.Item>
 					</Menu>
 				</StyledSider>
-				<Layout>
-				</Layout>
-			</Layout>
-
 	);
 }
 
