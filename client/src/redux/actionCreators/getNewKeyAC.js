@@ -5,7 +5,7 @@ export const getNewKeyAC = () => {
 		try {
       const response = await fetch('./api/keys/new')
 			const key = await response.json();
-			dispatch(newKey(key))
+			dispatch(newKey(key.key))
 		} catch(err) {
 			throw (new Error(err))
 		}

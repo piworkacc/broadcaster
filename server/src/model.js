@@ -108,6 +108,25 @@ function getUserFinishedStreams(userId) {
   });
 }
 
+function getLatestStreamKeyByUserId(userId) {
+  return Stream.findOne({
+    attributes: [
+      'id',
+      'broadcast_id',
+      'title',
+      'start',
+      'path',
+      'user_id',
+      'preview',
+      'stream_key',
+    ],
+    where: {
+      user_id:  userId ,
+    },
+    order: [['createdAt', 'DESC']],
+  });
+}
+
 function createStream(fields) {
   console.log(fields);
 
@@ -146,4 +165,5 @@ module.exports = {
   createStream,
   addTagsToStream,
   tags,
+  getLatestStreamKeyByUserId,
 };

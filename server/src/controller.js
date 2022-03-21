@@ -22,6 +22,7 @@ const {
   createStream,
   addTagsToStream,
   tags,
+  getLatestStreamKeyByUserId,
 } = require('./model');
 
 function hashIt(str) {
@@ -93,6 +94,18 @@ function auth(req, res) {
 
 function newKey(req, res) {
   res.json({ key: randomString() + randomString() });
+}
+
+async function latestStreamKey(req, res, next) {
+  try {
+    const foundKey = await getLatestStreamKeyByUserId(req.session.userId);
+    if(!foundKey) {
+      throw new Error('No stream key found');
+    }
+    return res.json(foundKey);
+  } catch (err) {
+    next(err);
+  }
 }
 
 // STREAMS
@@ -267,4 +280,5 @@ module.exports = {
   newKey,
   addStream,
   getTags,
+  latestStreamKey,
 };

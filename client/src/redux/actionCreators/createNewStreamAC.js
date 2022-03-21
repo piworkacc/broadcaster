@@ -1,22 +1,28 @@
 import { newStream } from "../actions/streamAction";
 
 export const createNewStreamAC = (data) => {
-  const { user_id, stream_key, title, preview } = data;
+
   return async (dispatch) => {
     try {
-      const requestOptions = {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ 
-          user_id: user_id, 
-          stream_key: stream_key, 
-          title: title, 
-          preview: preview, 
-        })
+      const { user_id, service, title, preview, tags } = data;
+      const newKey = await service.uxios('/api/keys/new')
+      const body = {
+        user_id: user_id,
+        stream_key: newKey.key,
+        title: title,
+        preview: preview,
+        tags: tags,
       };
 
-      const response = await fetch('/api/streams', requestOptions);
-      const stream = await response.json();
+      const stream = await service.uxios('/api/streams', 'POST', body)
+      // const requestOptions = {
+      //   method: 'POST',
+      //   headers: { 'Content-Type': 'application/json' },
+      //   )
+      // };
+
+      // const response = await fetch(, requestOptions);
+      // const stream = await response.json();
       dispatch(newStream(stream))
     } catch (err) {
       throw (new Error(err))
