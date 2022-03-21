@@ -89,7 +89,7 @@ const UserNewStreamModal = ({ visible, onCreate, onCancel, tags, error, loading 
           </Select>
         </Form.Item>
         <div className='errorText'>
-          <ErrorComponent message={error} />
+          <ErrorComponent error={error} />
           <Loading loading={loading} />
         </div>
       </Form>
