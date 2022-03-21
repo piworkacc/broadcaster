@@ -21,9 +21,6 @@ const CollectionCreateForm = ({ visible, onCreate, onCancel, tags }) => {
   const generateKey = () => {
     dispatch(getNewKeyAC());
   }
-  useEffect(() => {
-    generateKey();
-  }, []);
 
   function handleChange(selectedTags) {
     setselectedTags(selectedTags);
@@ -42,6 +39,7 @@ const CollectionCreateForm = ({ visible, onCreate, onCancel, tags }) => {
           .then((values) => {
             form.resetFields();
             onCreate(values);
+            generateKey();
           })
           .catch((info) => {
             console.log('Validate Failed:', info);
