@@ -8,7 +8,6 @@ import { useNavigate } from 'react-router-dom';
 
 const Category = ({ title }) => {
   const videos = useSelector((state) => state.videos);
-  console.log(videos)
   const nav = useNavigate();
   return (
     <CatergoryLi>

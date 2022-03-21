@@ -22,6 +22,7 @@ const {
   createStream,
   addTagsToStream,
   tags,
+  getLatestStreamKeyByUserId,
 } = require('./model');
 
 function hashIt(str) {
@@ -95,6 +96,18 @@ function newKey(req, res) {
   res.json({ key: randomString() + randomString() });
 }
 
+async function latestStreamKey(req, res, next) {
+  try {
+    const foundKey = await getLatestStreamKeyByUserId(req.session.userId);
+    if(!foundKey) {
+      throw new Error('No stream key found');
+    }
+    return res.json(foundKey);
+  } catch (err) {
+    next(err);
+  }
+}
+
 // STREAMS
 
 async function streams(req, res, next) {
@@ -112,6 +125,8 @@ async function streams(req, res, next) {
         start: el.start,
         preview: el.preview,
         source: `/live/${el.stream_key}.flv`,
+        Tags: el.Tags,
+        // comments: el.Comments,
       })),
     );
   } catch (err) {
@@ -237,9 +252,11 @@ async function preview(req, res, next) {
 
 async function addStream(req, res, next) {
   try {
-    const { tag, ...fields } = req.body;
+    const { tags: tagsArr, ...fields } = req.body;
+    fields.user_id = req.session.userId;
     const newStream = await createStream(fields);
-    await addTagsToStream(newStream, tag);
+    await addTagsToStream(newStream, tagsArr);
+    res.send(newStream);
   } catch (err) {
     next(err);
   }
@@ -267,4 +284,5 @@ module.exports = {
   newKey,
   addStream,
   getTags,
+  latestStreamKey,
 };
