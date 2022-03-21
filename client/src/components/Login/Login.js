@@ -7,7 +7,7 @@ import ErrorComponent from '../ErrorComponent/index';
 import Loading from '../Loading/index';
 import { loginAC } from '../../redux/sagas/sagasAC';
 import './Login.css';
-import Particle from "../Particles/Particles.component";
+import Particle from '../Particles/Particles.component';
 
 const Login = () => {
   const dispatch = useDispatch();
@@ -15,6 +15,11 @@ const Login = () => {
   const navigate = useNavigate();
   const [inputs, setInputs] = useState({});
   const { error, loading, uxios } = useUxios();
+
+  useEffect(() => {
+    
+  });
+
   useEffect(() => {
     if (auth.ok) {
       navigate('/');
@@ -34,12 +39,9 @@ const Login = () => {
   };
 
   return (
-    <div className='loginContainer'>
+    <div className="loginContainer">
       <Particle />
-      <Card
-        className="login-form-card"
-        style={{ marginTop: '100px' }}
-      >
+      <Card className="login-form-card" style={{ marginTop: '100px' }}>
         <Form
           name="basic"
           className="login-form"
@@ -53,8 +55,8 @@ const Login = () => {
           onFinishFailed={onFinishFailed}
           autoComplete="off"
         >
-          <h2 className='loginFormText'>
-            Войти в <span className='veshatel'>Veschatel</span>
+          <h2 className="loginFormText">
+            Войти в <span className="veshatel">Veschatel</span>
           </h2>
           <Form.Item
             name="email"
@@ -65,10 +67,7 @@ const Login = () => {
               },
             ]}
           >
-            <Input
-              placeholder="email"
-              className='login-input'
-            />
+            <Input placeholder="email" className="login-input" />
           </Form.Item>
 
           <Form.Item
@@ -83,7 +82,7 @@ const Login = () => {
             <Input
               type="password"
               placeholder="пароль"
-              className='login-input'
+              className="login-input"
             />
           </Form.Item>
           <Form.Item>
@@ -95,15 +94,15 @@ const Login = () => {
               >
                 Войти
               </Button>
-              <div className='loginFormRegisterText'>
+              <div className="loginFormRegisterText">
                 Или <Link to="/signup">зарегистрируйтесь сейчас!</Link>
               </div>
             </div>
           </Form.Item>
-            <div className='loginErrorAndLoadingArea'>
-              <ErrorComponent message={error} />
-              <Loading loading={loading} />
-            </div>
+          <div className="loginErrorAndLoadingArea">
+            <ErrorComponent error={error} />
+            <Loading loading={loading} />
+          </div>
         </Form>
       </Card>
     </div>

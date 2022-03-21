@@ -16,17 +16,19 @@ function useUxios() {
     if (body && !Object.entries(_headers).length) {
       _headers['Content-Type'] = 'application/json';
     }
-    
+
     try {
       const resp = await fetch(path, {
         method,
         headers: _headers,
         body: _body,
       });
-      if (!resp.ok) throw await resp.text();
+      if (!resp.ok) {
+        throw await resp.json();
+      }
       return await resp.json();
     } catch (err) {
-      setError(err.toString());
+      setError(err);
     } finally {
       setLoading(false);
     }

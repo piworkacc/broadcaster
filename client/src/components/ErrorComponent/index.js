@@ -1,9 +1,5 @@
-function ErrorComponent({ message }) {
-  return (
-  <>
-  {message && <div className="text-danger position-fixed">{message}</div>}
-  </>
-  );
+function ErrorComponent({ error }) {
+  return <>{error && <div className="text-danger position-fixed">{`${error.name}: ${error.message}`}</div>}</>;
 }
 
 export default ErrorComponent;
