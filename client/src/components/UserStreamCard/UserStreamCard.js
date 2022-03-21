@@ -5,7 +5,7 @@ import './UserStreamCard.css';
 import styled from 'styled-components';
 const { Meta } = Card;
 
-const UserStreamCard = ({ id, title, preview, stream_key }) => {
+const UserStreamCard = ({ id, title, preview, start }) => {
 
   return (
     <Card
@@ -23,7 +23,7 @@ const UserStreamCard = ({ id, title, preview, stream_key }) => {
       <DivContainer>
         <ul className='streamStatsUl'>
           <li>
-            Stream_key: {stream_key}
+            Дата: {start}
           </li>
           <li>
             <EyeOutlined /> <span>1000</span>

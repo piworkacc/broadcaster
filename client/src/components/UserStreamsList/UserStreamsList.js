@@ -14,7 +14,7 @@ const UserStreamsList = () => {
 return (
   <DivContainer>
     {userVideos?.map((el) => (
-      <UserStreamCard key={el.id} id={el.id} title={el.title} preview={el.preview} stream_key={el.stream_key}/>
+      <UserStreamCard key={el.id} id={el.id} title={el.title} preview={el.preview} start={el.start}/>
     ))}
   </DivContainer>
 );
