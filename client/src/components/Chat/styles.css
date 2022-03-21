@@ -1,16 +1,9 @@
 /* Chat containers */
 .containerMessage {
-  border: 2px solid #ee4540;
+  border: 1px solid #ee4540;
+  border-radius: 8px;
+  margin: 2px 0px 2px 0px;
   background-color: #323232;
-  border-radius: 15px;
-  padding: 2px;
-  margin: 2px 0;
-  width: 20vw;
-  height: 60px;
-  color:#fff;
-  position: sticky;
-  top: 70px;
-  right: 0;
 }
 
 /* Darker chat container */
@@ -26,16 +19,6 @@
   display: table;
 }
 
-/* Style images */
-.containerMessage img {
-  float: left;
-  max-width: 60px;
-  width: 100%;
-  margin-right: 20px;
-  border-radius: 50%;
-
-}
-
 /* Style the right image */
 .containerMessage img.right {
   float: right;
@@ -44,71 +27,57 @@
 }
 
 /* Style time text */
-.time-right {
+.message-right {
   float: right;
   color: #aaa;
 }
 
 /* Style time text */
-.time-left {
+.message-left {
   float: left;
   color: #999;
 }
 
 .chat-messages {
-  overflow: auto;
-  height: 87vh;
   display:flex;
   flex-direction: column;
-  align-items: flex-end;
-  padding: 0;
+  height: 75vh;
+  overflow: auto;
   overflow-x: hidden;
-
+  padding: 0px 3px 0px 3px;
 }
 
 .chatList {
-  overflow: auto;
-  display: flex;
-  justify-content: flex-end;
+  min-width: 28vw;
+  max-width: 28vw;
 }
 
 .chat__input {
-  width: 350px;
   border: none;
   border-bottom: 1px solid #ee4540;
   background-color: #000;
   color: #fff;
-  padding: 5px 0;
+  min-width: 80%;
 }
 
 .chat__input:focus {
-  outline: 3px solid #ee4540;
-  box-shadow: 3px 2px 35px #ee4540;
-  border: 2px solid #ee4540;
-  border-radius: 5px;
-
+  outline: 1px solid #ee4540;
+  box-shadow: 1px 1px 28px #ee4540;
+  border: 1px solid #ee4540;
+  border-radius: 1px;
 }
 
 .chat__sendMsgButton {
-  border: 2px solid #ee4540;
+  border: 1px solid #ee4540;
   background-color: transparent;
   color: #fff;
-  padding: 5px 20px;
-  border-radius: 10px;
-  margin-left: 20px;
-  transition: .4s transform ease;
+  padding: 5px 10px;
+  border-radius:5px;
+  margin-left: 8px;
+  transition: .2s transform ease;
 }
 
 .chat__sendMsgButton:hover {
   background-color: #ee4540;
   transform: scale(1.1);
 }
-
-.chat__form {
-  position: fixed;
-  bottom: 0;
-  right: 70%;
-  margin-bottom: 87px;
-}
-
-

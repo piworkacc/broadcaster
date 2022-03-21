@@ -1,6 +1,5 @@
 import React, { useEffect, useState, useRef } from 'react'
 import './styles.css';
-import { UserOutlined } from '@ant-design/icons'
 
 export default function Chat({ socket, stream, user }) {
 
@@ -61,13 +60,15 @@ export default function Chat({ socket, stream, user }) {
   }
 
   return (
-    <div className='ChatList'>
+    <div className='chatList'>
       <div className='chat-messages'>
         {chatMessages.map((element) => (
           <div key={element.id} className="containerMessage">
-            <UserOutlined />
-            <p>{element.userName || element.User?.name} {element.message} {element.createdAt.toLocaleString('en-US')}</p>
-            <span className="time-right">{Date.now().toLocaleString}</span>
+            <div className={element.User.id === user.id ? "message-right" : "message-left"}>
+              <span>{element.userName || element.User?.name}</span>
+              <div>{element.message}</div>
+              <span>{element.createdAt}</span>
+            </div>
           </div>
         ))}
         <p ref={bottomRef}></p>
