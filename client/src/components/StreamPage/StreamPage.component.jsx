@@ -20,13 +20,15 @@ const StreamPage = ({socket}) => {
 	useEffect(() => {
 		if(currStream) {
 		setStream(currStream)
+			console.log(stream)
+
 		}
 	}, [stream, currStream]);
 
 	return (
 			<Wrapper>
       <ReactPlayer width={'80vw'} height={'80vh'} url={urlForStream(stream.source)} playing controls config={{file:{forceFLV:true}}}/>
-      <Chat socket={socket} user={auth.ok && auth.name} stream={stream} />
+      <Chat socket={socket} user={auth.ok && auth.name} stream={currStream.id} />
 			</Wrapper>
 	)
 };

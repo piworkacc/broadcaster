@@ -23,7 +23,7 @@ const Category = ({ title }) => {
           <SlideContainer key={el.id}>
             <Img
               key={el.broadcast_id}
-              src={el.img || viking}
+              src={el.preview ?? viking}
               broadcast_id={el.broadcast_id}
               onClick={() => nav(`videos/${el.broadcast_id}`)}
             />

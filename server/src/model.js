@@ -2,6 +2,8 @@ const {
   Stream,
   StreamTag,
   Tag,
+  Comment,
+  User,
   Sequelize: { Op, fn, col },
 } = require('../db/models');
 
@@ -15,7 +17,16 @@ function getUsersWithStreams(limit) {
 }
 
 function getStreamById(id) {
-  return Stream.findOne({ where: { id } });
+  return Stream.findOne({
+    where: { id },
+    include: [
+      {
+        model: Tag,
+        attributes: ['tag'],
+        through: { model: StreamTag, attributes: [] },
+      },
+    ],
+  });
 }
 
 function getStreamByStreamKey(streamKey) {
@@ -83,6 +94,18 @@ function getActiveStreams() {
       'stream_key',
       'preview',
     ],
+    include: [
+      {
+        model: Tag,
+        attributes: ['tag'],
+        through: { model: StreamTag, attributes: [] },
+      },
+      // {
+      //   model: Comment,
+      //   attributes: ['comment'],
+      //   include: { model: User, attributes: ['id', 'name'] },
+      // },
+    ],
     where: {
       end: { [Op.is]: null },
     },
@@ -99,6 +122,13 @@ function getUserFinishedStreams(userId) {
       'path',
       'user_id',
       'preview',
+    ],
+    include: [
+      {
+        model: Tag,
+        attributes: ['tag'],
+        through: { model: StreamTag, attributes: [] },
+      },
     ],
     where: {
       path: { [Op.not]: null },
@@ -128,19 +158,17 @@ function getLatestStreamKeyByUserId(userId) {
 }
 
 function createStream(fields) {
-  console.log(fields);
-
   return Stream.create(fields);
 }
 
 // TAGS
 
-async function addTagsToStream(stream, tags) {
-  if (!(tags && tags.length)) {
+async function addTagsToStream(stream, tagsArr) {
+  if (!(tagsArr && tagsArr.length)) {
     return;
   }
   const prms = [];
-  tags.forEach((el) => {
+  tagsArr.forEach((el) => {
     if (el.id) {
       prms.push(StreamTag.create({ stream_id: stream.id, tag_id: el.id }));
     }

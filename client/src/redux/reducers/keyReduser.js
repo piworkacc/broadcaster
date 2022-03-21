@@ -1,8 +1,7 @@
 import { GET_LATEST_KEY, GET_NEW_KEY } from '../actionTypes/keyTypes'
 
-
 const cache = window.localStorage.getItem('state');
-const preloadedState = JSON.parse(cache).keys;
+const preloadedState = cache ? JSON.parse(cache).keys : '';
 
 const keyReducer = (state = preloadedState || [], action) => {
   const { type, payload } = action;

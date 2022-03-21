@@ -2,14 +2,14 @@ import React, { useEffect, useState } from 'react'
 import './styles.css';
 import { UserOutlined } from '@ant-design/icons'
 
-export default function Chat({ socket, stream_id = 1, user = 1 }) {
+export default function Chat({ socket, stream, user }) {
 
   const [chatMessages, setChatMessages] = useState([]);
 
   useEffect(() => {
 
     async function fetchData() {
-      const response = await fetch(`/messages/${stream_id}`);
+      const response = await fetch(`/messages/${stream}`);
       const data = await response.json();
       console.log(data);
       setChatMessages((prev) => [...prev, ...data])
@@ -17,7 +17,7 @@ export default function Chat({ socket, stream_id = 1, user = 1 }) {
 
     fetchData();
 
-  }, [socket, stream_id, user])
+  }, [socket, stream, user])
 
   useEffect(() => {
 
@@ -37,14 +37,14 @@ export default function Chat({ socket, stream_id = 1, user = 1 }) {
 
   const onClickHandler = () => {
     console.log('Отправка сообщения');
-    socket.emit('message:send', { message: inputValue, room: stream_id })
+    socket.emit('message:send', { message: inputValue, room: stream })
     setInputValue('')
   }
 
   const submitHandler = (e) => {
     e.preventDefault();
     console.log('Отправка сообщения');
-    socket.emit('message:send', { message: inputValue, room: stream_id })
+    socket.emit('message:send', { message: inputValue, room: stream })
     setInputValue('')
   }
 
