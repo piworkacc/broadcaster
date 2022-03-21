@@ -9,7 +9,6 @@ import {HeartOutlined} from "@ant-design/icons";
 
 const Category = ({title}) => {
   const videos = useSelector((state) => state.videos);
-  console.log(videos)
   const nav = useNavigate();
   return (
       <CatergoryLi>

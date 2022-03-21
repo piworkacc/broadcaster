@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Select, Form, Input, Layout, Menu, Modal } from 'antd';
+import { Layout, Menu } from 'antd';
 import { UploadOutlined, UserOutlined, VideoCameraOutlined } from '@ant-design/icons';
 import './UserProfile.css';
 import styled from 'styled-components';
@@ -9,107 +9,15 @@ import UserStats from '../UserStats/UserStats';
 import UserStreamList from '../UserStreamsList/UserStreamsList';
 import UserAccount from '../UserAccount/UserAccount';
 import { getAllTagsAC } from '../../redux/actionCreators/getAllTagsAC';
-import { getNewKeyAC } from '../../redux/actionCreators/getNewKeyAC';
 import { createNewStreamAC } from '../../redux/actionCreators/createNewStreamAC';
+import { getLatestKeyAC } from '../../redux/actionCreators/getLatestKeyAC';
+import useUxios from '../../hooks/useUxios'
+import UserNewStreamModal from '../UserNewStreamModal/UserNewStreamModal';
 
 const { Header, Content, Footer, Sider } = Layout;
 
-const CollectionCreateForm = ({ visible, onCreate, onCancel, tags }) => {
-  const dispatch = useDispatch();
-  const [form] = Form.useForm();
-  const [selectedTags, setselectedTags] = useState([]);
-  const generateKey = () => {
-    dispatch(getNewKeyAC());
-  }
-  useEffect(() => {
-    generateKey();
-  }, []);
-
-  function handleChange(selectedTags) {
-    setselectedTags(selectedTags);
-  }
-
-  return (
-    <Modal
-      visible={visible}
-      title="Создать новый стрим"
-      okText="Сохранить"
-      cancelText="Отмена"
-      onCancel={onCancel}
-      onOk={() => {
-        form
-          .validateFields()
-          .then((values) => {
-            form.resetFields();
-            onCreate(values);
-          })
-          .catch((info) => {
-            console.log('Validate Failed:', info);
-          });
-      }}
-    >
-      <Form
-        form={form}
-        layout="vertical"
-        name="form_in_modal"
-        initialValues={{
-          modifier: 'public',
-        }}
-      >
-        <Form.Item
-          name="title"
-          label="Название"
-          rules={[
-            {
-              required: true,
-              message: 'Введите название вашего стрима',
-            },
-          ]}
-        >
-          <Input />
-        </Form.Item>
-        <Form.Item
-          name="preview"
-          label="Обложка"
-          rules={[
-            {
-              required: true,
-              message: 'Введите ссылку на изображение для обложки',
-            },
-          ]}
-        >
-          <Input type="textarea" />
-        </Form.Item>
-        <Form.Item
-          name="tag_id"
-          label="Категория"
-          rules={[
-            {
-              required: true,
-              message: 'Выберите минимум одну категорию',
-            },
-          ]}
-        >
-          <Select
-            mode="multiple"
-            placeholder="Выберите категории"
-            value={selectedTags}
-            onChange={handleChange}
-            style={{ width: '100%' }}
-          >
-            {tags.map(item => (
-              <Select.Option key={item.id} value={item.id}>
-                {item.tag}
-              </Select.Option>
-            ))}
-          </Select>
-        </Form.Item>
-      </Form>
-    </Modal >
-  );
-};
-
 const UserProfile = () => {
+  console.log('UserProfile rendered');
 
   const [visible, setVisible] = useState(false);
   const [selectedMenuItem, setSelectedMenuItem] = useState();
@@ -121,14 +29,19 @@ const UserProfile = () => {
   const getTags = () => {
     dispatch(getAllTagsAC());
   }
+  const getLatestKey = () => {
+    dispatch(getLatestKeyAC(auth.id));
+  }
 
+
+  const { error, loading, uxios } = useUxios();
   const onCreate = (values) => {
-    console.log('Received values of form: ', values);
     dispatch(createNewStreamAC({
       user_id: auth.id,
-      stream_key: keys.key,
       title: values.title,
       preview: values.preview,
+      tags: values.tags,
+      service: { error, loading, uxios }
     }))
     setVisible(false);
   };
@@ -138,8 +51,8 @@ const UserProfile = () => {
       navigate('/login');
     }
     getTags();
-  }, [auth, navigate]);
-
+    getLatestKey();
+  }, [auth, keys, navigate, dispatch]);
 
   const componentsSwitch = (key) => {
     switch (key) {
@@ -166,12 +79,6 @@ const UserProfile = () => {
         <Sider
           breakpoint="lg"
           collapsedWidth="0"
-        // onBreakpoint={broken => {
-        //   console.log(broken);
-        // }}
-        // onCollapse={(collapsed, type) => {
-        //   console.log(collapsed, type);
-        // }}
         >
           <HelloUserName className="logo" >
             <span>Привет, Username!</span>
@@ -214,11 +121,11 @@ const UserProfile = () => {
                     setVisible(true);
                   }}
                 >
-                  Начать стрим
+                  Начать новый стрим
                 </StartStreamButton>
-                <p style={{ color: 'white' }}>Stream key: {keys.key}</p>
+                <p style={{ color: 'white' }}>Последний stream key: {keys}</p>
                 <div>
-                  <CollectionCreateForm
+                  <UserNewStreamModal
                     visible={visible}
                     okText="Сохранить"
                     cancelText="Отмена"
@@ -227,6 +134,9 @@ const UserProfile = () => {
                       setVisible(false);
                     }}
                     tags={tags}
+                    user_id={auth.id}
+                    error={error}
+                    loading={loading}
                   />
                 </div>
 
@@ -256,7 +166,7 @@ const StartStreamButton = styled.button`
     font-family: 'Robert Sans Medium', Arial, sans-serif;
     color: #fff;
     margin-bottom: 30px;
-    width: 150px;
+    width: 200px;
     height: 40px;
     background-color: #ee4540;
     border-radius: 20px;
@@ -271,18 +181,3 @@ const DivContainer = styled.div`
     transform: scale(1.1);
   }
 `
-// const GenerateStreamKeyButton = styled.button`
-//     font-family: 'Robert Sans Medium', Arial, sans-serif;
-//     color: #fff;
-//     margin-right: 30px;
-//     // margin-bottom: 30px;
-//     width: 250px;
-//     height: 40px;
-//     background-color: #ee4540;
-//     border-radius: 20px;
-//     border: none;
-//     transition: scale .4s ease;
-//     &hover: {
-//       transform:scale(1.1)
-//     }
-// `
