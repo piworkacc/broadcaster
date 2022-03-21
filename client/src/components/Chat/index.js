@@ -12,7 +12,6 @@ export default function Chat({ socket, stream, user }) {
     async function fetchData() {
       const response = await fetch(`/messages/${stream}`);
       const data = await response.json();
-      console.log(data);
       setChatMessages((prev) => [...prev, ...data])
     }
 
