@@ -21,12 +21,17 @@ import UserNewStreamModal from '../UserNewStreamModal/UserNewStreamModal';
 const { Header, Content, Footer, Sider } = Layout;
 
 const UserProfile = () => {
-
   const [visible, setVisible] = useState(false);
   const [selectedMenuItem, setSelectedMenuItem] = useState();
-  const auth = useSelector((store) => store.auth);
-  const tags = useSelector((store) => store.tags);
-  const keys = useSelector((store) => store.keys);
+  // const auth = useSelector((store) => store.auth);
+  // const tags = useSelector((store) => store.tags);
+  // const keys = useSelector((store) => store.keys);
+  const [keys, auth, tags, streams] = useSelector((store) => [
+    store.keys,
+    store.auth,
+    store.tags,
+    store.streams,
+  ]);
   const { error, loading, uxios } = useUxios();
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -48,7 +53,6 @@ const UserProfile = () => {
         service: { error, loading, uxios },
       }),
     );
-    getLatestKey();
     setVisible(false);
   };
 
@@ -58,7 +62,7 @@ const UserProfile = () => {
     if (!auth.ok) {
       navigate('/login');
     }
-  }, [auth, keys, navigate]);
+  }, [auth, streams, navigate]);
 
   const componentsSwitch = (key) => {
     switch (key) {

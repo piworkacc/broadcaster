@@ -12,7 +12,6 @@ import {HeartOutlined} from "@ant-design/icons";
 const CarouselMain = ({id}) => {
 	const nav = useNavigate()
 	const streams = useSelector(state=> state.streams);
-	console.log(streams)
 
 	return (
 			<StyledSplide

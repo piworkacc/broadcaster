@@ -16,7 +16,6 @@ const VideoPage = () => {
   useEffect(() => {
     if (currVideo) {
       setVideo(currVideo);
-      console.log(video.source);
     }
   }, [video]);
 
