@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Form, Input, Button, Row, Col, Card } from 'antd';
+import { Form, Input, Button, Card } from 'antd';
 import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import useUxios from '../../hooks/useUxios';
@@ -34,90 +34,78 @@ const Login = () => {
   };
 
   return (
-    <div className='container'>
+    <div className='loginContainer'>
       <Particle />
-      <Row>
-        <Col span={12} offset={6}>
-          <Card
-            className="login-form-card"
-            style={{ marginTop: '100px' }}
+      <Card
+        className="login-form-card"
+        style={{ marginTop: '100px' }}
+      >
+        <Form
+          name="basic"
+          className="login-form"
+          wrapperCol={{
+            span: 24,
+          }}
+          initialValues={{
+            remember: true,
+          }}
+          onFinish={onFinish}
+          onFinishFailed={onFinishFailed}
+          autoComplete="off"
+        >
+          <h2 className='loginFormText'>
+            Войти в <span className='veshatel'>Veschatel</span>
+          </h2>
+          <Form.Item
+            name="email"
+            rules={[
+              {
+                required: true,
+                message: 'Введите свой email!',
+              },
+            ]}
           >
-            <Form
-              name="basic"
-              className="login-form"
-              wrapperCol={{
-                span: 24,
-              }}
-              initialValues={{
-                remember: true,
-              }}
-              onFinish={onFinish}
-              onFinishFailed={onFinishFailed}
-              autoComplete="off"
-            >
-              <h2 className='loginFormText'>
-                Войти в <span className='veshatel'>Veschatel</span>
-              </h2>
-              <Form.Item
-                name="email"
-                rules={[
-                  {
-                    required: true,
-                    message: 'Введите свой email!',
-                  },
-                ]}
+            <Input
+              placeholder="email"
+              className='login-input'
+            />
+          </Form.Item>
+
+          <Form.Item
+            name="password"
+            rules={[
+              {
+                required: true,
+                message: 'Введите пароль',
+              },
+            ]}
+          >
+            <Input
+              type="password"
+              placeholder="пароль"
+              className='login-input'
+            />
+          </Form.Item>
+          <Form.Item>
+            <div className="loginSubContainer">
+              <Button
+                type="primary"
+                htmlType="submit"
+                className="login-form-button"
               >
-                <Input
-                  placeholder="email"
-                  className='login-input'
-                />
-              </Form.Item>
-
-              <Form.Item
-                name="password"
-                rules={[
-                  {
-                    required: true,
-                    message: 'Введите пароль',
-                  },
-                ]}
-              >
-                <Input
-                  type="password"
-                  placeholder="пароль"
-                  className='login-input'
-                />
-              </Form.Item>
-
-              <Form.Item
-                wrapperCol={{
-                  offset: 8,
-                  span: 8,
-                }}
-              >
-                <div className="subContainer">
-                <Button
-                  type="primary"
-                  htmlType="submit"
-                  className="login-form-button"
-                >
-                  Войти
-                </Button>
-                <div className='loginFormText'>
-                  Или <Link to="/signup">зарегистрируйтесь сейчас!</Link>
-                </div>
-
-                </div>
-
-              </Form.Item>
-              <div className='errorText'>
-                <ErrorComponent error={error} />
-                <Loading loading={loading} />
+                Войти
+              </Button>
+              <div className='loginFormRegisterText'>
+                Или <Link to="/signup">зарегистрируйтесь сейчас!</Link>
               </div>
-            </Form>
-          </Card>
-        </Col>
-      </Row>
+            </div>
+          </Form.Item>
+            <div className='loginErrorAndLoadingArea'>
+              <ErrorComponent error={error} />
+              <Loading loading={loading} />
+            </div>
+        </Form>
+      </Card>
     </div>
   );
 };
