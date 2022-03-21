@@ -28,7 +28,7 @@ const StreamPage = ({socket}) => {
 	return (
 			<Wrapper>
       <ReactPlayer width={'80vw'} height={'80vh'} url={urlForStream(stream.source)} playing controls config={{file:{forceFLV:true}}}/>
-      <Chat socket={socket} user={auth.ok && auth.name} stream={currStream.id} />
+      <Chat socket={socket} user={auth.ok && auth} stream={currStream.id} />
 			</Wrapper>
 	)
 };
