@@ -2,6 +2,7 @@ const {
   Stream,
   StreamTag,
   Tag,
+  User,
   Sequelize: { Op, fn, col },
 } = require('../db/models');
 
@@ -25,7 +26,7 @@ function getStreamByStreamKey(streamKey) {
 async function startStream(broadcastId, stream) {
   await Stream.update(
     { start: new Date(), end: null, broadcast_id: broadcastId },
-    { where: { id: stream.id } },
+    { where: { id: stream.id } }
   );
 
   return Stream.findOne({ where: { id: stream.id } });
@@ -39,7 +40,7 @@ function endStream(broadcastId, filePath) {
     },
     {
       where: { broadcast_id: broadcastId },
-    },
+    }
   );
 }
 
@@ -62,7 +63,7 @@ async function closeLostStreams(getStreamPathName) {
   currStreams.forEach((el, ind) => {
     const prm = Stream.update(
       { end: new Date(), path: paths[ind] },
-      { where: { id: el.id } },
+      { where: { id: el.id } }
     );
     prms.push(prm);
   });
@@ -83,6 +84,7 @@ function getActiveStreams() {
       'stream_key',
       'preview',
     ],
+    include: [{ model: User, attributes: ['name', 'id'] }],
     where: {
       end: { [Op.is]: null },
     },
@@ -104,6 +106,7 @@ function getUserFinishedStreams(userId) {
       path: { [Op.not]: null },
       user_id: { [Op.in]: userId },
     },
+    include: [{ model: User, attributes: ['id', 'name'] }],
     order: [['updatedAt', 'DESC']],
   });
 }
