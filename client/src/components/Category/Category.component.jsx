@@ -1,37 +1,41 @@
 import React from 'react';
 import styled from 'styled-components';
-import { Splide, SplideSlide } from '@splidejs/react-splide';
+import {Splide, SplideSlide} from '@splidejs/react-splide';
 import '@splidejs/splide/dist/css/splide.min.css';
 import viking from '../../images/valhalla.jpeg';
-import { useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
+import {useSelector} from 'react-redux';
+import {useNavigate} from 'react-router-dom';
+import {HeartOutlined} from "@ant-design/icons";
 
-const Category = ({ title }) => {
+const Category = ({title}) => {
   const videos = useSelector((state) => state.videos);
   const nav = useNavigate();
   return (
-    <CatergoryLi>
-      <Title>{title}</Title>
-      <Splide
-        options={{
-          perPage: 6,
-          rewind: true,
-          maxWidth: '100%',
-          gap: 40,
-        }}>
-        {videos?.map((el) => (
-          <SlideContainer key={el.id}>
-            <Img
-              key={el.broadcast_id}
-              src={el.preview ?? viking}
-              broadcast_id={el.broadcast_id}
-              onClick={() => nav(`videos/${el.broadcast_id}`)}
-            />
-          </SlideContainer>
-        ))}
-        1
-      </Splide>
-    </CatergoryLi>
+      <CatergoryLi>
+        <Title>{title}</Title>
+        <Splide
+            options={{
+              perPage: 6,
+              rewind: true,
+              maxWidth: '100%',
+              gap: 40,
+            }}>
+          {videos?.map((el) => (
+              <SlideContainer key={el.id}>
+                <StyledStreamTitle>{el.title}</StyledStreamTitle>
+                <StyledUser>@{el.User.name}</StyledUser>
+                <Img
+                    key={el.broadcast_id}
+                    src={el.preview ?? viking}
+                    broadcast_id={el.broadcast_id}
+                    onClick={() => nav(`videos/${el.broadcast_id}`)}
+                />
+                <StyledLike><StyledLikeIcon /> 78</StyledLike>
+              </SlideContainer>
+          ))}
+          1
+        </Splide>
+      </CatergoryLi>
   );
 };
 
@@ -96,6 +100,7 @@ const Img = styled.img`
     transition: 0.4s ease-in-out;
     opacity: 0.3;
   }
+
   &:before {
     content: '';
     position: absolute;
@@ -111,3 +116,65 @@ const Img = styled.img`
 const CatergoryLi = styled.li`
   padding-left: 30px;
 `;
+
+const StyledStreamTitle = styled.h3`
+  font-size: 15px;
+  line-height: 20px;
+  color: #fff;
+  position: relative;
+  right: 0;
+  top: 20px;
+  z-index: 1;
+  font-weight: 800;
+  letter-spacing: 5px;
+  background-color: #000;
+  background-position: center;
+`
+
+
+const StyledUser = styled.span`
+  font-size: 20px;
+  line-height: 24px;
+  background-color: #222;
+  padding: 5px;
+  border: 1px solid #222;
+  border-radius: 10px;
+  color: #fff;
+  position: relative;
+  right:40%;
+  top: 75%;
+  z-index:2;
+  font-weight: 800;
+  letter-spacing: 5px;
+`
+
+const StyledLike = styled.div`
+	padding: 0 10px;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	position: relative;
+	top: -80px;
+	left: 85%;
+	width: 60px;
+  background-color: #222;
+  font-size: 20px;
+	border: 1px solid #ee4540;
+	border-radius: 25px;
+	color: #fff;
+	transition: 0.4s transform ease;
+  z-index:3;
+  &:hover {
+		cursor: pointer;
+		transform: scale(1.15);
+	}
+`
+
+const StyledLikeIcon = styled(HeartOutlined)`
+	padding:0;
+    position: relative;
+		width: 40px;
+    font-size: 15px;
+    color: #ee4540;
+    z-index:3;
+`

@@ -99,7 +99,7 @@ function newKey(req, res) {
 async function latestStreamKey(req, res, next) {
   try {
     const foundKey = await getLatestStreamKeyByUserId(req.session.userId);
-    if(!foundKey) {
+    if (!foundKey) {
       throw new Error('No stream key found');
     }
     return res.json(foundKey);
@@ -124,10 +124,11 @@ async function streams(req, res, next) {
         title: el.title,
         start: el.start,
         preview: el.preview,
+        User: el.User,
         source: `/live/${el.stream_key}.flv`,
         Tags: el.Tags,
         // comments: el.Comments,
-      })),
+      }))
     );
   } catch (err) {
     next(err);

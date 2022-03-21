@@ -94,7 +94,9 @@ function getActiveStreams() {
       'stream_key',
       'preview',
     ],
+
     include: [
+      { model: User, attributes: ['name', 'id'] },
       {
         model: Tag,
         attributes: ['tag'],
@@ -129,6 +131,7 @@ function getUserFinishedStreams(userId) {
         attributes: ['tag'],
         through: { model: StreamTag, attributes: [] },
       },
+      { model: User, attributes: ['id', 'name'] },
     ],
     where: {
       path: { [Op.not]: null },
@@ -151,7 +154,7 @@ function getLatestStreamKeyByUserId(userId) {
       'stream_key',
     ],
     where: {
-      user_id:  userId ,
+      user_id: userId,
     },
     order: [['createdAt', 'DESC']],
   });
