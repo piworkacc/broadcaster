@@ -14,7 +14,8 @@ const StreamPage = ({socket}) => {
 					return streamRedux.filter(el => el.broadcast_id === streamId)[0]
 	});
 
-  const { auth } = useSelector(state => stream.auth);
+  const auth  = useSelector(state => state.auth);
+	console.log(auth)
 
 	useEffect(() => {
 		if(currStream) {
@@ -33,7 +34,7 @@ const StreamPage = ({socket}) => {
 export default StreamPage;
 
 const Wrapper = styled.div`
-	width: 500px;
+	width: 100vw;
 	height:100vh;
   display:flex;
 `
