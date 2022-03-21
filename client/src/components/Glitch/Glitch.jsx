@@ -16,11 +16,12 @@ const Glitch = () => {
 export default Glitch;
 
 const GlitchStyled = styled.div`
-    color: white;
-    font-size: 35px;
-    position: relative;
-    margin: 0 auto;
-		cursor:pointer;
+  color: white;
+  font-size: 35px;
+  position: relative;
+  width: 330px;
+  margin: 0 auto;
+  cursor:pointer;
   @keyframes noise-anim {
     0% {
       clip: rect(15px, 9999px, 6px, 0);
