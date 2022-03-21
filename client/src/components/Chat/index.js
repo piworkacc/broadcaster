@@ -64,7 +64,7 @@ export default function Chat({ socket, stream, user }) {
       <div className='chat-messages'>
         {chatMessages.map((element) => (
           <div key={element.id} className="containerMessage">
-            <div className={element.User.id === user.id ? "message-right" : "message-left"}>
+            <div className={element.user_id === user.id ? "message-right" : "message-left"}>
               <span>{element.userName || element.User?.name}</span>
               <div>{element.message}</div>
               <span>{element.createdAt}</span>

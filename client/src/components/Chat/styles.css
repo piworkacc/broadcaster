@@ -48,7 +48,6 @@
 }
 
 .chatList {
-  min-width: 28vw;
   max-width: 28vw;
 }
 
@@ -80,4 +79,11 @@
 .chat__sendMsgButton:hover {
   background-color: #ee4540;
   transform: scale(1.1);
+}
+
+@media screen and (max-width: 800px) {
+  .chatList {
+    min-width: 28vw;
+    max-width: 71vw;
+  }
 }
