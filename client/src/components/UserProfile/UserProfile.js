@@ -115,7 +115,7 @@ const UserProfile = () => {
               className="site-layout-background"
               style={{ padding: 24, minHeight: 360 }}
             >
-              <DivContainer>
+              {/* <DivContainer> */}
                 <StartStreamButton
                   type="button"
                   onClick={() => {
@@ -124,7 +124,7 @@ const UserProfile = () => {
                 >
                   Начать новый стрим
                 </StartStreamButton>
-                <p style={{ color: 'white' }}>Последний stream key: {keys}</p>
+                  {/* </DivContainer> */}
                 <div>
                   <UserNewStreamModal
                     visible={visible}
@@ -140,7 +140,7 @@ const UserProfile = () => {
                     loading={loading}
                   />
                 </div>
-              </DivContainer>
+              <p style={{ color: 'white' }}>Последний stream key: {keys}</p>
               {!selectedMenuItem && <UserStreamList />}
               {componentsSwitch(selectedMenuItem)}
             </div>
@@ -172,12 +172,12 @@ const StartStreamButton = styled.button`
   border-radius: 20px;
   border: none;
   transition: scale 0.4s ease;
-  &hover: {
+  &:hover: {
     transform: scale(1.1);
   }
 `;
-const DivContainer = styled.div`
-  &:hover ${StartStreamButton} {
-    transform: scale(1.1);
-  }
-`;
+// const DivContainer = styled.div`
+//   &:hover ${StartStreamButton} {
+//     transform: scale(1.1);
+//   }
+// `;

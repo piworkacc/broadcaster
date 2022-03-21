@@ -10,7 +10,7 @@ const Category = ({title}) => {
 	const videos = useSelector((state) => state.videos);
 	const tags = useSelector(state => state.tags);
 	const nav = useNavigate();
-	const videosToRender = videos.filter((el) => el.Tags[0].tag === title)
+	const videosToRender = videos.filter((el) => el.Tags[0]?.tag === title)
   console.log(videosToRender)
 	return (
 			<CatergoryLi>
