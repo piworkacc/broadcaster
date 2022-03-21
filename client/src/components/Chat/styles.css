@@ -105,6 +105,9 @@
 }
 
 .chat__form {
+  position: fixed;
+  bottom: 0;
+  right: 70%;
   margin-bottom: 87px;
 }
 
