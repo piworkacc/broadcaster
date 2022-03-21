@@ -33,7 +33,11 @@ export default function Chat({ socket, stream, user }) {
 
     socket.on('message:get', (msg) => {
       const { newMessage, name, room, error } = msg;
-      console.log('Обработал message:get...', msg, newMessage);
+      setChatMessages((prev) => [...prev, newMessage]);
+    })
+
+    socket.on('message:error', (msg) => {
+      const { newMessage, name, room, error } = msg;
       setChatMessages((prev) => [...prev, newMessage]);
     })
 
