@@ -112,6 +112,8 @@ async function streams(req, res, next) {
         start: el.start,
         preview: el.preview,
         source: `/live/${el.stream_key}.flv`,
+        Tags: el.Tags,
+        // comments: el.Comments,
       })),
     );
   } catch (err) {
@@ -237,9 +239,11 @@ async function preview(req, res, next) {
 
 async function addStream(req, res, next) {
   try {
-    const { tag, ...fields } = req.body;
+    const { tags: tagsArr, ...fields } = req.body;
+    fields.user_id = req.session.userId;
     const newStream = await createStream(fields);
-    await addTagsToStream(newStream, tag);
+    await addTagsToStream(newStream, tagsArr);
+    res.send(newStream);
   } catch (err) {
     next(err);
   }
