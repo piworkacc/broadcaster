@@ -47,6 +47,5 @@ const TitleScreen = styled.section`
 `
 
 const MainContainer = styled.main`
-  padding-left: 200px;
-
+padding: 200px;
 `

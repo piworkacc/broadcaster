@@ -21,5 +21,8 @@ export default CategoryList;
 const ListContainer = styled.ul`
 		list-style-type: none;
 		padding: 0;
-	margin-top: 90px;
+		margin-top: 90px;
 		`
+const StyledCategory = styled(Category)`
+	margin-top: 50px;
+`
