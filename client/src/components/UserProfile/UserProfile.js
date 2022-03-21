@@ -21,7 +21,6 @@ import UserNewStreamModal from '../UserNewStreamModal/UserNewStreamModal';
 const { Header, Content, Footer, Sider } = Layout;
 
 const UserProfile = () => {
-  console.log('UserProfile rendered');
 
   const [visible, setVisible] = useState(false);
   const [selectedMenuItem, setSelectedMenuItem] = useState();
