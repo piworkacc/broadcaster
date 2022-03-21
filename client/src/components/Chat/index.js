@@ -33,8 +33,14 @@ export default function Chat({ socket, stream, user }) {
   useEffect(() => {
 
     socket.on('message:get', (msg) => {
+      console.log('get');
       const { newMessage, name, room, error } = msg;
-      console.log('Обработал message:get...', msg, newMessage);
+      setChatMessages((prev) => [...prev, newMessage]);
+    })
+
+    socket.on('message:error', (msg) => {
+      console.log('error');
+      const { newMessage, name, room, error } = msg;
       setChatMessages((prev) => [...prev, newMessage]);
     })
 
