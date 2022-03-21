@@ -8,6 +8,7 @@ import { useNavigate } from 'react-router-dom';
 
 const Category = ({ title }) => {
   const videos = useSelector((state) => state.videos);
+  console.log(videos)
   const nav = useNavigate();
   return (
     <CatergoryLi>
@@ -23,7 +24,7 @@ const Category = ({ title }) => {
           <SlideContainer key={el.id}>
             <Img
               key={el.broadcast_id}
-              src={el.img || viking}
+              src={el.preview ?? viking}
               broadcast_id={el.broadcast_id}
               onClick={() => nav(`videos/${el.broadcast_id}`)}
             />
