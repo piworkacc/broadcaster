@@ -5,7 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="349ca0e4-9e4d-46ba-bfcb-b03f1f363015" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/components/Category/Category.component.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/Category/Category.component.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/components/Chat/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/Chat/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/components/Chat/styles.css" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/Chat/styles.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/components/StreamPage/StreamPage.component.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/StreamPage/StreamPage.component.jsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -43,6 +46,7 @@
       <updated>1647691617436</updated>
       <workItem from="1647691619445" duration="29000" />
       <workItem from="1647782173901" duration="57000" />
+      <workItem from="1647847679834" duration="130000" />
     </task>
     <servers />
   </component>
