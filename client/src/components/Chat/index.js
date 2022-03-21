@@ -12,7 +12,6 @@ export default function Chat({ socket, stream, user }) {
     async function fetchData() {
       const response = await fetch(`/messages/${stream}`);
       const data = await response.json();
-      console.log(data);
       setChatMessages((prev) => [...prev, ...data])
     }
 
@@ -33,13 +32,11 @@ export default function Chat({ socket, stream, user }) {
   useEffect(() => {
 
     socket.on('message:get', (msg) => {
-      console.log('get');
       const { newMessage, name, room, error } = msg;
       setChatMessages((prev) => [...prev, newMessage]);
     })
 
     socket.on('message:error', (msg) => {
-      console.log('error');
       const { newMessage, name, room, error } = msg;
       setChatMessages((prev) => [...prev, newMessage]);
     })
