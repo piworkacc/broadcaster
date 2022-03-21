@@ -16,12 +16,13 @@ const Glitch = () => {
 export default Glitch;
 
 const GlitchStyled = styled.div`
-    color: white;
-    font-size: 35px;
-    position: relative;
-    width: 330px;
-    margin: 0 auto;
-		cursor:pointer;
+	padding-top:200px;
+  color: white;
+  font-size: 35px;
+  position: relative;
+  width: 330px;
+  margin: 0 auto;
+  cursor:pointer;
   @keyframes noise-anim {
     0% {
       clip: rect(15px, 9999px, 6px, 0);
@@ -88,16 +89,16 @@ const GlitchStyled = styled.div`
     }
   }
    &:after {
-    content: attr(data-text);
-    position: absolute;
-    left: 2px;
-    text-shadow: -1px 0 red;
-    top: 0;
-    color: white;
-    background: black;
-    overflow: hidden;
-    clip: rect(0, 900px, 0, 0);
-    animation: noise-anim 2s infinite linear alternate-reverse;
+		  content: attr(data-text);
+	    position: absolute;
+	    left: 2px;
+	    text-shadow: -1px 0 red;
+	    top: 200px;
+	    color: white;
+	    background: black;
+	    overflow: hidden;
+	    clip: rect(0, 900px, 0, 0);
+	    animation: noise-anim 2s infinite linear alternate-reverse;
   }
 
   @keyframes noise-anim-2 {
@@ -170,7 +171,7 @@ const GlitchStyled = styled.div`
     position: absolute;
     left: -2px;
     text-shadow: 1px 0 blue;
-    top: 0;
+    top: 200px;
     color: white;
     background: black;
     overflow: hidden;
