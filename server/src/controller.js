@@ -69,7 +69,9 @@ async function login(req, res, next) {
       setSession(req, user);
       res.json({ name: user.name, id: user.id });
     } else {
-      res.sendStatus(401);
+      const err = new Error('Unauthorized');
+      err.status = 401;
+      throw err;
     }
   } catch (err) {
     next(err);
@@ -206,8 +208,9 @@ async function sendStream(req, res, next) {
     const { range } = req.headers;
 
     if (!range) {
-      res.status(400).send('Requires Range header');
-      return;
+      const err = new Error('Requires Range header');
+      err.status = 400;
+      throw err;
     }
     const videoPath = stream.path;
     const videoSize = fs.statSync(videoPath).size;

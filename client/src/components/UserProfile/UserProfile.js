@@ -23,9 +23,6 @@ const { Header, Content, Footer, Sider } = Layout;
 const UserProfile = () => {
   const [visible, setVisible] = useState(false);
   const [selectedMenuItem, setSelectedMenuItem] = useState();
-  // const auth = useSelector((store) => store.auth);
-  // const tags = useSelector((store) => store.tags);
-  // const keys = useSelector((store) => store.keys);
   const [keys, auth, tags, streams] = useSelector((store) => [
     store.keys,
     store.auth,
