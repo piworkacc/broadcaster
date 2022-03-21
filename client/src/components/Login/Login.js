@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Form, Input, Button, Row, Col, Card } from 'antd';
+import { Form, Input, Button, Card } from 'antd';
 import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import useUxios from '../../hooks/useUxios';
@@ -38,7 +38,7 @@ const Login = () => {
       <Particle />
       <Card
         className="login-form-card"
-        style={{ marginTop: '200px' }}
+        style={{ marginTop: '100px' }}
       >
         <Form
           name="basic"

@@ -29,6 +29,8 @@
   border-color:#434343;
   z-index: 99999;
   box-shadow: 0 15px 50px #434343;
+  max-width: fit-content;
+  padding: 35px;
 }
 
 .login-input {
@@ -36,7 +38,6 @@
 	color: #fff;
 	width: 260px;
 	border: 1px solid #3c3c3c;
-  border-color: #ff4d4f;
 	border-radius: 5px;
 }
 
@@ -57,15 +58,11 @@
   border-color: #ff4d4f;
 }
 
-.ant-card {
-  max-width: fit-content;
-  padding: 35px;
-}
-
 .loginContainer {
   place-items: center;
   display: flex;
   justify-content: center;
+  height: 700px;
 }
 
 .loginErrorAndLoadingArea {

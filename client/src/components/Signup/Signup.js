@@ -1,4 +1,4 @@
-import { Form, Input, Button, Row, Col, Card } from 'antd';
+import { Form, Input, Button, Card } from 'antd';
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from 'react-router-dom';
@@ -35,104 +35,91 @@ const Signup = () => {
   };
 
   return (
-    <div className='container'>
+    <div className='signUpContainer'>
       <Particle />
-      <Row>
-        <Col span={12} offset={6}>
-          <Card
-            className="signup-form-card"
-            style={{ marginTop: '100px' }}
+      <Card
+        className="signup-form-card"
+        style={{ marginTop: '100px' }}
+      >
+        <Form
+          name="basic"
+          className="signup-form"
+          wrapperCol={{
+            span: 24,
+          }}
+          initialValues={{
+            remember: true,
+          }}
+          onFinish={onFinish}
+          onFinishFailed={onFinishFailed}
+          autoComplete="off"
+        >
+          <h2 className='signupFormText'>
+            Зарегистрироваться в <span className='veshatel'>Veschatel</span>
+          </h2>
+          <Form.Item
+            name="name"
+            rules={[
+              {
+                required: true,
+                message: 'Введите имя!',
+              },
+            ]}
           >
-            <Form
-              name="basic"
-              className="signup-form"
-              wrapperCol={{
-                span: 24,
-              }}
-              initialValues={{
-                remember: true,
-              }}
-              onFinish={onFinish}
-              onFinishFailed={onFinishFailed}
-              autoComplete="off"
-            >
-              <h2 className='signupFormText'>
-                Зарегистрироваться в <span className='veshatel'>Veschatel</span>
-              </h2>
-              <Form.Item
-                name="name"
-                rules={[
-                  {
-                    required: true,
-                    message: 'Введите имя!',
-                  },
-                ]}
+            <Input
+              placeholder="Имя"
+              className='signup-input'
+            />
+          </Form.Item>
+          <Form.Item
+            name="email"
+            rules={[
+              {
+                required: true,
+                message: 'Введите email!',
+              },
+            ]}
+          >
+            <Input
+              placeholder="E-mail"
+              className='signup-input'
+            />
+          </Form.Item>
+          <Form.Item
+            name="password"
+            rules={[
+              {
+                required: true,
+                message: 'Введите пароль!',
+              },
+            ]}
+          >
+            <Input
+              type="password"
+              placeholder="Придумайте пароль"
+              className='signup-input'
+            />
+          </Form.Item>
+          <Form.Item>
+            <div className="signupSubContainer">
+              <Button
+                type="primary"
+                htmlType="submit"
+                className="signup-form-button"
               >
-                <Input
-                  placeholder="Имя"
-                  className='signup-input'
-                />
-              </Form.Item>
-
-              <Form.Item
-                name="email"
-                rules={[
-                  {
-                    required: true,
-                    message: 'Введите email!',
-                  },
-                ]}
-              >
-                <Input
-                  placeholder="E-mail"
-                  className='signup-input'
-                />
-              </Form.Item>
-
-              <Form.Item
-                // label="Password"
-                name="password"
-                rules={[
-                  {
-                    required: true,
-                    message: 'Введите пароль!',
-                  },
-                ]}
-              >
-                <Input
-                  type="password"
-                  placeholder="Придумайте пароль"
-                  className='signup-input'
-                />
-              </Form.Item>
-
-              <Form.Item
-                wrapperCol={{
-                  offset: 8,
-                  span: 8,
-                }}
-              >
-                <div className="subContainer">
-                  <Button
-                    type="primary"
-                    htmlType="submit"
-                    className="signup-form-button"
-                  >
-                    Отправить
-                  </Button>
-                  <div className='signupFormTextBottom'>
-                    Или <Link to="/login">войдите в свой аккаунт</Link>
-                  </div>
-                </div>
-              </Form.Item>
-              <div className='errorText'>
-                <ErrorComponent message={error} />
-                <Loading loading={loading} />
+                Отправить
+              </Button>
+              <div className='signupFormTextBottom'>
+                Или <Link to="/login">войдите в свой аккаунт</Link>
               </div>
-            </Form>
-          </Card>
-        </Col>
-      </Row>
+            </div>
+          </Form.Item>
+          <div className='errorText'>
+            <ErrorComponent message={error} />
+            <Loading loading={loading} />
+          </div>
+        </Form>
+      </Card>
     </div>
   );
 };

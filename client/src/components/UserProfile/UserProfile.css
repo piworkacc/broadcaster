@@ -123,9 +123,9 @@
   background-color: #1c1c1c;
 	color: #fff;
 	border: 1px solid #3c3c3c;
-  border-color: #ff4d4f;
 	border-radius: 5px;
 }
+
 .ant-input:hover {
   border-color: #1c1c1c;
   border-right-width: 1px;
