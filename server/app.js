@@ -5,20 +5,24 @@ const cors = require('cors');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const session = require('express-session');
+const http = require('http');
 const FileStore = require('session-file-store')(session);
 const { Server } = require('socket.io');
+const nms = require('./src/mediaServer');
 require('dotenv').config();
-
-const http = require('http');
-const nms = require('./mediaServer');
 
 nms.run();
 
 const indexRouter = require('./src/routes/index.router');
 const usersRouter = require('./src/routes/users.router');
+const streamsRouter = require('./src/routes/streams.router');
+const messagesRouter = require('./src/routes/messages.routes');
+const streamkeysRouter = require('./src/routes/streamkeys.router');
+const tagsRouter = require('./src/routes/tags.router');
 
 const app = express();
 const HTTPServer = http.createServer(app);
+
 const io = new Server(HTTPServer, {
   cors: {
     origin: '*',
@@ -56,8 +60,10 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
 app.use('/api/users', usersRouter);
-
-// app.use
+app.use('/api/streams', streamsRouter);
+app.use('/api/keys', streamkeysRouter);
+app.use('/api/tags', tagsRouter);
+app.use('/messages', messagesRouter);
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {
@@ -79,7 +85,7 @@ const { onConnection } = require('./chat/index');
 io.on('connection', (socket) => onConnection(socket, io));
 
 const HTTP_PORT = process.env.HTTP_PORT || 3002;
-HTTPServer.listen(3002, () => {
+HTTPServer.listen(HTTP_PORT, () => {
   console.log(`HTTPServer started on ${HTTP_PORT}`);
 });
 

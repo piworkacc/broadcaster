@@ -1,7 +1,5 @@
 'use strict';
-const {
-  Model
-} = require('sequelize');
+const { Model } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
   class StreamTag extends Model {
     /**
@@ -13,12 +11,15 @@ module.exports = (sequelize, DataTypes) => {
       // define association here
     }
   }
-  StreamTag.init({
-    tag_id: DataTypes.INTEGER,
-    stream_id: DataTypes.INTEGER
-  }, {
-    sequelize,
-    modelName: 'StreamTag',
-  });
+  StreamTag.init(
+    {
+      tag_id: DataTypes.INTEGER,
+      stream_id: DataTypes.INTEGER,
+    },
+    {
+      sequelize,
+      modelName: 'StreamTag',
+    },
+  );
   return StreamTag;
 };

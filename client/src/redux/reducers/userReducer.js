@@ -7,7 +7,7 @@ const authReducer = (state = preloadedState, action) => {
   const { type, payload } = action;
   switch (type) {
     case AUTH:
-      return { name: payload, ok: true };
+      return { name: payload.name, id: payload.id, ok: true };
     case UNAUTH:
       return { ok: false };
     default:

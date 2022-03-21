@@ -1,8 +1,8 @@
-import {ADD_VIDEO} from "../actionTypes/videoTypes";
+import { GET_TAG_VIDEOS } from "../actionTypes/videoTypes";
 
-export const addVideo = (payload) => {
-	return {
-		type: ADD_VIDEO,
-		payload,
-	};
-};
+export const getAllVideos = (payload) => {
+  return {
+    type: GET_TAG_VIDEOS,
+    payload,
+  }
+}

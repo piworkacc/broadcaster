@@ -1,68 +1,77 @@
 import React from 'react';
 import styled from 'styled-components';
-import { Splide, SplideSlide } from '@splidejs/react-splide';
+import {Splide, SplideSlide} from '@splidejs/react-splide';
 import '@splidejs/splide/dist/css/splide.min.css';
-import horizon from '../../images/horizon.jpeg'
-
-
-
+import viking from '../../images/valhalla.jpeg';
+import {useSelector} from 'react-redux';
+import {useNavigate} from 'react-router-dom';
+import {HeartOutlined} from "@ant-design/icons";
 
 const Category = ({title}) => {
-
-	return (
-			<CatergoryLi>
-				<Title>{title}</Title>
-				<Splide
-						options={ {
-							perPage: 6,
-							rewind: true,
-							maxWidth : '100%',
-							gap   : 40,
-						} }
-				>
-					<SlideContainer><Img src={horizon} alt="Image 1"/></SlideContainer>
-					<SlideContainer><Img src={horizon} alt="Image 1"/></SlideContainer>
-					<SlideContainer><Img src={horizon} alt="Image 1"/></SlideContainer>
-					<SlideContainer><Img src={horizon} alt="Image 1"/></SlideContainer>
-					<SlideContainer><Img src={horizon} alt="Image 1"/></SlideContainer>
-					<SlideContainer><Img src={horizon} alt="Image 1"/></SlideContainer>
-					<SlideContainer><Img src={horizon} alt="Image 1"/></SlideContainer>
-					<SlideContainer><Img src={horizon} alt="Image 1"/></SlideContainer>
-					<SlideContainer><Img src={horizon} alt="Image 1"/></SlideContainer>
-
-				</Splide>
-			</CatergoryLi>
-	)
+  const videos = useSelector((state) => state.videos);
+  const nav = useNavigate();
+  return (
+      <CatergoryLi>
+        <Title>{title}</Title>
+        <Splide
+            options={{
+              perPage: 4,
+              rewind: true,
+              maxWidth: '2000px',
+              gap: 40,
+            }}>
+          {videos?.map((el) => (
+              <SlideContainer key={el.id}>
+                <StyledStreamTitle>{el.title}</StyledStreamTitle>
+                <StyledUser>@ {el.User.name}</StyledUser>
+                <Img
+                    key={el.broadcast_id}
+                    src={el.preview ?? viking}
+                    broadcast_id={el.broadcast_id}
+                    onClick={() => nav(`videos/${el.broadcast_id}`)}
+                />
+                <StyledLike><StyledLikeIcon /> 78</StyledLike>
+              </SlideContainer>
+          ))}
+          1
+        </Splide>
+      </CatergoryLi>
+  );
 };
 
 export default Category;
 
-
 const Title = styled.h2`
-	color: #f9fafb;
-	font-weight: 900;
-	text-transform: uppercase;
-	letter-spacing: 2px; 
-	border-bottom: 1px solid red;
-	text-align: start;
-	 &:after {
-    content: "";
+  color: #f9fafb;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  border-bottom: 1px solid #393939;
+  text-align: start;
+  margin-top: 50px;
+
+  &:after {
+    content: '';
+    display: block;
     position: relative;
-    height: 4px;
-    width: 50px;
+    height: 20px;
+    width: 280px;
     left: 0;
-    bottom: 1rem;
-    background: #ee4540;
+    top: 0px;
+    border-bottom: 2px solid #ee4540;
+    z-index: 2;
   }
-`
+`;
 
 const SlideContainer = styled(SplideSlide)`
-width: 250px;
-	height: 200px;
+  width: 300px;
+  height: 200px;
   margin: 20px;
+
   &:hover {
-    transition: .3s;
+    transition: 0.3s;
     opacity: 1;
+
     &:before {
       content: '▶';
       display: block;
@@ -81,17 +90,17 @@ width: 250px;
       cursor: pointer;
     }
   }
-
-`
+`;
 const Img = styled.img`
-	max-width: 230px;
+  max-width: 100%;
   height: 200px;
   object-fit: cover;
-	border-radius: 5px;
+  border-radius: 5px;
+
   &:hover {
-    transition: .4s ease-in-out;
-    opacity: .3;
-  };
+    transition: 0.4s ease-in-out;
+    opacity: 0.3;
+  }
 
   &:before {
     content: '';
@@ -100,12 +109,73 @@ const Img = styled.img`
     left: 0;
     width: 100%;
     height: 100%;
-    opacity: .7;
+    opacity: 0.7;
     z-index: 2;
   }
-`
+`;
 
 const CatergoryLi = styled.li`
   padding-left: 30px;
+`;
 
+const StyledStreamTitle = styled.h3`
+  font-size: 15px;
+  line-height: 20px;
+  color: #fff;
+  position: relative;
+  right: 0;
+  top: 20px;
+  z-index: 1;
+  font-weight: 800;
+  letter-spacing: 5px;
+  background-color: #000;
+  background-position: center;
+`
+
+
+const StyledUser = styled.span`
+  font-size: 20px;
+  line-height: 24px;
+  background-color: #222;
+  padding: 5px;
+  border: 1px solid #222;
+  border-radius: 10px;
+  color: #fff;
+  position: relative;
+  right:40%;
+  top: 75%;
+  z-index:2;
+  font-weight: 600;
+`
+
+const StyledLike = styled.div`
+	padding: 0 10px;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	position: relative;
+	top: -80px;
+	left: 85%;
+	width: 70px;
+  background-color: #222;
+  font-size: 20px;
+	border: 1px solid #ee4540;
+	border-radius: 25px;
+	color: #fff;
+	transition: 0.4s transform ease;
+  z-index:3;
+  &:hover {
+		cursor: pointer;
+		transform: scale(1.15);
+	}
+`
+
+const StyledLikeIcon = styled(HeartOutlined)`
+	padding:0;
+    position: relative;
+		width: 40px;
+    font-size: 15px;
+    color: #ee4540;
+    z-index:3;
+  margin-right: 10px;
 `

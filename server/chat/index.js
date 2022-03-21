@@ -1,37 +1,72 @@
-// const registerMessageHandlers = require('./handlers/messageHandlers');
-// const registerUserHandlers = require('./handlers/userHandlers');
+const { Message, User } = require('../db/models');
 
-// данная функция выполняется при подключении каждого сокета (обычно, один клиент = один сокет)
+const defaultErrorMessaage = {
+  id: 0,
+  userName: 'anonymous',
+  User: {
+    name: 'anonymous',
+  },
+  message: '',
+  createdAt: new Date(),
+};
+
 const onConnection = (socket, io) => {
-  // выводим сообщение о подключении пользователя
-  console.log('User connected');
+  const { handshake } = socket;
+  const { headers } = handshake;
 
-  socket.broadcast.emit('hi');
-  socket.on('chat message', (msg) => {
-    io.emit('chat message', msg);
+  console.log('User connected', headers.host);
+
+  socket.on('message:send', async ({ message, room, user }) => {
+    socket.join(room);
+    if (user.ok) {
+      try {
+        const messagefromDB = await Message.create({
+          stream_id: room,
+          user_id: user.id,
+          message,
+        });
+        const { name } = await User.findOne({
+          raw: true,
+          where: {
+            id: user.id,
+          },
+        });
+
+        const { dataValues } = { ...messagefromDB };
+        dataValues.userName = name;
+
+        io.to(room).emit('message:get', {
+          newMessage: dataValues,
+          name,
+          room,
+          error: null,
+        });
+        console.log(
+          `User: ${headers.host} - ${user.name} - Отправил сообщение " ${message} " в комнату:`,
+          room,
+        );
+      } catch (error) {
+        io.to(room).emit('message:error', { message, error });
+        console.log(
+          `User: ${headers.host} ${user} - ошибка сообщение " ${message} " ошибка:`,
+          error,
+        );
+      }
+    } else {
+      defaultErrorMessaage.message = 'Пользователь не авторизован';
+      io.emit('message:error', {
+        newMessage: defaultErrorMessaage,
+        error: true,
+      });
+      console.log(
+        `User: ${headers.host} ${user} - ошибка сообщение " ${defaultErrorMessaage.message} " ошибка:`,
+      );
+    }
   });
 
-  // // получаем название комнаты из строки запроса "рукопожатия"
-  // const { roomId } = socket.handshake.query;
-
-  // // сохраняем название комнаты в соответствующем свойстве сокета
-  // socket.roomId = roomId;
-
-  // // присоединяемся к комнате (входим в нее)
-  // socket.join(roomId);
-
-  // // регистрируем обработчики
-  // // обратите внимание на передаваемые аргументы
-  // registerMessageHandlers(io, socket);
-  // registerUserHandlers(io, socket);
-
-  // // обрабатываем отключение сокета-пользователя
-  // socket.on('disconnect', () => {
-  //   // выводим сообщение
-  //   console.log('User disconnected');
-  //   // покидаем комнату
-  //   socket.leave(roomId);
-  // });
+  socket.on('disconnect', () => {
+    console.log(`User: ${headers.host} leave room`);
+  });
 };
 
 module.exports = { onConnection };

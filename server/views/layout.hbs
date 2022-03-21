@@ -62,13 +62,14 @@
 </head>
 
 <body>
+  {{{body}}}
   <ul id="messages"></ul>
   <form id="form" action="">
     <input id="input" autocomplete="off" /><button>Send</button>
   </form>
   <script defer type="module">
     import { io } from "https://cdn.socket.io/4.3.2/socket.io.esm.min.js";
-    var socket = io("http://192.168.1.103:3002");
+    var socket = io("/");
 
     var messages = document.getElementById('messages');
     var form = document.getElementById('form');

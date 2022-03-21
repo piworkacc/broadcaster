@@ -1,1 +1,1 @@
-export const ADD_VIDEO = 'ADD_VIDEO';
+export const GET_TAG_VIDEOS = 'GET_TAG_VIDEOS';

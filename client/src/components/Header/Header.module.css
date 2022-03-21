@@ -1,5 +1,5 @@
 .header {
-    position: sticky;
+    position: fixed;
     top: 0;
     width: 100vw;
     height: 70px;
@@ -7,7 +7,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    z-index: 2;
+    z-index: 3;
 }
 
 .header__logo {
@@ -28,6 +28,7 @@
     transition: scale .4s ease;
 }
 
+
 .header__signInBtn:hover {
     transform:scale(1.1);
 }
@@ -37,4 +38,10 @@
 
 .header__searchBox {
 
+}
+
+.signContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }

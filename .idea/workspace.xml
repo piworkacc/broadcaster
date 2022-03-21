@@ -4,7 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="349ca0e4-9e4d-46ba-bfcb-b03f1f363015" name="Changes" comment="" />
+    <list default="true" id="349ca0e4-9e4d-46ba-bfcb-b03f1f363015" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/client/src/components/Category/Category.component.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/Category/Category.component.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/components/Chat/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/Chat/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/components/Chat/styles.css" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/Chat/styles.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/components/StreamPage/StreamPage.component.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/StreamPage/StreamPage.component.jsx" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -13,10 +18,39 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="PropertiesComponent">
-    <property name="node.js.selected.package.tslint" value="(autodetect)" />
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
   </component>
+  <component name="ProjectId" id="26bU861W5F4e7gPkfUFl2lcPYKU" />
+  <component name="ProjectViewState">
+    <option name="compactDirectories" value="true" />
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="node.js.selected.package.tslint" value="(autodetect)" />
+    <property name="nodejs_package_manager_path" value="npm" />
+    <property name="vue.rearranger.settings.migration" value="true" />
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="349ca0e4-9e4d-46ba-bfcb-b03f1f363015" name="Changes" comment="" />
+      <created>1647691617436</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1647691617436</updated>
+      <workItem from="1647691619445" duration="29000" />
+      <workItem from="1647782173901" duration="57000" />
+      <workItem from="1647847679834" duration="130000" />
+    </task>
     <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
   </component>
 </project>
