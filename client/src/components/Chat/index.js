@@ -12,7 +12,6 @@ export default function Chat({ socket, stream, user }) {
     async function fetchData() {
       const response = await fetch(`/messages/${stream}`);
       const data = await response.json();
-      console.log(data);
       setChatMessages((prev) => [...prev, ...data])
     }
 
@@ -34,8 +33,12 @@ export default function Chat({ socket, stream, user }) {
 
     socket.on('message:get', (msg) => {
       const { newMessage, name, room, error } = msg;
-      console.log('Обработал message:get...', msg, newMessage);
       setChatMessages((prev) => [...prev, newMessage]);
+    })
+
+    socket.on('message:error', (msg) => {
+      // const { newMessage, name, room, error } = msg;
+      // setChatMessages((prev) => [...prev, newMessage]);
     })
 
     return () => {
@@ -63,7 +66,7 @@ export default function Chat({ socket, stream, user }) {
         {chatMessages.map((element) => (
           <div key={element.id} className="containerMessage">
             <UserOutlined />
-            <p>{element.userName || element.User.name} {element.message} {element.createdAt.toLocaleString('en-US')}</p>
+            <p>{element.userName || element.User?.name} {element.message} {element.createdAt.toLocaleString('en-US')}</p>
             <span className="time-right">{Date.now().toLocaleString}</span>
           </div>
         ))}

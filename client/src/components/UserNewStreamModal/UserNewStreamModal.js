@@ -4,7 +4,7 @@ import ErrorComponent from '../ErrorComponent/index';
 import Loading from '../Loading/index';
 
 const UserNewStreamModal = ({ visible, onCreate, onCancel, tags, error, loading }) => {
-  console.log('Modal rendered');
+  // console.log('Modal rendered');
 
   const [form] = Form.useForm();
   const [selectedTags, setselectedTags] = useState([]);

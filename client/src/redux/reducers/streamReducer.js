@@ -9,7 +9,7 @@ const streamReducer = (state = preloadedState || [], action) => {
     case GET_ALL_STREAMS:
       return payload;
     case NEW_STREAM:
-      return payload;
+      return [payload, ...state];
     default:
       return state;
   }
