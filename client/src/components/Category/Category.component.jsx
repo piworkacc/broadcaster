@@ -1,45 +1,49 @@
 import React from 'react';
 import styled from 'styled-components';
-import {Splide, SplideSlide} from '@splidejs/react-splide';
+import { Splide, SplideSlide } from '@splidejs/react-splide';
 import '@splidejs/splide/dist/css/splide.min.css';
-import {useSelector} from 'react-redux';
-import {useNavigate} from 'react-router-dom';
-import {HeartOutlined} from "@ant-design/icons";
+import { useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import { HeartOutlined } from '@ant-design/icons';
 
-const Category = ({title}) => {
-	const videos = useSelector((state) => state.videos);
-	const tags = useSelector(state => state.tags);
-	const nav = useNavigate();
-	const videosToRender = videos.filter((el) => el.Tags[0].tag === title)
-  console.log(videosToRender)
-	return (
-			<CatergoryLi>
-				<Title>{title}</Title>
-				<Splide
-						options={{
-							perPage: 4,
-							rewind: true,
-							maxWidth: '2000px',
-							gap: 40,
-						}}>
-					{videosToRender?.map((el) => (
-									<SlideContainer key={el.id}>
-										<StyledStreamTitle>{el.title}</StyledStreamTitle>
-										<StyledUser>@ {el.User.name}</StyledUser>
-										<Img
-												key={el.broadcast_id}
-												src={el.preview ?? 'https://twizz.ru/wp-content/uploads/2016/06/%D0%BF%D1%80%D0%B5%D0%B2%D1%8C%D1%8E-19.jpg'}
-												broadcast_id={el.broadcast_id}
-												onClick={() => nav(`videos/${el.broadcast_id}`)}
-										/>
-										<StyledLike><StyledLikeIcon/> 78</StyledLike>
-									</SlideContainer>
-								)
-
-					)}
-				</Splide>
-			</CatergoryLi>
-	);
+const Category = ({ title }) => {
+  const videos = useSelector((state) => state.videos);
+  const nav = useNavigate();
+  const videosToRender = videos.filter((el) =>
+    el.Tags.some((someEl) => someEl.tag === title),
+  );
+  return (
+    <CatergoryLi>
+      <Title>{title}</Title>
+      <Splide
+        options={{
+          perPage: 4,
+          rewind: true,
+          maxWidth: '2000px',
+          gap: 40,
+        }}
+      >
+        {videosToRender?.map((el) => (
+          <SlideContainer key={el.id}>
+            <StyledStreamTitle>{el.title}</StyledStreamTitle>
+            <StyledUser>@ {el.User.name}</StyledUser>
+            <Img
+              key={el.broadcast_id}
+              src={
+                el.preview ??
+                'https://twizz.ru/wp-content/uploads/2016/06/%D0%BF%D1%80%D0%B5%D0%B2%D1%8C%D1%8E-19.jpg'
+              }
+              broadcast_id={el.broadcast_id}
+              onClick={() => nav(`videos/${el.broadcast_id}`)}
+            />
+            <StyledLike>
+              <StyledLikeIcon /> 78
+            </StyledLike>
+          </SlideContainer>
+        ))}
+      </Splide>
+    </CatergoryLi>
+  );
 };
 
 export default Category;
@@ -130,15 +134,14 @@ const StyledStreamTitle = styled.h3`
   top: 20px;
   z-index: 1;
   font-weight: 800;
-  letter-spacing: 5px;
-  background: rgba(34, 34, 34, .7);
-`
-
+  letter-spacing: 4px;
+  background: rgba(34, 34, 34, 0.7);
+`;
 
 const StyledUser = styled.span`
   font-size: 20px;
   line-height: 24px;
-  background: rgba(34, 34, 34, .7);
+  background: rgba(34, 34, 34, 0.7);
   padding: 5px;
   border: 1px solid #222;
   border-radius: 10px;
@@ -148,7 +151,7 @@ const StyledUser = styled.span`
   top: 75%;
   z-index: 2;
   font-weight: 600;
-`
+`;
 
 const StyledLike = styled.div`
   padding: 0 10px;
@@ -159,7 +162,7 @@ const StyledLike = styled.div`
   top: -80px;
   left: 85%;
   width: 70px;
-  background: rgba(34, 34, 34, .5);
+  background: rgba(34, 34, 34, 0.5);
   font-size: 20px;
   border: 1px solid #ee4540;
   border-radius: 25px;
@@ -171,7 +174,7 @@ const StyledLike = styled.div`
     cursor: pointer;
     transform: scale(1.15);
   }
-`
+`;
 
 const StyledLikeIcon = styled(HeartOutlined)`
   padding: 0;
@@ -181,4 +184,4 @@ const StyledLikeIcon = styled(HeartOutlined)`
   color: #ee4540;
   z-index: 3;
   margin-right: 10px;
-`
+`;

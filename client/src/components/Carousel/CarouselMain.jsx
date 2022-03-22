@@ -98,7 +98,7 @@ const StyledStreamTitle = styled.h3`
   top: 100px;
   z-index: 2;
   font-weight: 800;
-  letter-spacing: 5px;
+  letter-spacing: 3px;
 `
 const StyledUser = styled.span`
   font-size: 20px;
