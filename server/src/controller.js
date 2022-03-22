@@ -281,8 +281,8 @@ async function getTags(req, res, next) {
 
 async function comments(req, res, next) {
   try {
-    const { id } = req.params;
-    const result = await getCommentsByVideoId(id);
+    const { videoId } = req.params;
+    const result = await getCommentsByVideoId(videoId);
     if (!result) {
       res.json([]);
       return;
@@ -294,6 +294,7 @@ async function comments(req, res, next) {
         published: el.createdAt,
         comment_id: el.comment_id,
         comment: el.comment,
+        user_id: el.user_id,
         User: el.User,
       })),
     );

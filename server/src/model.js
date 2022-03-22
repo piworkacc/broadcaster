@@ -192,7 +192,7 @@ function tags() {
 
 function getCommentsByVideoId(videoId) {
   return Comment.findAll({ 
-    where: { video_id: videoId },
+    where: { stream_id: videoId },
     include: [
       { model: User, attributes: ['name', 'id'] },
     ],
