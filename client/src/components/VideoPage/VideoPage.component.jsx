@@ -4,6 +4,7 @@ import ReactPlayer from 'react-player/lazy';
 import styled from 'styled-components';
 import { useSelector } from 'react-redux';
 import { urlForStream } from '../../utils/fetchPath';
+import CommentSection from '../CommentSection/CommentSection';
 
 const VideoPage = () => {
   const [video, setVideo] = useState('');
@@ -28,6 +29,7 @@ const VideoPage = () => {
         playing
         controls
       />
+      <CommentSection key={currVideo.id} stream_id={currVideo.id}/>
     </Wrapper>
   );
 };
@@ -35,6 +37,16 @@ const VideoPage = () => {
 export default VideoPage;
 
 const Wrapper = styled.div`
-  width: 500px;
-  height: 100vh;
+  // width: 500px;
+  // height: 100vh;
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
+  justify-content: space-evenly;
+  padding: 0px 5px 5px 5px;
+  align-content: center;
+  align-items: stretch;
+  min-height: 100vh;
+  // overflow: scroll;
+  // align-content: center;
 `;

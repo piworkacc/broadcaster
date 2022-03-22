@@ -216,6 +216,34 @@ function tags() {
   return Tag.findAll();
 }
 
+// COMMENTS
+
+function getCommentsByVideoId(videoId) {
+  return Comment.findAll({ 
+    where: { stream_id: videoId },
+    include: [
+      { model: User,
+        attributes: ['name', 'id'] },
+    ],
+    order: [['createdAt', 'ASC']],
+  });
+}
+
+function createComment(fields) {
+  return Comment.create(fields);
+}
+
+function getCommentById(id) {
+  return Comment.findOne({
+    where: { id },
+    include: [
+      { model: User,
+        attributes: ['id', 'name'],
+      },
+    ],
+  });
+}
+
 module.exports = {
   getStreamByStreamKey,
   startStream,
@@ -230,4 +258,7 @@ module.exports = {
   addTagsToStream,
   tags,
   getLatestStreamKeyByUserId,
+  getCommentsByVideoId,
+  createComment,
+  getCommentById,
 };
