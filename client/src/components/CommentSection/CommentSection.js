@@ -51,7 +51,7 @@ const CommentSection = () => {
 
   return (
     <CommentSectionWrapper>
-      <h4 style={{ color: 'white' }}>Оставьте комментарий:</h4>
+      {/* <h4 style={{ color: 'white' }}>Оставьте комментарий:</h4> */}
       {comments.length > 0 && <CommentList comments={comments} />}
       <Comment
           avatar={<Avatar src="https://joeschmoe.io/api/v1/random" alt="Han Solo" />}
