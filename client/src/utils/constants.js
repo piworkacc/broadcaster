@@ -1,0 +1,1 @@
+export const selectionSize = 50;
