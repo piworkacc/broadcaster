@@ -293,7 +293,8 @@ async function comments(req, res, next) {
       result.map((el) => ({
         id: el.id,
         stream_id: el.stream_id,
-        published: el.createdAt,
+        createdAt: el.createdAt,
+        updatedAt: el.updatedAt,
         comment_id: el.comment_id,
         comment: el.comment,
         user_id: el.user_id,
@@ -310,8 +311,8 @@ async function addComment(req, res, next) {
     const { ...fields } = req.body;
     fields.user_id = req.session.userId;
     const newComment = await createComment(fields);
-
-    res.send(await getCommentById(newComment));
+    console.log(newComment);
+    res.send(await getCommentById(newComment.id));
   } catch (err) {
     next(err);
   }

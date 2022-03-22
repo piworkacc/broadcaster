@@ -1,4 +1,4 @@
-import { GET_ALL_COMMENTS } from "../actionTypes/commentTypes";
+import { ADD_NEW_COMMENT, GET_ALL_COMMENTS } from "../actionTypes/commentTypes";
 
 export const allComments = (payload) => {
   return {
@@ -7,3 +7,9 @@ export const allComments = (payload) => {
   };
 };
 
+export const newComment = (payload) => {
+  return {
+    type: ADD_NEW_COMMENT,
+    payload
+  };
+};

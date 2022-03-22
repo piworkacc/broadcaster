@@ -8,6 +8,7 @@ import CommentEditor from '../CommentEditor/CommentEditor';
 import { useDispatch, useSelector } from 'react-redux';
 import { getAllCommentsAC } from '../../redux/actionCreators/getAllCommentsAC';
 import useUxios from '../../hooks/useUxios';
+import { createNewCommentAC } from '../../redux/actionCreators/createNewCommentAC';
 
 const CommentList = ({ comments }) => (
   <List
@@ -38,6 +39,7 @@ const CommentSection = ({ stream_id }) => {
 
   useEffect(() => {
     getAllComments(stream_id);
+    // console.log(videoComments);
     setComments(videoComments);
   }, [comments]);
 
@@ -51,15 +53,21 @@ const CommentSection = ({ stream_id }) => {
     setTimeout(() => {
       setSubmitting(false);
       setValue('');
-      setComments([
-        ...comments,
-        {
-          User: auth,
-          avatar: 'https://joeschmoe.io/api/v1/random',
-          content: <p style={{ color: 'white' }}>{value}</p>,
-          published: moment().fromNow(),
-        },
-      ]);
+      dispatch(createNewCommentAC({
+        user_id: auth.id,
+        stream_id: stream_id,
+        comment: value,
+        service: { error, loading, uxios },
+      }));
+      // setComments([
+      //   ...comments,
+      //   {
+      //     user: auth,
+      //     avatar: 'https://joeschmoe.io/api/v1/random',
+      //     content: <p style={{ color: 'white' }}>{value}</p>,
+      //     published: moment().fromNow(),
+      //   },
+      // ]);
     }, 1000);
   };
 
@@ -72,10 +80,10 @@ const CommentSection = ({ stream_id }) => {
       {/* <h4 style={{ color: 'white' }}>Оставьте комментарий:</h4> */}
       {videoComments.length > 0 && <CommentList comments={videoComments} />}
       {videoComments?.map((el) => (
-        <Comment author={el.User.name} key={el.id} id={el.id} content={el.comment} datetime={el.published} />
+        <Comment author={el.User.name} key={el.id} id={el.id} content={`${el.comment} в ${el.createdAt} обновлено в ${el.updatedAt}`} />
       ))}
       <Comment
-        avatar={<Avatar src="https://joeschmoe.io/api/v1/random" alt="Han Solo" />}
+        avatar={<Avatar src="https://joeschmoe.io/api/v1/random" alt={auth.name} />}
         author={<a style={{ color: 'white' }}>{auth.name}</a>}
         content={
           <CommentEditor
@@ -86,45 +94,6 @@ const CommentSection = ({ stream_id }) => {
           />
         }
       />
-
-      {/* <div style={{ display: 'block', width: 700, padding: 30 }}>
-        <h4 style={{ color: 'white' }}>Оставьте комментарий (версия с лайками/дислайками):</h4>
-
-        <Comment
-          author={<a style={{ color: 'white' }}>UserName</a>}
-          avatar={<Avatar style={{ backgroundColor: 'green' }}>G</Avatar>}
-          content={
-            <p>I am sample comment. I am good, what about you? </p>
-          }
-          actions={[
-            <Tooltip title="Like">
-              <span onClick={() => {
-                setLikesCount(prev => prev + 1);
-                setAction('liked');
-              }}>
-                {React.createElement(action === 'liked' ?
-                  LikeFilled : LikeOutlined)}
-                <div style={{ color: 'white' }}>{likesCount}</div>
-              </span>
-            </Tooltip>,
-            <Tooltip title="Dislike" style={{ color: 'white' }}>
-              <span onClick={() => {
-                setDislikesCount(prev => prev + 1);
-                setAction('disliked');
-              }}>
-                {React.createElement(action === 'disliked' ?
-                  DislikeFilled : DislikeOutlined)}
-                <div style={{ color: 'white' }}>{dislikesCount}</div>
-              </span>
-            </Tooltip>
-          ]}
-          datetime={
-            <Tooltip title={moment().format("YYYY-MM-DD HH:mm:ss")}>
-              <span>{moment().fromNow()}</span>
-            </Tooltip>
-          }
-        />
-      </div> */}
     </CommentSectionWrapper>
   );
 }

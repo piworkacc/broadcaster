@@ -194,7 +194,8 @@ function getCommentsByVideoId(videoId) {
   return Comment.findAll({ 
     where: { stream_id: videoId },
     include: [
-      { model: User, attributes: ['name', 'id'] },
+      { model: User,
+        attributes: ['name', 'id'] },
     ],
     order: [['createdAt', 'DESC']],
   });
@@ -208,7 +209,9 @@ function getCommentById(id) {
   return Comment.findOne({
     where: { id },
     include: [
-      { model: User, attributes: ['id', 'name'] },
+      { model: User,
+        attributes: ['id', 'name'],
+      },
     ],
   });
 }
