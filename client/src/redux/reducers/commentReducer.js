@@ -1,4 +1,4 @@
-import { GET_ALL_COMMENTS } from "../actionTypes/commentsTypes";
+import { GET_ALL_COMMENTS } from "../actionTypes/commentTypes";
 
 const cache = window.localStorage.getItem('state');
 const preloadedState = cache ? JSON.parse(cache).comments : [];

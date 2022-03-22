@@ -1,10 +1,13 @@
 import { Comment, Avatar, List, Tooltip } from 'antd';
-import React, { useState, createElement } from 'react';
+import React, { useState, createElement, useEffect } from 'react';
 // import { LikeOutlined, LikeFilled, DislikeFilled, DislikeOutlined } from '@ant-design/icons';
 import styled from 'styled-components';
 import moment from 'moment';
 import './CommentSection.css';
 import CommentEditor from '../CommentEditor/CommentEditor';
+import { useDispatch, useSelector } from 'react-redux';
+import { getAllCommentsAC } from '../../redux/actionCreators/getAllCommentsAC';
+import useUxios from '../../hooks/useUxios';
 
 const CommentList = ({ comments }) => (
   <List
@@ -15,13 +18,28 @@ const CommentList = ({ comments }) => (
   />
 );
 
-const CommentSection = () => {
+const CommentSection = ({ stream_id }) => {
   // const [likesCount, setLikesCount] = useState(0);
   // const [dislikesCount, setDislikesCount] = useState(0);
   // const [action, setAction] = useState(null);
+  const videoComments = useSelector((state) => state.comments);
+  const auth = useSelector((state) => state.auth);
   const [comments, setComments] = useState([]);
   const [submitting, setSubmitting] = useState(false);
   const [value, setValue] = useState('');
+  const { error, loading, uxios } = useUxios();
+  const dispatch = useDispatch();
+  const getAllComments = (stream_id) => {
+    dispatch(getAllCommentsAC({
+      stream_id: stream_id,
+      service: { error, loading, uxios }
+    }));
+  };
+
+  useEffect(() => {
+    getAllComments(stream_id);
+    setComments(videoComments);
+  }, [comments]);
 
   const handleSubmit = () => {
     if (!value) {
@@ -36,10 +54,10 @@ const CommentSection = () => {
       setComments([
         ...comments,
         {
-          author: 'Han Solo',
+          User: auth,
           avatar: 'https://joeschmoe.io/api/v1/random',
           content: <p style={{ color: 'white' }}>{value}</p>,
-          datetime: moment().fromNow(),
+          published: moment().fromNow(),
         },
       ]);
     }, 1000);
@@ -52,19 +70,22 @@ const CommentSection = () => {
   return (
     <CommentSectionWrapper>
       {/* <h4 style={{ color: 'white' }}>Оставьте комментарий:</h4> */}
-      {comments.length > 0 && <CommentList comments={comments} />}
+      {videoComments.length > 0 && <CommentList comments={videoComments} />}
+      {videoComments?.map((el) => (
+        <Comment author={el.User.name} key={el.id} id={el.id} content={el.comment} datetime={el.published} />
+      ))}
       <Comment
-          avatar={<Avatar src="https://joeschmoe.io/api/v1/random" alt="Han Solo" />}
-          author={<a style={{ color: 'white' }}>UserName</a>}
-          content={
-            <CommentEditor
-              onChange={handleChange}
-              onSubmit={handleSubmit}
-              submitting={submitting}
-              value={value}
-            />
-          }
-        />
+        avatar={<Avatar src="https://joeschmoe.io/api/v1/random" alt="Han Solo" />}
+        author={<a style={{ color: 'white' }}>{auth.name}</a>}
+        content={
+          <CommentEditor
+            onChange={handleChange}
+            onSubmit={handleSubmit}
+            submitting={submitting}
+            value={value}
+          />
+        }
+      />
 
       {/* <div style={{ display: 'block', width: 700, padding: 30 }}>
         <h4 style={{ color: 'white' }}>Оставьте комментарий (версия с лайками/дислайками):</h4>

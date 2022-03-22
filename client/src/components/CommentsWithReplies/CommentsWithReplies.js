@@ -1,7 +1,7 @@
 import { Comment, Avatar } from 'antd';
-import './Comments.css';
+import './CommentsWithReplies.css';
 
-const Comments = ({ children, value }) => (
+const CommentsWithReplies = ({ children, value }) => (
   <Comment className='videoPageComment'
     actions={[<span key="comment-nested-reply-to">Ответить</span>]}
     author={<a>Ёж</a>}
@@ -16,4 +16,4 @@ const Comments = ({ children, value }) => (
   </Comment>
 );
 
-export default Comments;
+export default CommentsWithReplies;

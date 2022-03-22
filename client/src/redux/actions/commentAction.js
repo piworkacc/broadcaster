@@ -1,4 +1,4 @@
-import { GET_ALL_COMMENTS } from "../actionTypes/commentsTypes";
+import { GET_ALL_COMMENTS } from "../actionTypes/commentTypes";
 
 export const allComments = (payload) => {
   return {
