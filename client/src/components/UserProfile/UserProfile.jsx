@@ -68,7 +68,7 @@ const UserProfile = () => {
     if (!auth.ok) {
       navigate('/login');
     }
-  }, [auth, streams, navigate]);
+  }, [auth, navigate]);
 
   const componentsSwitch = (key) => {
     switch (key) {

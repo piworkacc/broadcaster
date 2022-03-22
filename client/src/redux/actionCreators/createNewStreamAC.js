@@ -1,3 +1,4 @@
+import { latestKey } from '../actions/keyAction';
 import { newStream } from '../actions/streamAction';
 
 export const createNewStreamAC = (data) => {
@@ -15,6 +16,7 @@ export const createNewStreamAC = (data) => {
 
       const stream = await service.uxios('/api/streams', 'POST', body);
       dispatch(newStream(stream));
+      dispatch(latestKey(stream));
     } catch (err) {
       throw new Error(err);
     }
