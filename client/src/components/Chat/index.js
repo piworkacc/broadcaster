@@ -1,5 +1,7 @@
 import React, { useEffect, useState, useRef } from 'react'
 import './styles.css';
+import avatarHedgehog from '../../images/hedgehog.png'
+import catAvatar from '../../images/cat.png'
 
 export default function Chat({ socket, stream, user }) {
 
@@ -58,17 +60,18 @@ export default function Chat({ socket, stream, user }) {
     socket.emit('message:send', { message: inputValue, room: stream, user })
     setInputValue('')
   }
-
+  // 
   return (
     <div className='chatList'>
       <div className='chat-messages'>
         {chatMessages.map((element) => (
-          <div key={element.id} className="containerMessage">
-            <div className={element.user_id === user.id ? "message-right" : "message-left"}>
-              <span>{element.userName || element.User?.name}</span>
-              <div>{element.message}</div>
-              <span>{element.createdAt}</span>
+          <div key={element.id} className={element.user_id === user.id ? "containerMessage message-right" : "containerMessage message-left"}>
+            <div>
+              <img src={element.user_id === user.id ? avatarHedgehog : catAvatar} alt="Avatar" />
+              <span> {element.createdAt}</span>
+              <span className='userName'>{element.userName || element.User?.name}</span>
             </div>
+            <p>{element.message}</p>
           </div>
         ))}
         <p ref={bottomRef}></p>
