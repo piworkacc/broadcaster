@@ -115,7 +115,8 @@ async function latestStreamKey(req, res, next) {
 
 async function streams(req, res, next) {
   try {
-    const result = await getActiveStreams();
+    const searchQuery = req.query?.search;
+    const result = await getActiveStreams(searchQuery);
     if (!result) {
       res.json([]);
       return;

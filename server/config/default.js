@@ -9,7 +9,7 @@ const config = {
   rtmp_server: {
     rtmp: {
       port: 1935,
-      chunk_size: 4096,
+      chunk_size: 65536,
       gop_cache: false,
       ping: 60,
       ping_timeout: 30,

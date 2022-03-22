@@ -87,8 +87,8 @@ function getAllUserStreams(userId) {
   return Stream.findAll({ where: { user_id: userId } });
 }
 
-function getActiveStreams() {
-  return Stream.findAll({
+function getActiveStreams(searchQuery) {
+  const queryObject = {
     attributes: [
       'id',
       'broadcast_id',
@@ -97,7 +97,6 @@ function getActiveStreams() {
       'stream_key',
       'preview',
     ],
-
     include: [
       { model: User, attributes: ['name', 'id'] },
       {
@@ -105,18 +104,19 @@ function getActiveStreams() {
         attributes: ['tag'],
         through: { model: StreamTag, attributes: [] },
       },
-      // {
-      //   model: Comment,
-      //   attributes: ['comment'],
-      //   include: { model: User, attributes: ['id', 'name'] },
-      // },
     ],
     where: {
       end: { [Op.is]: null },
       start: { [Op.not]: null },
       broadcast_id: { [Op.not]: null },
     },
-  });
+  };
+
+  if (searchQuery) {
+    queryObject.where.title = { [Op.iLike]: `%${searchQuery}%` };
+  }
+
+  return Stream.findAll(queryObject);
 }
 
 function getUserFinishedStreams(userId) {
