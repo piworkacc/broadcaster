@@ -23,8 +23,8 @@ const VideoPage = () => {
   return (
     <Wrapper>
       <ReactPlayer
-        width={'60vw'}
-        height={'60vh'}
+        width={'80vw'}
+        height={'80vh'}
         url={video.source}
         playing
         controls

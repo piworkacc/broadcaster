@@ -197,7 +197,7 @@ function getCommentsByVideoId(videoId) {
       { model: User,
         attributes: ['name', 'id'] },
     ],
-    order: [['createdAt', 'DESC']],
+    order: [['createdAt', 'ASC']],
   });
 }
 
