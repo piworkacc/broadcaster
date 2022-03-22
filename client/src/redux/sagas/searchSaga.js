@@ -15,7 +15,9 @@ async function search(value, service) {
 }
 
 function* searchWorker({ type, payload: { value, service } }) {
-  yield delay(1000);
+  if (value) {
+    yield delay(1000);
+  }
   const data = yield call(search, value, service);
   if (data.streams) {
     yield put(allStreams(data.streams));
