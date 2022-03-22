@@ -23,8 +23,25 @@ return (
 export default UserStreamsList;
 
 const DivContainer = styled.div`
-display: flex;
-flex-wrap: wrap;
-flex-direction: row;
-justify-content: space-around;
+  margin: 0 auto;
+  max-width: 1400px;
+  height: 700px;
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  gap: 30px;
+  overflow: scroll;
+  &::-webkit-scrollbar {
+    width: 1em;
+  }
+  &::-webkit-scrollbar-track {
+    box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+  }
+  &::-webkit-scrollbar-thumb {
+    background-color: #434343;
+    outline: 1px solid #000;
+  }
+  &::-webkit-scrollbar-corner {
+    background: rgba(0,0,0,0);
+  }
 `

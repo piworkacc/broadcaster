@@ -134,7 +134,7 @@ const StyledStreamTitle = styled.h3`
   top: 20px;
   z-index: 1;
   font-weight: 800;
-  letter-spacing: 5px;
+  letter-spacing: 4px;
   background: rgba(34, 34, 34, 0.7);
 `;
 
