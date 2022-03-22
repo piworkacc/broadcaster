@@ -200,6 +200,19 @@ function getCommentsByVideoId(videoId) {
   });
 }
 
+function createComment(fields) {
+  return Comment.create(fields);
+}
+
+function getCommentById(id) {
+  return Comment.findOne({
+    where: { id },
+    include: [
+      { model: User, attributes: ['id', 'name'] },
+    ],
+  });
+}
+
 module.exports = {
   getStreamByStreamKey,
   startStream,
@@ -215,4 +228,6 @@ module.exports = {
   tags,
   getLatestStreamKeyByUserId,
   getCommentsByVideoId,
+  createComment,
+  getCommentById,
 };

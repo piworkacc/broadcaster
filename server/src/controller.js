@@ -24,6 +24,8 @@ const {
   tags,
   getLatestStreamKeyByUserId,
   getCommentsByVideoId,
+  createComment,
+  getCommentById,
 } = require('./model');
 
 function hashIt(str) {
@@ -303,6 +305,18 @@ async function comments(req, res, next) {
   }
 }
 
+async function addComment(req, res, next) {
+  try {
+    const { ...fields } = req.body;
+    fields.user_id = req.session.userId;
+    const newComment = await createComment(fields);
+
+    res.send(await getCommentById(newComment));
+  } catch (err) {
+    next(err);
+  }
+}
+
 module.exports = {
   addUser,
   login,
@@ -318,4 +332,5 @@ module.exports = {
   getTags,
   latestStreamKey,
   comments,
+  addComment,
 };
