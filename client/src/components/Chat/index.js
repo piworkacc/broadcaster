@@ -2,6 +2,7 @@ import React, { useEffect, useState, useRef } from 'react'
 import './styles.css';
 import avatarHedgehog from '../../images/hedgehog.png'
 import catAvatar from '../../images/cat.png'
+import Moment from 'react-moment'
 
 export default function Chat({ socket, stream, user }) {
 
@@ -66,12 +67,18 @@ export default function Chat({ socket, stream, user }) {
       <div className='chat-messages'>
         {chatMessages.map((element) => (
           <div key={element.id} className={element.user_id === user.id ? "containerMessage message-right" : "containerMessage message-left"}>
-            <div>
+            <div className='flexAvatar'>
               <img src={element.user_id === user.id ? avatarHedgehog : catAvatar} alt="Avatar" />
-              <span> {element.createdAt}</span>
               <span className='userName'>{element.userName || element.User?.name}</span>
             </div>
-            <p>{element.message}</p>
+            <div className='flexMessage'>
+              <p>{element.message}</p>
+              <span>
+                <Moment format="YYYY-MM-DD HH:mm">
+                  {element.createdAt}
+                </Moment>
+              </span>
+            </div>
           </div>
         ))}
         <p ref={bottomRef}></p>
