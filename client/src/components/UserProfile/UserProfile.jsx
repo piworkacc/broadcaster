@@ -190,9 +190,9 @@ const StartStreamButton = styled.button`
   }
 `;
 const DivContainer = styled.div`
-  &:hover ${StartStreamButton} {
-    transform: scale(1.1);
-  }
+  // &:hover ${StartStreamButton} {
+  //   transform: scale(1.1);
+  // }
 `;
 
 const StyledContainer = styled.div`

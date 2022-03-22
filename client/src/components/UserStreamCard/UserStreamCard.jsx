@@ -49,7 +49,7 @@ const StyledCard = styled(Card)`
   background-color: #222;
   border-radius: 15px;
   object-fit:cover;
-
+  height: 350px;
 
 `
 
