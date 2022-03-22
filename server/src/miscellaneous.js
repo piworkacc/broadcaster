@@ -1,4 +1,9 @@
-const makeStreamSource = (id) => `/api/streams/${id}`;
+const makeStreamSource = (stream) => {
+  const source = stream.path?.startsWith('http')
+    ? stream.path
+    : `/api/streams/${stream.id}`;
+  return source;
+};
 
 const changeExtension = (fileName, newExtension) => {
   const parts = fileName.split('.');

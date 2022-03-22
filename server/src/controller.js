@@ -147,7 +147,7 @@ async function userFinishedStreams(req, res, next) {
     }
     const results = foundStreams.map((el) => {
       const obj = el.dataValues;
-      obj.source = makeStreamSource(el.id);
+      obj.source = makeStreamSource(el);
       return obj;
     });
     res.json(results);
@@ -186,7 +186,7 @@ async function streamsSelection(req, res, next) {
         if (structure[el][i] && result.length < amount) {
           added = true;
           const obj = structure[el][i];
-          obj.source = makeStreamSource(obj.id);
+          obj.source = makeStreamSource(obj);
           result.push(obj);
         }
       });
@@ -204,6 +204,7 @@ async function streamsSelection(req, res, next) {
 async function sendStream(req, res, next) {
   try {
     const { id } = req.params;
+    // console.log('------------------------->', id)
     const stream = await getStreamById(id);
     if (!stream) {
       throw new Error('stream not found');
