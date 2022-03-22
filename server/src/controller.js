@@ -158,13 +158,17 @@ async function userFinishedStreams(req, res, next) {
 
 async function streamsSelection(req, res, next) {
   const amount = +req.params.amount;
+  const searchQuery = req.query?.search;
   try {
-    const users = await getUsersWithStreams(amount);
+    const users = await getUsersWithStreams(amount, searchQuery);
     if (!users || !users.length) {
       res.json([]);
       return;
     }
-    const userStreams = await getUserFinishedStreams(users.map((el) => el.id));
+    const userStreams = await getUserFinishedStreams(
+      users.map((el) => el.id),
+      searchQuery,
+    );
 
     const structure = {};
     userStreams.forEach((el) => {

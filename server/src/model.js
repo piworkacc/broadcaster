@@ -7,13 +7,20 @@ const {
   Sequelize: { Op, fn, col },
 } = require('../db/models');
 
-function getUsersWithStreams(limit) {
-  return Stream.findAll({
+function filterStreamsBySearchQuery(queryObject, searchQuery) {
+  if (searchQuery) {
+    queryObject.where.title = { [Op.iLike]: `%${searchQuery}%` };
+  }
+}
+
+function getUsersWithStreams(limit, searchQuery) {
+  const queryObject = {
     attributes: [[fn('DISTINCT', col('user_id')), 'id']],
     limit,
     where: { path: { [Op.not]: null } },
-    // order: [['updatedAt', 'DESC']],
-  });
+  };
+  filterStreamsBySearchQuery(queryObject, searchQuery);
+  return Stream.findAll(queryObject);
 }
 
 function getStreamById(id) {
@@ -112,15 +119,13 @@ function getActiveStreams(searchQuery) {
     },
   };
 
-  if (searchQuery) {
-    queryObject.where.title = { [Op.iLike]: `%${searchQuery}%` };
-  }
+  filterStreamsBySearchQuery(queryObject, searchQuery);
 
   return Stream.findAll(queryObject);
 }
 
-function getUserFinishedStreams(userId) {
-  return Stream.findAll({
+function getUserFinishedStreams(userId, searchQuery) {
+  const queryObject = {
     attributes: [
       'id',
       'broadcast_id',
@@ -143,7 +148,9 @@ function getUserFinishedStreams(userId) {
       user_id: { [Op.in]: userId },
     },
     order: [['updatedAt', 'DESC']],
-  });
+  };
+  filterStreamsBySearchQuery(queryObject, searchQuery);
+  return Stream.findAll(queryObject);
 }
 
 function getLatestStreamKeyByUserId(userId) {
