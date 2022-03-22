@@ -188,6 +188,18 @@ function tags() {
   return Tag.findAll();
 }
 
+// COMMENTS
+
+function getCommentsByVideoId(videoId) {
+  return Comment.findAll({ 
+    where: { video_id: videoId },
+    include: [
+      { model: User, attributes: ['name', 'id'] },
+    ],
+    order: [['createdAt', 'DESC']],
+  });
+}
+
 module.exports = {
   getStreamByStreamKey,
   startStream,
@@ -202,4 +214,5 @@ module.exports = {
   addTagsToStream,
   tags,
   getLatestStreamKeyByUserId,
+  getCommentsByVideoId,
 };

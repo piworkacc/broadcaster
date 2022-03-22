@@ -23,6 +23,7 @@ const {
   addTagsToStream,
   tags,
   getLatestStreamKeyByUserId,
+  getCommentsByVideoId,
 } = require('./model');
 
 function hashIt(str) {
@@ -276,6 +277,31 @@ async function getTags(req, res, next) {
   }
 }
 
+// Comments
+
+async function comments(req, res, next) {
+  try {
+    const { id } = req.params;
+    const result = await getCommentsByVideoId(id);
+    if (!result) {
+      res.json([]);
+      return;
+    }
+    res.json(
+      result.map((el) => ({
+        id: el.id,
+        stream_id: el.stream_id,
+        published: el.createdAt,
+        comment_id: el.comment_id,
+        comment: el.comment,
+        User: el.User,
+      })),
+    );
+  } catch (err) {
+    next(err);
+  }
+}
+
 module.exports = {
   addUser,
   login,
@@ -290,4 +316,5 @@ module.exports = {
   addStream,
   getTags,
   latestStreamKey,
+  comments,
 };
