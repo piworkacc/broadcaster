@@ -6,7 +6,7 @@ const exec = util.promisify(require('child_process').exec);
 
 require('dotenv').config();
 
-const { User, Like, Stream } = require('../db/models');
+const { User } = require('../db/models');
 
 const {
   makeStreamSource,
@@ -22,7 +22,6 @@ const {
   createStream,
   addTagsToStream,
   tags,
-  likes,
   getLatestStreamKeyByUserId,
   getCommentsByVideoId,
   createComment,
@@ -127,15 +126,8 @@ async function streams(req, res, next) {
     }
     res.json(
       result.map((el) => ({
-        id: el.id,
-        broadcast_id: el.broadcast_id,
-        title: el.title,
-        start: el.start,
-        preview: el.preview,
-        User: el.User,
+        ...el.dataValues,
         source: `/live/${el.stream_key}.flv`,
-        Tags: el.Tags,
-        // comments: el.Comments,
       })),
     );
   } catch (err) {
@@ -285,37 +277,6 @@ async function getTags(req, res, next) {
   }
 }
 
-async function getStreamLikes(req, res, next) {
-  try {
-    const { stream_id } = req.params;
-    const streamLikes = await Like.findAll({
-      where: { stream_id: stream_id },
-    });
-    res.send(streamLikes);
-  } catch (error) {
-    next(error);
-  }
-}
-
-async function postLike(req, res, next) {
-  try {
-    const { user_id, stream_id } = req.body;
-    if (user_id) {
-      const like = await Like.findOne({
-        where: { user_id: user_id, stream_id: stream_id },
-      });
-      if (!like) {
-        const postedLike = await Like.create({ user_id, stream_id });
-        res.json({ postedLike, isLiked: true });
-      } else {
-        await like.destroy();
-        res.json({ isLiked: false });
-      }
-    }
-  } catch (error) {
-    next(error);
-  }
-}
 // Comments
 
 async function comments(req, res, next) {
@@ -368,8 +329,6 @@ module.exports = {
   newKey,
   addStream,
   getTags,
-  getStreamLikes,
-  postLike,
   comments,
   addComment,
 };

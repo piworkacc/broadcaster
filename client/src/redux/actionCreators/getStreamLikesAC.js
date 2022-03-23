@@ -1,14 +1,10 @@
-import { getLikes } from "../actions/likeAction";
+import { streamLikes } from '../actions/likeActions';
 
-
-export const getStreamLikesAC = ({stream_id}) => {
-	return async (dispatch) => {
-		try {
-			const response = await fetch(`/api/likes/${stream_id}` )
-			const likes = await response.json();
-			dispatch(getLikes(likes));
-		} catch (err) {
-			throw new Error(err);
-		}
-	};
+export const getStreamLikesAC = ({ streamId, service }) => {
+  return async (dispatch) => {
+    const likes = await service.uxios(`/api/likes/${streamId}`);
+    if (likes) {
+      dispatch(streamLikes(likes));
+    }
+  };
 };
