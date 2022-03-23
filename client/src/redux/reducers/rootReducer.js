@@ -4,7 +4,7 @@ import videoReducer from "./videoReducer";
 import streamReducer from "./streamReducer";
 import tagReducer from './tagReducer';
 import keyReducer from './keyReduser';
-
+import commentReducer from './commentReducer';
 
 const rootReducer = combineReducers({ 
   auth: authReducer,
@@ -12,6 +12,7 @@ const rootReducer = combineReducers({
   streams: streamReducer,
   tags: tagReducer,
   keys: keyReducer,
+  comments: commentReducer,
  });
 
 export default rootReducer;

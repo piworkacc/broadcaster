@@ -4,16 +4,44 @@ const {
   Tag,
   Comment,
   User,
-  Sequelize: { Op, fn, col },
+  Sequelize: { Op, fn, col, literal, QueryTypes },
+  sequelize,
 } = require('../db/models');
 
-function getUsersWithStreams(limit) {
-  return Stream.findAll({
-    attributes: [[fn('DISTINCT', col('user_id')), 'id']],
-    limit,
-    where: { path: { [Op.not]: null } },
-    // order: [['updatedAt', 'DESC']],
-  });
+function filterStreamsBySearchQuery(queryObject, searchQuery) {
+  if (searchQuery) {
+    // queryObject.where.title = { [Op.iLike]: `%${searchQuery}%` };
+    // queryObject.where[Op.or] = [{ title: { [Op.iLike]: `%${searchQuery}%` } }, {[User.name]: {[OP.]}}];
+    queryObject.where[Op.and] = literal(
+      `("Stream"."title" ilike '%${searchQuery}%' or "User"."name" ilike '%${searchQuery}%' )`,
+    );
+  }
+}
+
+function getUsersWithStreams(limit, searchQuery) {
+  // const queryObject = {
+  //   attributes: [],
+  //   limit,
+  //   include: [{ model: User, attributes: ['name', 'id'] }],
+  //   where: { path: { [Op.not]: null } },
+  // };
+  // filterStreamsBySearchQuery(queryObject, searchQuery);
+  // return Stream.findAll(queryObject);
+
+  const addClause = searchQuery
+    ? `AND ("Stream"."title" ilike '%${searchQuery}%' or "User"."name" ilike '%${searchQuery}%' )`
+    : '';
+
+  const queryText = `SELECT DISTINCT
+    "Stream"."user_id" as "id", "User"."name" AS "user_name" FROM "Streams" AS "Stream"
+    JOIN "Users" AS "User" ON
+    "Stream"."user_id" = "User"."id"
+    WHERE
+    "Stream"."path" IS NOT NULL
+    ${addClause}
+    LIMIT ${limit};`;
+
+  return sequelize.query(queryText, { type: QueryTypes.SELECT });
 }
 
 function getStreamById(id) {
@@ -87,8 +115,8 @@ function getAllUserStreams(userId) {
   return Stream.findAll({ where: { user_id: userId } });
 }
 
-function getActiveStreams() {
-  return Stream.findAll({
+function getActiveStreams(searchQuery) {
+  const queryObject = {
     attributes: [
       'id',
       'broadcast_id',
@@ -97,7 +125,6 @@ function getActiveStreams() {
       'stream_key',
       'preview',
     ],
-
     include: [
       { model: User, attributes: ['name', 'id'] },
       {
@@ -105,22 +132,21 @@ function getActiveStreams() {
         attributes: ['tag'],
         through: { model: StreamTag, attributes: [] },
       },
-      // {
-      //   model: Comment,
-      //   attributes: ['comment'],
-      //   include: { model: User, attributes: ['id', 'name'] },
-      // },
     ],
     where: {
       end: { [Op.is]: null },
       start: { [Op.not]: null },
       broadcast_id: { [Op.not]: null },
     },
-  });
+  };
+
+  filterStreamsBySearchQuery(queryObject, searchQuery);
+
+  return Stream.findAll(queryObject);
 }
 
-function getUserFinishedStreams(userId) {
-  return Stream.findAll({
+function getUserFinishedStreams(userId, searchQuery) {
+  const queryObject = {
     attributes: [
       'id',
       'broadcast_id',
@@ -143,7 +169,9 @@ function getUserFinishedStreams(userId) {
       user_id: { [Op.in]: userId },
     },
     order: [['updatedAt', 'DESC']],
-  });
+  };
+  filterStreamsBySearchQuery(queryObject, searchQuery);
+  return Stream.findAll(queryObject);
 }
 
 function getLatestStreamKeyByUserId(userId) {
@@ -188,6 +216,34 @@ function tags() {
   return Tag.findAll();
 }
 
+// COMMENTS
+
+function getCommentsByVideoId(videoId) {
+  return Comment.findAll({ 
+    where: { stream_id: videoId },
+    include: [
+      { model: User,
+        attributes: ['name', 'id'] },
+    ],
+    order: [['createdAt', 'ASC']],
+  });
+}
+
+function createComment(fields) {
+  return Comment.create(fields);
+}
+
+function getCommentById(id) {
+  return Comment.findOne({
+    where: { id },
+    include: [
+      { model: User,
+        attributes: ['id', 'name'],
+      },
+    ],
+  });
+}
+
 module.exports = {
   getStreamByStreamKey,
   startStream,
@@ -202,4 +258,7 @@ module.exports = {
   addTagsToStream,
   tags,
   getLatestStreamKeyByUserId,
+  getCommentsByVideoId,
+  createComment,
+  getCommentById,
 };

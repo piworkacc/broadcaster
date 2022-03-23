@@ -23,6 +23,9 @@ const {
   addTagsToStream,
   tags,
   getLatestStreamKeyByUserId,
+  getCommentsByVideoId,
+  createComment,
+  getCommentById,
 } = require('./model');
 
 function hashIt(str) {
@@ -115,7 +118,8 @@ async function latestStreamKey(req, res, next) {
 
 async function streams(req, res, next) {
   try {
-    const result = await getActiveStreams();
+    const searchQuery = req.query?.search;
+    const result = await getActiveStreams(searchQuery);
     if (!result) {
       res.json([]);
       return;
@@ -157,13 +161,17 @@ async function userFinishedStreams(req, res, next) {
 
 async function streamsSelection(req, res, next) {
   const amount = +req.params.amount;
+  const searchQuery = req.query?.search;
   try {
-    const users = await getUsersWithStreams(amount);
+    const users = await getUsersWithStreams(amount, searchQuery);
     if (!users || !users.length) {
       res.json([]);
       return;
     }
-    const userStreams = await getUserFinishedStreams(users.map((el) => el.id));
+    const userStreams = await getUserFinishedStreams(
+      users.map((el) => el.id),
+      searchQuery,
+    );
 
     const structure = {};
     userStreams.forEach((el) => {
@@ -276,6 +284,45 @@ async function getTags(req, res, next) {
   }
 }
 
+// Comments
+
+async function comments(req, res, next) {
+  try {
+    const { videoId } = req.params;
+    const result = await getCommentsByVideoId(videoId);
+    if (!result) {
+      res.json([]);
+      return;
+    }
+    res.json(
+      result.map((el) => ({
+        id: el.id,
+        stream_id: el.stream_id,
+        createdAt: el.createdAt,
+        updatedAt: el.updatedAt,
+        comment_id: el.comment_id,
+        comment: el.comment,
+        user_id: el.user_id,
+        User: el.User,
+      })),
+    );
+  } catch (err) {
+    next(err);
+  }
+}
+
+async function addComment(req, res, next) {
+  try {
+    const { ...fields } = req.body;
+    fields.user_id = req.session.userId;
+    const newComment = await createComment(fields);
+    console.log(newComment);
+    res.send(await getCommentById(newComment.id));
+  } catch (err) {
+    next(err);
+  }
+}
+
 module.exports = {
   addUser,
   login,
@@ -290,4 +337,6 @@ module.exports = {
   addStream,
   getTags,
   latestStreamKey,
+  comments,
+  addComment,
 };

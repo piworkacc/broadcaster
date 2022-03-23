@@ -5,6 +5,8 @@ import {
   CHECK_AUTH_REQUESTED,
 } from '../actionTypes/userTypes';
 
+import { SEARCH_REQUESTED } from '../actionTypes/streamTypes';
+
 export function loginAC(payload) {
   return {
     type: AUTH_REQUESTED,
@@ -29,5 +31,12 @@ export function unauthAC(payload) {
 export function checkAuthAC() {
   return {
     type: CHECK_AUTH_REQUESTED,
+  };
+}
+
+export function searchAC(payload) {
+  return {
+    type: SEARCH_REQUESTED,
+    payload,
   };
 }
