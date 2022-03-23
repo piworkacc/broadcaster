@@ -8,17 +8,24 @@ const UserStreamsList = () => {
   const auth = useSelector((state) => state.auth);
   const currUserId = auth.id;
   const userVideos = useSelector((state) => {
-    return state.videos.filter(el => el.user_id === currUserId)
+    return state.videos.filter((el) => el.user_id === currUserId);
   });
 
-return (
-  <DivContainer>
-    {userVideos?.map((el) => (
-      <UserStreamCard key={el.id} id={el.id} title={el.title} preview={el.preview} start={el.start}/>
-    ))}
-  </DivContainer>
-);
-}
+  return (
+    <DivContainer>
+      {userVideos?.map((el) => (
+        <UserStreamCard
+          key={el.id}
+          id={el.id}
+          title={el.title}
+          preview={el.preview}
+          start={el.start}
+          broadcast_id={el.broadcast_id}
+        />
+      ))}
+    </DivContainer>
+  );
+};
 
 export default UserStreamsList;
 
@@ -42,6 +49,6 @@ const DivContainer = styled.div`
     outline: 1px solid #000;
   }
   &::-webkit-scrollbar-corner {
-    background: rgba(0,0,0,0);
-  };
-`
+    background: rgba(0, 0, 0, 0);
+  }
+`;

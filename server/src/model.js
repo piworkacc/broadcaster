@@ -4,14 +4,12 @@ const {
   Tag,
   Comment,
   User,
-  Sequelize: { Op, fn, col, literal, QueryTypes },
+  Sequelize: { Op, literal, QueryTypes },
   sequelize,
 } = require('../db/models');
 
 function filterStreamsBySearchQuery(queryObject, searchQuery) {
   if (searchQuery) {
-    // queryObject.where.title = { [Op.iLike]: `%${searchQuery}%` };
-    // queryObject.where[Op.or] = [{ title: { [Op.iLike]: `%${searchQuery}%` } }, {[User.name]: {[OP.]}}];
     queryObject.where[Op.and] = literal(
       `("Stream"."title" ilike '%${searchQuery}%' or "User"."name" ilike '%${searchQuery}%' )`,
     );
@@ -19,15 +17,6 @@ function filterStreamsBySearchQuery(queryObject, searchQuery) {
 }
 
 function getUsersWithStreams(limit, searchQuery) {
-  // const queryObject = {
-  //   attributes: [],
-  //   limit,
-  //   include: [{ model: User, attributes: ['name', 'id'] }],
-  //   where: { path: { [Op.not]: null } },
-  // };
-  // filterStreamsBySearchQuery(queryObject, searchQuery);
-  // return Stream.findAll(queryObject);
-
   const addClause = searchQuery
     ? `AND ("Stream"."title" ilike '%${searchQuery}%' or "User"."name" ilike '%${searchQuery}%' )`
     : '';
@@ -219,12 +208,9 @@ function tags() {
 // COMMENTS
 
 function getCommentsByVideoId(videoId) {
-  return Comment.findAll({ 
+  return Comment.findAll({
     where: { stream_id: videoId },
-    include: [
-      { model: User,
-        attributes: ['name', 'id'] },
-    ],
+    include: [{ model: User, attributes: ['name', 'id'] }],
     order: [['createdAt', 'ASC']],
   });
 }
@@ -236,11 +222,7 @@ function createComment(fields) {
 function getCommentById(id) {
   return Comment.findOne({
     where: { id },
-    include: [
-      { model: User,
-        attributes: ['id', 'name'],
-      },
-    ],
+    include: [{ model: User, attributes: ['id', 'name'] }],
   });
 }
 
