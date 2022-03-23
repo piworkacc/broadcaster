@@ -8,6 +8,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getAllCommentsAC } from '../../redux/actionCreators/getAllCommentsAC';
 import useUxios from '../../hooks/useUxios';
 import { createNewCommentAC } from '../../redux/actionCreators/createNewCommentAC';
+import ErrorComponent from '../ErrorComponent';
+import Loading from '../Loading';
 
 const CommentList = ({ comments }) => (
   <List
@@ -62,8 +64,12 @@ const CommentSection = ({ stream_id }) => {
   };
 
   return (
+    <>
+    <ErrorComponent error={error} />
+      <Loading loading={loading} />
     <CommentSectionWrapper>
       {videoComments.length > 0 && <CommentList comments={videoComments} />}
+      {auth.ok && 
       <Comment
         className='commentSectionInput'
         avatar={<Avatar src="https://joeschmoe.io/api/v1/random" alt={auth.name} />}
@@ -75,13 +81,13 @@ const CommentSection = ({ stream_id }) => {
             onSubmit={handleSubmit}
             submitting={submitting}
             value={value}
-          />
-        }
-      />
+          />}
+      />}
       {videoComments?.map((el) => (
         <Comment author={el.User.name} key={el.id} id={el.id} content={el.comment} datetime={<Moment format='YYYY-MM-DD HH:mm:ss'>{el.createdAt}</Moment>} />
       ))}
     </CommentSectionWrapper>
+    </>
   );
 }
 
