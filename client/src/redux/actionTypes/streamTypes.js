@@ -3,3 +3,5 @@ export const GET_ALL_STREAMS = 'GET_ALL_STREAMS';
 export const NEW_STREAM = 'NEW_STREAM';
 
 export const SEARCH_REQUESTED = 'SEARCH_REQUESTED';
+
+export const LIKE_STREAM = 'LIKE_STREAM';

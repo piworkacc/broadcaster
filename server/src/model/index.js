@@ -7,11 +7,12 @@ const {
   Sequelize: { Op, literal, QueryTypes, fn, col },
   Like,
   sequelize,
-} = require('../db/models');
+} = require('../../db/models');
 
 function filterStreamsBySearchQuery(queryObject, searchQuery) {
+  const buf = queryObject;
   if (searchQuery) {
-    queryObject.where[Op.and] = literal(
+    buf.where[Op.and] = literal(
       `("Stream"."title" ilike '%${searchQuery}%' or "User"."name" ilike '%${searchQuery}%' )`,
     );
   }
@@ -36,6 +37,16 @@ function getUsersWithStreams(limit, searchQuery) {
 
 function getStreamById(id) {
   return Stream.findOne({
+    attributes: [
+      'id',
+      'broadcast_id',
+      'title',
+      'start',
+      'path',
+      'user_id',
+      'preview',
+      [fn('COUNT', col('Likes.id')), 'likesCount'],
+    ],
     where: { id },
     include: [
       {
@@ -44,7 +55,9 @@ function getStreamById(id) {
         through: { model: StreamTag, attributes: [] },
       },
       { model: User, attributes: ['id', 'name'] },
+      { model: Like, attributes: [] },
     ],
+    group: ['Stream.id', 'Tags.id', 'User.id'],
   });
 }
 
@@ -209,10 +222,6 @@ function tags() {
   return Tag.findAll();
 }
 
-function likes() {
-  return Like.findAll();
-}
-
 // COMMENTS
 
 function getCommentsByVideoId(videoId) {
@@ -247,7 +256,6 @@ module.exports = {
   createStream,
   addTagsToStream,
   tags,
-  likes,
   getLatestStreamKeyByUserId,
   getCommentsByVideoId,
   createComment,
