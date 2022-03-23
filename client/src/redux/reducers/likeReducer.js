@@ -1,9 +1,9 @@
 import {ADD_LIKE, GET_STREAM_LIKES } from '../actionTypes/likeTypes'
 
-const cache = window.localStorage.getItem('state');
-const preloadedState = cache ? JSON.parse(cache)?.likes : [];
+// const cache = window.localStorage.getItem('state');
+// const preloadedState = cache ? JSON.parse(cache)?.likes : [];
 
-const likeReducer = (state = preloadedState, action) => {
+const likeReducer = (state = [], action) => {
 	const { type, payload } = action;
 	switch (type) {
 		case ADD_LIKE:
