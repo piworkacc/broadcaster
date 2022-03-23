@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Layout, Menu } from 'antd';
 import {
+  CopyOutlined,
   UploadOutlined,
   UserOutlined,
   VideoCameraOutlined,
@@ -15,17 +16,16 @@ import UserAccount from '../UserAccount/UserAccount';
 import { getAllTagsAC } from '../../redux/actionCreators/getAllTagsAC';
 import { createNewStreamAC } from '../../redux/actionCreators/createNewStreamAC';
 import { getLatestKeyAC } from '../../redux/actionCreators/getLatestKeyAC';
+import { removeAuth } from '../../redux/actions/userAction';
 import useUxios from '../../hooks/useUxios';
 import UserNewStreamModal from '../UserNewStreamModal/UserNewStreamModal';
 
 const { Header, Content, Footer, Sider } = Layout;
 
 const UserProfile = () => {
+  const [copied, setCopied] = useState(false)
   const [visible, setVisible] = useState(false);
   const [selectedMenuItem, setSelectedMenuItem] = useState();
-  // const auth = useSelector((store) => store.auth);
-  // const tags = useSelector((store) => store.tags);
-  // const keys = useSelector((store) => store.keys);
   const [keys, auth, tags, streams] = useSelector((store) => [
     store.keys,
     store.auth,
@@ -57,12 +57,18 @@ const UserProfile = () => {
   };
 
   useEffect(() => {
+    if (error && error.status === 401) {
+      dispatch(removeAuth());
+    }
+  }, [error]);
+
+  useEffect(() => {
     getTags();
     getLatestKey();
     if (!auth.ok) {
       navigate('/login');
     }
-  }, [auth, streams, navigate]);
+  }, [auth, navigate]);
 
   const componentsSwitch = (key) => {
     switch (key) {
@@ -77,8 +83,13 @@ const UserProfile = () => {
     }
   };
 
+  const copyClickHandler = () => {
+    setCopied(!copied);
+    navigator.clipboard.writeText(keys);
+  }
+
   return (
-    <div className="container">
+    <StyledContainer className="container">
       <Layout>
         <Sider breakpoint="lg" collapsedWidth="0">
           <HelloUserName className="logo">
@@ -111,7 +122,7 @@ const UserProfile = () => {
               className="site-layout-background"
               style={{ padding: 24, minHeight: 360 }}
             >
-              <DivContainer>
+              {/* <DivContainer> */}
                 <StartStreamButton
                   type="button"
                   onClick={() => {
@@ -120,7 +131,11 @@ const UserProfile = () => {
                 >
                   Начать новый стрим
                 </StartStreamButton>
-                <p style={{ color: 'white' }}>Последний stream key: {keys}</p>
+                <StyledKeyContainer>
+                <StyledKeyText>Последний stream key: <span style={{color:'#ee4540'}}>{keys}</span> </StyledKeyText>
+                <StyledCopyButton  aria-label="Скопировать"
+                                    onClick={() => {copyClickHandler()}} />
+                </StyledKeyContainer>
                 <div>
                   <UserNewStreamModal
                     visible={visible}
@@ -136,7 +151,7 @@ const UserProfile = () => {
                     loading={loading}
                   />
                 </div>
-              </DivContainer>
+              {/* <p style={{ color: 'white' }}>Последний stream key: {keys}</p> */}
               {!selectedMenuItem && <UserStreamList />}
               {componentsSwitch(selectedMenuItem)}
             </div>
@@ -144,7 +159,7 @@ const UserProfile = () => {
           <Footer style={{ textAlign: 'center' }}>Veschatel ©2022</Footer>
         </Layout>
       </Layout>
-    </div>
+    </StyledContainer>
   );
 };
 
@@ -158,6 +173,7 @@ const HelloUserName = styled.div`
   align-items: center;
   color: white;
 `;
+
 const StartStreamButton = styled.button`
   font-family: 'Robert Sans Medium', Arial, sans-serif;
   color: #fff;
@@ -168,12 +184,45 @@ const StartStreamButton = styled.button`
   border-radius: 20px;
   border: none;
   transition: scale 0.4s ease;
-  &hover: {
+  &:hover {
     transform: scale(1.1);
   }
 `;
 const DivContainer = styled.div`
-  &:hover ${StartStreamButton} {
-    transform: scale(1.1);
-  }
+  // &:hover ${StartStreamButton} {
+  //   transform: scale(1.1);
+  // }
 `;
+
+const StyledContainer = styled.div`
+  margin: 0 auto;
+  max-width: 1920px;
+  width: 100%;
+`
+
+const StyledCopyButton = styled(CopyOutlined)`
+  border: 1px solid #49a84d;
+  border-radius: 10px;
+  padding: 10px;
+  font-size: 16px;
+  margin-left: 20px;
+  transition: .2s transform ease;
+  &:hover {
+      transform: scale(1.1);
+    }
+  
+`
+
+const StyledKeyContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+`
+
+const StyledKeyText = styled.p`
+  color: white;
+  font-size: 20px;
+  font-weight: 700;
+  margin: 0;
+`

@@ -1,4 +1,4 @@
-import { ADD_USER, AUTH, UNAUTH } from "../actionTypes/userTypes";
+import { ADD_USER, AUTH, UNAUTH, CHECK_AUTH } from '../actionTypes/userTypes';
 
 export const setAuth = (payload) => {
   return {
@@ -17,5 +17,11 @@ export const addUser = (payload) => {
   return {
     type: ADD_USER,
     payload,
+  };
+};
+
+export const checkAuth = () => {
+  return {
+    type: CHECK_AUTH,
   };
 };

@@ -1,31 +1,36 @@
-.signup-form-button {
+.signup-form {
+  margin-block: 10px;
   display: flex;
-  justify-content: center;
+  flex-direction: column;
+  justify-items: center;
   align-items: center;
-    color: rgb(255, 255, 255);
-    position: relative;
-    background-color: rgb(238, 69, 64);
-    height: 39px;
-    width: 200px;
-    border-radius: 15px;
-    border: none;
+  max-width: 100%;
+}
+
+.signup-form-button {
+  color: rgb(255, 255, 255);
+  position: relative;
+  background-color: rgb(238, 69, 64);
+  height: 39px;
+  width: 200px;
+  border-radius: 15px;
+  border: none;
 }
 
 .signupFormText {
   color: rgb(255, 255, 255);
-  margin:60px 0;
-
-}
-
-.errorText {
-  color: rgb(238, 69, 64);
-  margin-block: 10px;
+  margin-top: 10px;
+  margin-bottom: 40px;
 }
 
 .signup-form-card {
   background-color:#262626;
   border-radius: 15px;
   border-color:#434343;
+  z-index: 99999;
+  box-shadow: 0 15px 50px #434343;
+  max-width: fit-content;
+  padding: 35px;
 }
 
 .signup-input {
@@ -36,35 +41,23 @@
 	border-radius: 5px;
 }
 
+.veshatel {
+  color: rgb(238, 69, 64);
+}
+
+.signUpContainer {
+  place-items: center;
+  display: flex;
+  justify-content: center;
+  height: 750px;
+}
+
 .signupFormTextBottom {
   justify-content: center;
   align-items: center;
   color: rgb(255, 255, 255);
-  /* margin-block: 10px; */
-}
-
-.ant-form-item-control-input-content {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.signup-form-card {
-  background-color:#262626;
-  border-radius: 15px;
-  border-color:#434343;
-  z-index: 99999;
-  height: 100%;
-  width: 100%;
-  box-shadow: 0 15px 50px #434343;
-}
-
-.container {
-  place-items: center;
-}
-
-.veshatel {
-  color: rgb(238, 69, 64);
+  margin-top: 10px;
+  height: 10px;
 }
 
 .ant-input-status-error:not(.ant-input-disabled):not(.ant-input-borderless).ant-input, .ant-input-status-error:not(.ant-input-disabled):not(.ant-input-borderless).ant-input:hover {
@@ -72,11 +65,15 @@
   border-color: #ff4d4f;
 }
 
-.subContainer{
-  height: 100px;
-  margin-top: 100px;
+.signupSubContainer{
+  height: 50px;
+  margin-top: 5px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 20px;
+}
+
+.errorText {
+  color: rgb(238, 69, 64);
+  margin-block: 10px;
 }

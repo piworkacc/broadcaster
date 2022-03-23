@@ -1,32 +1,26 @@
 .login-form {
-    margin-block: 10px;
-    display: flex;
-    flex-direction: column;
-    justify-items: center;
-    align-items: center;
-    max-width: 100%;
+  margin-block: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-items: center;
+  align-items: center;
+  max-width: 100%;
 }
 
-
 .login-form-button {
-    color: rgb(255, 255, 255);
-    position: relative;
-    background-color: rgb(238, 69, 64);
-    height: 39px;
-    width: 200px;
-    border-radius: 15px;
-    border: none;
-
+  color: rgb(255, 255, 255);
+  position: relative;
+  background-color: rgb(238, 69, 64);
+  height: 39px;
+  width: 200px;
+  border-radius: 15px;
+  border: none;
 }
 
 .loginFormText {
   color: rgb(255, 255, 255);
-  margin-bottom: 50px;
-}
-
-.errorText {
-  color: rgb(238, 69, 64);
-  margin-block: 10px;
+  margin-top: 10px;
+  margin-bottom: 40px;
 }
 
 .login-form-card {
@@ -34,34 +28,56 @@
   border-radius: 15px;
   border-color:#434343;
   z-index: 99999;
-  height: 100%;
-  width: 100%;
   box-shadow: 0 15px 50px #434343;
+  max-width: fit-content;
+  padding: 35px;
 }
 
 .login-input {
   background-color: #1c1c1c;
 	color: #fff;
-	width: 220px;
+	width: 260px;
 	border: 1px solid #3c3c3c;
-  border-color: #ff4d4f;
 	border-radius: 5px;
 }
 
 .veshatel {
-    color: rgb(238, 69, 64);
+  color: rgb(238, 69, 64);
 }
 
-.subContainer{
-    height: 100px;
-    margin-top: 100px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 20px;
+.loginSubContainer{
+  height: 50px;
+  margin-top: 5px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .ant-input-status-error:not(.ant-input-disabled):not(.ant-input-borderless).ant-input, .ant-input-status-error:not(.ant-input-disabled):not(.ant-input-borderless).ant-input:hover {
   background-color: #1c1c1c;
   border-color: #ff4d4f;
+}
+
+.loginContainer {
+  place-items: center;
+  display: flex;
+  justify-content: center;
+  height: 700px;
+}
+
+.loginErrorAndLoadingArea {
+  color: rgb(238, 69, 64);
+  margin-top: 10px;
+  display: flex;
+  flex-direction: column;
+  width: 300px;
+  height: 20px;
+  align-content: center;
+  align-items: center; 
+}
+
+.loginFormRegisterText {
+  margin-top: 10px;
+  color: #fff;
+  height: 10px;
 }

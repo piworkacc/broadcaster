@@ -4,20 +4,49 @@ const {
   Tag,
   Comment,
   User,
-  Sequelize: { Op, fn, col },
-} = require('../db/models');
+  Sequelize: { Op, literal, QueryTypes, fn, col },
+  Like,
+  sequelize,
+} = require('../../db/models');
 
-function getUsersWithStreams(limit) {
-  return Stream.findAll({
-    attributes: [[fn('DISTINCT', col('user_id')), 'id']],
-    limit,
-    where: { path: { [Op.not]: null } },
-    // order: [['updatedAt', 'DESC']],
-  });
+function filterStreamsBySearchQuery(queryObject, searchQuery) {
+  const buf = queryObject;
+  if (searchQuery) {
+    buf.where[Op.and] = literal(
+      `("Stream"."title" ilike '%${searchQuery}%' or "User"."name" ilike '%${searchQuery}%' )`,
+    );
+  }
+}
+
+function getUsersWithStreams(limit, searchQuery) {
+  const addClause = searchQuery
+    ? `AND ("Stream"."title" ilike '%${searchQuery}%' or "User"."name" ilike '%${searchQuery}%' )`
+    : '';
+
+  const queryText = `SELECT DISTINCT
+    "Stream"."user_id" as "id", "User"."name" AS "user_name" FROM "Streams" AS "Stream"
+    JOIN "Users" AS "User" ON
+    "Stream"."user_id" = "User"."id"
+    WHERE
+    "Stream"."path" IS NOT NULL
+    ${addClause}
+    LIMIT ${limit};`;
+
+  return sequelize.query(queryText, { type: QueryTypes.SELECT });
 }
 
 function getStreamById(id) {
   return Stream.findOne({
+    attributes: [
+      'id',
+      'broadcast_id',
+      'title',
+      'start',
+      'path',
+      'user_id',
+      'preview',
+      [fn('COUNT', col('Likes.id')), 'likesCount'],
+    ],
     where: { id },
     include: [
       {
@@ -26,7 +55,9 @@ function getStreamById(id) {
         through: { model: StreamTag, attributes: [] },
       },
       { model: User, attributes: ['id', 'name'] },
+      { model: Like, attributes: [] },
     ],
+    group: ['Stream.id', 'Tags.id', 'User.id'],
   });
 }
 
@@ -87,8 +118,8 @@ function getAllUserStreams(userId) {
   return Stream.findAll({ where: { user_id: userId } });
 }
 
-function getActiveStreams() {
-  return Stream.findAll({
+function getActiveStreams(searchQuery) {
+  const queryObject = {
     attributes: [
       'id',
       'broadcast_id',
@@ -96,8 +127,8 @@ function getActiveStreams() {
       'start',
       'stream_key',
       'preview',
+      [fn('COUNT', col('Likes.id')), 'likesCount'],
     ],
-
     include: [
       { model: User, attributes: ['name', 'id'] },
       {
@@ -105,22 +136,23 @@ function getActiveStreams() {
         attributes: ['tag'],
         through: { model: StreamTag, attributes: [] },
       },
-      // {
-      //   model: Comment,
-      //   attributes: ['comment'],
-      //   include: { model: User, attributes: ['id', 'name'] },
-      // },
+      { model: Like, attributes: [] },
     ],
     where: {
       end: { [Op.is]: null },
       start: { [Op.not]: null },
       broadcast_id: { [Op.not]: null },
     },
-  });
+    group: ['Stream.id', 'Tags.id', 'User.id'],
+  };
+
+  filterStreamsBySearchQuery(queryObject, searchQuery);
+
+  return Stream.findAll(queryObject);
 }
 
-function getUserFinishedStreams(userId) {
-  return Stream.findAll({
+function getUserFinishedStreams(userId, searchQuery) {
+  const queryObject = {
     attributes: [
       'id',
       'broadcast_id',
@@ -129,6 +161,7 @@ function getUserFinishedStreams(userId) {
       'path',
       'user_id',
       'preview',
+      [fn('COUNT', col('Likes.id')), 'likesCount'],
     ],
     include: [
       {
@@ -137,13 +170,17 @@ function getUserFinishedStreams(userId) {
         through: { model: StreamTag, attributes: [] },
       },
       { model: User, attributes: ['id', 'name'] },
+      { model: Like, attributes: [] },
     ],
     where: {
       path: { [Op.not]: null },
       user_id: { [Op.in]: userId },
     },
+    group: ['Stream.id', 'Tags.id', 'User.id'],
     order: [['updatedAt', 'DESC']],
-  });
+  };
+  filterStreamsBySearchQuery(queryObject, searchQuery);
+  return Stream.findAll(queryObject);
 }
 
 function getLatestStreamKeyByUserId(userId) {
@@ -188,6 +225,27 @@ function tags() {
   return Tag.findAll();
 }
 
+// COMMENTS
+
+function getCommentsByVideoId(videoId) {
+  return Comment.findAll({
+    where: { stream_id: videoId },
+    include: [{ model: User, attributes: ['name', 'id'] }],
+    order: [['createdAt', 'DESC']],
+  });
+}
+
+function createComment(fields) {
+  return Comment.create(fields);
+}
+
+function getCommentById(id) {
+  return Comment.findOne({
+    where: { id },
+    include: [{ model: User, attributes: ['id', 'name'] }],
+  });
+}
+
 module.exports = {
   getStreamByStreamKey,
   startStream,
@@ -202,4 +260,7 @@ module.exports = {
   addTagsToStream,
   tags,
   getLatestStreamKeyByUserId,
+  getCommentsByVideoId,
+  createComment,
+  getCommentById,
 };

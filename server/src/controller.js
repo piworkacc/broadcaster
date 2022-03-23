@@ -23,6 +23,9 @@ const {
   addTagsToStream,
   tags,
   getLatestStreamKeyByUserId,
+  getCommentsByVideoId,
+  createComment,
+  getCommentById,
 } = require('./model');
 
 function hashIt(str) {
@@ -69,7 +72,9 @@ async function login(req, res, next) {
       setSession(req, user);
       res.json({ name: user.name, id: user.id });
     } else {
-      res.sendStatus(401);
+      const err = new Error('Unauthorized');
+      err.status = 401;
+      throw err;
     }
   } catch (err) {
     next(err);
@@ -113,22 +118,16 @@ async function latestStreamKey(req, res, next) {
 
 async function streams(req, res, next) {
   try {
-    const result = await getActiveStreams();
+    const searchQuery = req.query?.search;
+    const result = await getActiveStreams(searchQuery);
     if (!result) {
       res.json([]);
       return;
     }
     res.json(
       result.map((el) => ({
-        id: el.id,
-        broadcast_id: el.broadcast_id,
-        title: el.title,
-        start: el.start,
-        preview: el.preview,
-        User: el.User,
+        ...el.dataValues,
         source: `/live/${el.stream_key}.flv`,
-        Tags: el.Tags,
-        // comments: el.Comments,
       })),
     );
   } catch (err) {
@@ -144,7 +143,7 @@ async function userFinishedStreams(req, res, next) {
     }
     const results = foundStreams.map((el) => {
       const obj = el.dataValues;
-      obj.source = makeStreamSource(el.id);
+      obj.source = makeStreamSource(el);
       return obj;
     });
     res.json(results);
@@ -155,13 +154,17 @@ async function userFinishedStreams(req, res, next) {
 
 async function streamsSelection(req, res, next) {
   const amount = +req.params.amount;
+  const searchQuery = req.query?.search;
   try {
-    const users = await getUsersWithStreams(amount);
+    const users = await getUsersWithStreams(amount, searchQuery);
     if (!users || !users.length) {
       res.json([]);
       return;
     }
-    const userStreams = await getUserFinishedStreams(users.map((el) => el.id));
+    const userStreams = await getUserFinishedStreams(
+      users.map((el) => el.id),
+      searchQuery,
+    );
 
     const structure = {};
     userStreams.forEach((el) => {
@@ -179,7 +182,7 @@ async function streamsSelection(req, res, next) {
         if (structure[el][i] && result.length < amount) {
           added = true;
           const obj = structure[el][i];
-          obj.source = makeStreamSource(obj.id);
+          obj.source = makeStreamSource(obj);
           result.push(obj);
         }
       });
@@ -206,8 +209,9 @@ async function sendStream(req, res, next) {
     const { range } = req.headers;
 
     if (!range) {
-      res.status(400).send('Requires Range header');
-      return;
+      const err = new Error('Requires Range header');
+      err.status = 400;
+      throw err;
     }
     const videoPath = stream.path;
     const videoSize = fs.statSync(videoPath).size;
@@ -273,6 +277,44 @@ async function getTags(req, res, next) {
   }
 }
 
+// Comments
+
+async function comments(req, res, next) {
+  try {
+    const { videoId } = req.params;
+    const result = await getCommentsByVideoId(videoId);
+    if (!result) {
+      res.json([]);
+      return;
+    }
+    res.json(
+      result.map((el) => ({
+        id: el.id,
+        stream_id: el.stream_id,
+        createdAt: el.createdAt,
+        updatedAt: el.updatedAt,
+        comment_id: el.comment_id,
+        comment: el.comment,
+        user_id: el.user_id,
+        User: el.User,
+      })),
+    );
+  } catch (err) {
+    next(err);
+  }
+}
+
+async function addComment(req, res, next) {
+  try {
+    const { ...fields } = req.body;
+    fields.user_id = req.session.userId;
+    const newComment = await createComment(fields);
+    res.send(await getCommentById(newComment.id));
+  } catch (err) {
+    next(err);
+  }
+}
+
 module.exports = {
   addUser,
   login,
@@ -282,9 +324,11 @@ module.exports = {
   userFinishedStreams,
   streamsSelection,
   sendStream,
+  latestStreamKey,
   preview,
   newKey,
   addStream,
   getTags,
-  latestStreamKey,
+  comments,
+  addComment,
 };
