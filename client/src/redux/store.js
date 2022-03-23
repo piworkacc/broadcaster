@@ -4,19 +4,19 @@ import createSagaMiddleware from 'redux-saga';
 
 import rootSaga from './sagas/rootSaga';
 import rootReducer from './reducers/rootReducer';
-import thunk from 'redux-thunk'
+import thunk from 'redux-thunk';
 
 const sagaMiddleware = createSagaMiddleware();
 const store = createStore(
   rootReducer,
-  composeWithDevTools(applyMiddleware(thunk,sagaMiddleware)),
+  composeWithDevTools(applyMiddleware(thunk, sagaMiddleware)),
 );
 
 sagaMiddleware.run(rootSaga);
 
 store.subscribe(() => {
-  const state = store.getState();
-  window.localStorage.setItem('state', JSON.stringify(state));
+  const { auth, videos } = store.getState();
+  window.localStorage.setItem('state', JSON.stringify({ auth, videos }));
 });
 
 export default store;
