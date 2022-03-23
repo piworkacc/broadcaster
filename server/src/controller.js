@@ -6,7 +6,7 @@ const exec = util.promisify(require('child_process').exec);
 
 require('dotenv').config();
 
-const { User, Like, Stream } = require('../db/models');
+const { User } = require('../db/models');
 
 const {
   makeStreamSource,
@@ -126,15 +126,8 @@ async function streams(req, res, next) {
     }
     res.json(
       result.map((el) => ({
-        id: el.id,
-        broadcast_id: el.broadcast_id,
-        title: el.title,
-        start: el.start,
-        preview: el.preview,
-        User: el.User,
+        ...el.dataValues,
         source: `/live/${el.stream_key}.flv`,
-        Tags: el.Tags,
-        // comments: el.Comments,
       })),
     );
   } catch (err) {

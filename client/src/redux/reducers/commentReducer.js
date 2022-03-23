@@ -12,7 +12,7 @@ export default function commentReducer(state = [], action) {
     return payload;
 
   case ADD_NEW_COMMENT:
-    return [...state, payload];
+    return [payload, ...state];
 
   default:
     return state;

@@ -15,8 +15,11 @@ const store = createStore(
 sagaMiddleware.run(rootSaga);
 
 store.subscribe(() => {
-  const { auth, videos } = store.getState();
-  window.localStorage.setItem('state', JSON.stringify({ auth, videos }));
+  const { auth, videos, streams } = store.getState();
+  window.localStorage.setItem(
+    'state',
+    JSON.stringify({ auth, videos, streams }),
+  );
 });
 
 export default store;

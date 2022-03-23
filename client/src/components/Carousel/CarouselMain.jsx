@@ -28,7 +28,7 @@ const CarouselMain = ({ id }) => {
             onClick={() => nav(`streams/${el.broadcast_id}`)}
           />
           <StyledLike>
-            <StyledLikeIcon /> 78
+            <StyledLikeIcon /> {el.likesCount}
           </StyledLike>
         </StyledSplideSide>
       ))}
@@ -138,7 +138,6 @@ const StyledLike = styled.div`
 const StyledLikeIcon = styled(HeartOutlined)`
   padding: 0;
   position: relative;
-  width: 50px;
   font-size: 20px;
   color: #ee4540;
   z-index: 3;

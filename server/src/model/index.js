@@ -127,6 +127,7 @@ function getActiveStreams(searchQuery) {
       'start',
       'stream_key',
       'preview',
+      [fn('COUNT', col('Likes.id')), 'likesCount'],
     ],
     include: [
       { model: User, attributes: ['name', 'id'] },
@@ -135,12 +136,14 @@ function getActiveStreams(searchQuery) {
         attributes: ['tag'],
         through: { model: StreamTag, attributes: [] },
       },
+      { model: Like, attributes: [] },
     ],
     where: {
       end: { [Op.is]: null },
       start: { [Op.not]: null },
       broadcast_id: { [Op.not]: null },
     },
+    group: ['Stream.id', 'Tags.id', 'User.id'],
   };
 
   filterStreamsBySearchQuery(queryObject, searchQuery);
@@ -228,7 +231,7 @@ function getCommentsByVideoId(videoId) {
   return Comment.findAll({
     where: { stream_id: videoId },
     include: [{ model: User, attributes: ['name', 'id'] }],
-    order: [['createdAt', 'ASC']],
+    order: [['createdAt', 'DESC']],
   });
 }
 
