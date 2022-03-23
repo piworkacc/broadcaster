@@ -4,13 +4,9 @@ const {
   Tag,
   Comment,
   User,
-<<<<<<< HEAD
   Like,
-  Sequelize: { Op, fn, col },
-=======
   Sequelize: { Op, fn, col, literal, QueryTypes },
   sequelize,
->>>>>>> development
 } = require('../db/models');
 
 function filterStreamsBySearchQuery(queryObject, searchQuery) {
@@ -221,11 +217,9 @@ function tags() {
   return Tag.findAll();
 }
 
-<<<<<<< HEAD
 function likes() {
   return Like.findAll();
-=======
-// COMMENTS
+}
 
 function getCommentsByVideoId(videoId) {
   return Comment.findAll({ 
@@ -251,7 +245,7 @@ function getCommentById(id) {
       },
     ],
   });
->>>>>>> development
+
 }
 
 module.exports = {
