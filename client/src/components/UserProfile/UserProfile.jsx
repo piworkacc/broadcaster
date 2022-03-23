@@ -152,7 +152,7 @@ const UserProfile = () => {
                     loading={loading}
                   />
                 </div>
-              <p style={{ color: 'white' }}>Последний stream key: {keys}</p>
+              {/* <p style={{ color: 'white' }}>Последний stream key: {keys}</p> */}
               {!selectedMenuItem && <UserStreamList />}
               {componentsSwitch(selectedMenuItem)}
             </div>

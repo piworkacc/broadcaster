@@ -136,7 +136,7 @@ async function streams(req, res, next) {
         source: `/live/${el.stream_key}.flv`,
         Tags: el.Tags,
         // comments: el.Comments,
-      }))
+      })),
     );
   } catch (err) {
     next(err);
@@ -171,7 +171,7 @@ async function streamsSelection(req, res, next) {
     }
     const userStreams = await getUserFinishedStreams(
       users.map((el) => el.id),
-      searchQuery
+      searchQuery,
     );
 
     const structure = {};
@@ -285,17 +285,12 @@ async function getTags(req, res, next) {
   }
 }
 
-<<<<<<< HEAD
 async function getStreamLikes(req, res, next) {
   try {
     const { stream_id } = req.params;
     const streamLikes = await Like.findAll({
       where: { stream_id: stream_id },
     });
-    console.log(
-      streamLikes,
-      '================================================='
-    );
     res.send(streamLikes);
   } catch (error) {
     next(error);
@@ -319,7 +314,8 @@ async function postLike(req, res, next) {
     }
   } catch (error) {
     next(error);
-=======
+  }
+}
 // Comments
 
 async function comments(req, res, next) {
@@ -355,7 +351,6 @@ async function addComment(req, res, next) {
     res.send(await getCommentById(newComment.id));
   } catch (err) {
     next(err);
->>>>>>> development
   }
 }
 
@@ -373,12 +368,8 @@ module.exports = {
   newKey,
   addStream,
   getTags,
-<<<<<<< HEAD
   getStreamLikes,
   postLike,
-=======
-  latestStreamKey,
   comments,
   addComment,
->>>>>>> development
 };

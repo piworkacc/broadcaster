@@ -26,9 +26,9 @@ const { Sider } = Layout;
 						<Menu.Item key="2" icon={<VideoCameraOutlined/>}>
 							<Link to='/profile'>Начать стрим</Link>
 						</Menu.Item>
-						<Menu.Item key="3" icon={<UploadOutlined/>}>
+						{/* <Menu.Item key="3" icon={<UploadOutlined/>}>
 							<Link to='/profile'> Загрузить ролик </Link>
-						</Menu.Item>
+						</Menu.Item> */}
 						<Menu.Item key="4" icon={<UserOutlined/>}>
 							<Link to='/profile'> Личный кабинет</Link>
 						</Menu.Item>
