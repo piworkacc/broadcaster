@@ -9,7 +9,7 @@ const likeReducer = (state = [], action) => {
 		case ADD_LIKE:
 			console.log(state)
 			if(payload.isLiked === true ) {
-			return  [...state, payload.likes]
+			return  [...state, payload]
 			} else {
 				return [...state, state.filter(el => el.id !== payload.id)]
 			}
