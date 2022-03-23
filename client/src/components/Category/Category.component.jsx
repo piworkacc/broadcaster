@@ -5,10 +5,11 @@ import '@splidejs/splide/dist/css/splide.min.css';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { HeartOutlined } from '@ant-design/icons';
+import playIcon from './play-icon.png';
 
 const Category = ({ title }) => {
   const videos = useSelector((state) => state.videos);
-  const likes = useSelector(state => state.likes)
+  const likes = useSelector((state) => state.likes);
   const nav = useNavigate();
   const videosToRender = videos.filter((el) =>
     el.Tags.some((someEl) => someEl.tag === title),
@@ -37,8 +38,10 @@ const Category = ({ title }) => {
               broadcast_id={el.broadcast_id}
               onClick={() => nav(`videos/${el.broadcast_id}`)}
             />
+            {/* <ImgPlay src={playIcon} /> */}
             <StyledLike>
-              <StyledLikeIcon /> {likes?.filter((like) => like.stream_id === el.id).length}
+              <StyledLikeIcon />{' '}
+              {likes?.filter((like) => like.stream_id === el.id).length}
             </StyledLike>
           </SlideContainer>
         ))}
@@ -79,31 +82,33 @@ const SlideContainer = styled(SplideSlide)`
   &:hover {
     transition: 0.3s;
     opacity: 1;
-
-    &:before {
-      content: '▶';
-      display: block;
-      font-size: 20px;
-      line-height: 20px;
-      color: #fff;
-      background-color: #ee4540;
-      border-radius: 50%;
-      background-position: center;
-      position: absolute;
-      padding: 12px 10px 10px 12px;
-      top: 45%;
-      left: 50%;
-      z-index: 2;
-      opacity: 1;
-      cursor: pointer;
-    }
   }
 `;
+
+// &:before {
+//   content: '▶';
+//   display: block;
+//   font-size: 20px;
+//   line-height: 20px;
+//   color: #fff;
+//   background-color: #ee4540;
+//   border-radius: 50%;
+//   background-position: center;
+//   position: absolute;
+//   padding: 12px 10px 10px 12px;
+//   top: 45%;
+//   left: 50%;
+//   z-index: 2;
+//   opacity: 1;
+//   cursor: pointer;
+// }
+
 const Img = styled.img`
   max-width: 100%;
   height: 200px;
   object-fit: cover;
   border-radius: 5px;
+  cursor: pointer;
 
   &:hover {
     transition: 0.4s ease-in-out;
@@ -121,6 +126,20 @@ const Img = styled.img`
     z-index: 2;
   }
 `;
+
+// const ImgPlay = styled.img`
+// position: absolute;
+// top: 65%;
+// left: 45%;
+// width: 20%;
+// height: 20%;
+// z-index: 3;
+// padding: 0;
+// visible: false;
+// &:hover: {
+//   visible: true;
+// }
+// `
 
 const CatergoryLi = styled.li`
   padding-left: 30px;
