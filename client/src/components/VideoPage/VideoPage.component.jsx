@@ -29,7 +29,7 @@ const VideoPage = () => {
         playing
         controls
       />
-      <CommentSection key={currVideo.id} stream_id={currVideo.id}/>
+      {/* <CommentSection key={currVideo.id} stream_id={currVideo.id}/> */}
     </Wrapper>
   );
 };

@@ -14,8 +14,14 @@ const changeExtension = (fileName, newExtension) => {
 
 const randomString = () => Math.random().toString(32).replace('.', '');
 
+const randomArrayElement = (array) => {
+  const ind = Math.trunc(Math.random() * array.length);
+  return array[ind];
+};
+
 module.exports = {
   makeStreamSource,
   changeExtension,
   randomString,
+  randomArrayElement,
 };
