@@ -45,7 +45,7 @@ app.use(
     name: process.env.COOKIE,
     store: new FileStore(),
     expires: new Date(Date.now() + 5 * 86400 * 1000),
-  })
+  }),
 );
 
 app.use(cors());
