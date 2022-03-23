@@ -1,0 +1,9 @@
+.ant-comment-actions {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+}
+
+.ant-comment-content-author-name {
+  color: white;
+}
