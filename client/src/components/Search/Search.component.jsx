@@ -21,6 +21,7 @@ const SearchInput = () => {
         <Input
           style={searchInput}
           onChange={({ target }) => setValue(target.value)}
+          value={value}
         />
         <button style={buttonSearch}>
           <SearchOutlined />{' '}

@@ -3,6 +3,6 @@ module.exports = {
     if (req.session.userId) return next();
     const err = new Error('Unauthorized');
     err.status = 401;
-    throw err;
+    next(err);
   },
 };

@@ -20,6 +20,7 @@ const messagesRouter = require('./src/routes/messages.routes');
 const streamkeysRouter = require('./src/routes/streamkeys.router');
 const tagsRouter = require('./src/routes/tags.router');
 const likesRouter = require('./src/routes/likes.router');
+const commentsRouter = require('./src/routes/comments.router');
 
 const app = express();
 const HTTPServer = http.createServer(app);
@@ -62,6 +63,7 @@ app.use('/api/keys', streamkeysRouter);
 app.use('/api/tags', tagsRouter);
 app.use('/messages', messagesRouter);
 app.use('/api/likes', likesRouter);
+app.use('/api/comments', commentsRouter);
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {

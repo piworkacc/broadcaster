@@ -6,9 +6,7 @@ import {useDispatch, useSelector} from 'react-redux';
 import {addLikeAC} from "../../redux/actionCreators/addLikeAC";
 import {HeartOutlined} from '@ant-design/icons';
 import {getStreamLikesAC} from '../../redux/actionCreators/getStreamLikesAC';
-import {getAllTagsAC} from "../../redux/actionCreators/getAllTagsAC";
-import {getAllVideos} from "../../redux/actions/videoAction";
-import {getAllVideosAC} from "../../redux/actionCreators/getAllVideosAC";
+import CommentSection from '../CommentSection/CommentSection';
 
 const VideoPage = () => {
   const [video, setVideo] = useState('');
@@ -58,6 +56,7 @@ const VideoPage = () => {
             streamLikes?.length}
         </span>
         </StyledLikeContainer>
+        <CommentSection key={currVideo.id} stream_id={currVideo.id}/>
       </Wrapper>
   );
 };
@@ -65,11 +64,20 @@ const VideoPage = () => {
 export default VideoPage;
 
 const Wrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
+
+
   width: 100%;
   height: 100vh;
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
+  justify-content: space-evenly;
+  padding: 0 5px 5px 5px;
+  align-content: center;
+  align-items: stretch;
+  min-height: 100vh;
+  // overflow: scroll;
+  // align-content: center;
 `;
 
 const StyledLikeBtn = styled(HeartOutlined)`

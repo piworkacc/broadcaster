@@ -5,7 +5,7 @@ import streamReducer from "./streamReducer";
 import tagReducer from './tagReducer';
 import keyReducer from './keyReduser';
 import likeReducer from "./likeReducer";
-
+import commentReducer from './commentReducer';
 
 const rootReducer = combineReducers({
   auth: authReducer,
@@ -13,7 +13,8 @@ const rootReducer = combineReducers({
   streams: streamReducer,
   tags: tagReducer,
   keys: keyReducer,
-  likes: likeReducer
+  likes: likeReducer,
+  comments: commentReducer,
  });
 
 export default rootReducer;

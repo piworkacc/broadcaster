@@ -24,6 +24,9 @@ const {
   tags,
   likes,
   getLatestStreamKeyByUserId,
+  getCommentsByVideoId,
+  createComment,
+  getCommentById,
 } = require('./model');
 
 function hashIt(str) {
@@ -148,7 +151,7 @@ async function userFinishedStreams(req, res, next) {
     }
     const results = foundStreams.map((el) => {
       const obj = el.dataValues;
-      obj.source = makeStreamSource(el.id);
+      obj.source = makeStreamSource(el);
       return obj;
     });
     res.json(results);
@@ -187,7 +190,7 @@ async function streamsSelection(req, res, next) {
         if (structure[el][i] && result.length < amount) {
           added = true;
           const obj = structure[el][i];
-          obj.source = makeStreamSource(obj.id);
+          obj.source = makeStreamSource(obj);
           result.push(obj);
         }
       });
@@ -282,6 +285,7 @@ async function getTags(req, res, next) {
   }
 }
 
+<<<<<<< HEAD
 async function getStreamLikes(req, res, next) {
   try {
     const { stream_id } = req.params;
@@ -315,6 +319,43 @@ async function postLike(req, res, next) {
     }
   } catch (error) {
     next(error);
+=======
+// Comments
+
+async function comments(req, res, next) {
+  try {
+    const { videoId } = req.params;
+    const result = await getCommentsByVideoId(videoId);
+    if (!result) {
+      res.json([]);
+      return;
+    }
+    res.json(
+      result.map((el) => ({
+        id: el.id,
+        stream_id: el.stream_id,
+        createdAt: el.createdAt,
+        updatedAt: el.updatedAt,
+        comment_id: el.comment_id,
+        comment: el.comment,
+        user_id: el.user_id,
+        User: el.User,
+      })),
+    );
+  } catch (err) {
+    next(err);
+  }
+}
+
+async function addComment(req, res, next) {
+  try {
+    const { ...fields } = req.body;
+    fields.user_id = req.session.userId;
+    const newComment = await createComment(fields);
+    res.send(await getCommentById(newComment.id));
+  } catch (err) {
+    next(err);
+>>>>>>> development
   }
 }
 
@@ -332,6 +373,12 @@ module.exports = {
   newKey,
   addStream,
   getTags,
+<<<<<<< HEAD
   getStreamLikes,
   postLike,
+=======
+  latestStreamKey,
+  comments,
+  addComment,
+>>>>>>> development
 };
