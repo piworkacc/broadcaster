@@ -33,7 +33,7 @@ const Header = () => {
         )}
         {auth.ok && (
           <Link to="/profile">
-            <button className={style.header__signInBtn}>Профиль</button>
+            <button className={style.header__signInBtn}>{auth?.name}</button>
           </Link>
         )}
       </div>

@@ -4,8 +4,13 @@ const {
   Tag,
   Comment,
   User,
+<<<<<<< HEAD
+  Like,
+  Sequelize: { Op, fn, col },
+=======
   Sequelize: { Op, fn, col, literal, QueryTypes },
   sequelize,
+>>>>>>> development
 } = require('../db/models');
 
 function filterStreamsBySearchQuery(queryObject, searchQuery) {
@@ -65,7 +70,7 @@ function getStreamByStreamKey(streamKey) {
 async function startStream(broadcastId, stream) {
   await Stream.update(
     { start: new Date(), end: null, broadcast_id: broadcastId },
-    { where: { id: stream.id } },
+    { where: { id: stream.id } }
   );
 
   return Stream.findOne({ where: { id: stream.id } });
@@ -79,7 +84,7 @@ function endStream(broadcastId, filePath) {
     },
     {
       where: { broadcast_id: broadcastId },
-    },
+    }
   );
 }
 
@@ -104,7 +109,7 @@ async function closeLostStreams(getStreamPathName) {
   currStreams.forEach((el, ind) => {
     const prm = Stream.update(
       { end: new Date(), path: paths[ind] },
-      { where: { id: el.id } },
+      { where: { id: el.id } }
     );
     prms.push(prm);
   });
@@ -216,6 +221,10 @@ function tags() {
   return Tag.findAll();
 }
 
+<<<<<<< HEAD
+function likes() {
+  return Like.findAll();
+=======
 // COMMENTS
 
 function getCommentsByVideoId(videoId) {
@@ -242,6 +251,7 @@ function getCommentById(id) {
       },
     ],
   });
+>>>>>>> development
 }
 
 module.exports = {
@@ -257,6 +267,7 @@ module.exports = {
   createStream,
   addTagsToStream,
   tags,
+  likes,
   getLatestStreamKeyByUserId,
   getCommentsByVideoId,
   createComment,

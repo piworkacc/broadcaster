@@ -8,6 +8,7 @@ import { HeartOutlined } from '@ant-design/icons';
 
 const Category = ({ title }) => {
   const videos = useSelector((state) => state.videos);
+  const likes = useSelector(state => state.likes)
   const nav = useNavigate();
   const videosToRender = videos.filter((el) =>
     el.Tags.some((someEl) => someEl.tag === title),
@@ -37,7 +38,7 @@ const Category = ({ title }) => {
               onClick={() => nav(`videos/${el.broadcast_id}`)}
             />
             <StyledLike>
-              <StyledLikeIcon /> 78
+              <StyledLikeIcon /> {likes?.filter((like) => like.stream_id === el.id).length}
             </StyledLike>
           </SlideContainer>
         ))}
@@ -71,7 +72,7 @@ const Title = styled.h2`
 `;
 
 const SlideContainer = styled(SplideSlide)`
-  width: 300px;
+  max-width: 390px;
   height: 200px;
   margin: 20px;
 
@@ -123,6 +124,7 @@ const Img = styled.img`
 
 const CatergoryLi = styled.li`
   padding-left: 30px;
+  max-width: 2550px;
 `;
 
 const StyledStreamTitle = styled.h3`

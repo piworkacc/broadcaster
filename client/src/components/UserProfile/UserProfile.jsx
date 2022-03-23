@@ -133,7 +133,7 @@ const UserProfile = () => {
                   Начать новый стрим
                 </StartStreamButton>
                 <StyledKeyContainer>
-                <StyledKeyText>Последний stream key: <span style={{color: '#ee4540'}}>{keys}</span> </StyledKeyText>
+                <StyledKeyText>Последний stream key: <span style={{color:'#ee4540'}}>{keys}</span> </StyledKeyText>
                 <StyledCopyButton  aria-label="Скопировать"
                                     onClick={() => {copyClickHandler()}} />
                 </StyledKeyContainer>
