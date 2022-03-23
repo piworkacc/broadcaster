@@ -334,7 +334,7 @@ module.exports = {
       for (let i = 0; i < count; i += 1) {
         data.push({
           user_id: randomArrayElement(users).id,
-          stream_id: randomArrayElement(streams).id,
+          stream_id: elStream.id,
           comment: randomArrayElement(comments),
           createdAt: new Date(),
           updatedAt: new Date(),
