@@ -1,44 +1,61 @@
 const sha256 = require('sha256');
+const { faker } = require('@faker-js/faker');
 
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.bulkInsert('Users', [
-      {
-        name: '123',
+    const data = [];
+    for (let i = 0; i < 50; i += 1) {
+      data.push({
+        name: faker.name.firstName(),
         password: sha256('123'),
-        email: '1@3',
-        createdAt: new Date().toISOString(),
-        updatedAt: new Date().toISOString(),
-      },
-      {
-        name: 'nana',
-        password: sha256('123'),
-        email: 'n@na',
-        createdAt: new Date().toISOString(),
-        updatedAt: new Date().toISOString(),
-      },
-      {
-        name: 'admin',
-        password: sha256('123'),
-        email: 'a@min',
-        createdAt: new Date().toISOString(),
-        updatedAt: new Date().toISOString(),
-      },
-      {
-        name: 'mario',
-        password: sha256('123'),
-        email: 'm@rio',
-        createdAt: new Date().toISOString(),
-        updatedAt: new Date().toISOString(),
-      },
-      {
-        name: 'qwe',
-        password: sha256('123'),
-        email: 'q@we',
-        createdAt: new Date().toISOString(),
-        updatedAt: new Date().toISOString(),
-      },
-    ], {});
+        email: faker.internet.email(),
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      });
+    }
+    await queryInterface.bulkInsert('Users', data, {});
+
+    await queryInterface.bulkInsert(
+      'Users',
+      [
+        {
+          name: 'artem',
+          password: sha256('123'),
+          email: 'artem@gmail.com',
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        },
+        {
+          name: 'katya',
+          password: sha256('123'),
+          email: 'katya@gmail.com',
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        },
+        {
+          name: 'vanya',
+          password: sha256('123'),
+          email: 'vanya@gmail.com',
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        },
+        {
+          name: 'ilya',
+          password: sha256('123'),
+          email: 'ilya@gmail.com',
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        },
+        {
+          name: 'kukech',
+          password: sha256('123'),
+          email: 'kukech@gmail.com',
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        },
+      ],
+      {},
+    );
   },
 
   async down(queryInterface, Sequelize) {

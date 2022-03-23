@@ -150,7 +150,7 @@ async function userFinishedStreams(req, res, next) {
     }
     const results = foundStreams.map((el) => {
       const obj = el.dataValues;
-      obj.source = makeStreamSource(el.id);
+      obj.source = makeStreamSource(el);
       return obj;
     });
     res.json(results);
@@ -189,7 +189,7 @@ async function streamsSelection(req, res, next) {
         if (structure[el][i] && result.length < amount) {
           added = true;
           const obj = structure[el][i];
-          obj.source = makeStreamSource(obj.id);
+          obj.source = makeStreamSource(obj);
           result.push(obj);
         }
       });
@@ -316,7 +316,6 @@ async function addComment(req, res, next) {
     const { ...fields } = req.body;
     fields.user_id = req.session.userId;
     const newComment = await createComment(fields);
-    console.log(newComment);
     res.send(await getCommentById(newComment.id));
   } catch (err) {
     next(err);
