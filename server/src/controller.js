@@ -207,7 +207,6 @@ async function streamsSelection(req, res, next) {
 async function sendStream(req, res, next) {
   try {
     const { id } = req.params;
-    // console.log('------------------------->', id)
     const stream = await getStreamById(id);
     if (!stream) {
       throw new Error('stream not found');
@@ -317,7 +316,6 @@ async function addComment(req, res, next) {
     const { ...fields } = req.body;
     fields.user_id = req.session.userId;
     const newComment = await createComment(fields);
-    console.log(newComment);
     res.send(await getCommentById(newComment.id));
   } catch (err) {
     next(err);
