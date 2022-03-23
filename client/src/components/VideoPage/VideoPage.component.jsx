@@ -22,18 +22,15 @@ const VideoPage = () => {
 
   const currUser = useSelector(state => state?.auth.id)
   const likes = useSelector(state => state?.likes)
-
+  console.log(likes)
 
   const LikeHandler = () => {
     dispatch(addLikeAC({stream_id: currVideo.id, user_id: currUser}))
-    setstreamLikes(likes)
-    setIsLiked(!isLiked)
   }
 
   useEffect(() => {
     dispatch(getStreamLikesAC({stream_id: currVideo.id}))
-
-  }, [likes])
+  }, [])
 
   useEffect(() => {
     if (currVideo) {
@@ -53,7 +50,7 @@ const VideoPage = () => {
         <StyledLikeContainer style={isLiked ? {backgroundColor: '#ee4540'} : {backgroundColor: 'transparent'} }>
           <StyledLikeBtn onClick={() => LikeHandler()}/>
           <span>{
-            streamLikes?.length}
+          likes.length}
         </span>
         </StyledLikeContainer>
         <CommentSection key={currVideo.id} stream_id={currVideo.id}/>
@@ -64,20 +61,13 @@ const VideoPage = () => {
 export default VideoPage;
 
 const Wrapper = styled.div`
-
-
-  width: 100%;
-  height: 100vh;
+  width: 90%;
   display: flex;
   flex-wrap: wrap;
   flex-direction: column;
   justify-content: space-evenly;
-  padding: 0 5px 5px 5px;
-  align-content: center;
-  align-items: stretch;
+  align-items: center;
   min-height: 100vh;
-  // overflow: scroll;
-  // align-content: center;
 `;
 
 const StyledLikeBtn = styled(HeartOutlined)`
@@ -85,6 +75,9 @@ const StyledLikeBtn = styled(HeartOutlined)`
   height: 30px;
 `
 const StyledLikeContainer = styled.div`
+  margin-left: 2%;
+  align-self: flex-start;
+  margin-top: 20px;
   color: #fff;
   border: 1px solid #343434;
   width: 100px;
@@ -97,3 +90,4 @@ const StyledLikeContainer = styled.div`
   border-radius: 20px;
   margin-right: 20px;
 `
+
