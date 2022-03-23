@@ -5,6 +5,7 @@ const {
   Comment,
   User,
   Sequelize: { Op, literal, QueryTypes },
+  Like,
   sequelize,
 } = require('../db/models');
 
@@ -205,6 +206,10 @@ function tags() {
   return Tag.findAll();
 }
 
+function likes() {
+  return Like.findAll();
+}
+
 // COMMENTS
 
 function getCommentsByVideoId(videoId) {
@@ -239,6 +244,7 @@ module.exports = {
   createStream,
   addTagsToStream,
   tags,
+  likes,
   getLatestStreamKeyByUserId,
   getCommentsByVideoId,
   createComment,

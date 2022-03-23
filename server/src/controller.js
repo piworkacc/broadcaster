@@ -6,7 +6,7 @@ const exec = util.promisify(require('child_process').exec);
 
 require('dotenv').config();
 
-const { User } = require('../db/models');
+const { User, Like, Stream } = require('../db/models');
 
 const {
   makeStreamSource,
@@ -22,6 +22,7 @@ const {
   createStream,
   addTagsToStream,
   tags,
+  likes,
   getLatestStreamKeyByUserId,
   getCommentsByVideoId,
   createComment,
@@ -135,7 +136,7 @@ async function streams(req, res, next) {
         source: `/live/${el.stream_key}.flv`,
         Tags: el.Tags,
         // comments: el.Comments,
-      })),
+      }))
     );
   } catch (err) {
     next(err);
@@ -170,7 +171,7 @@ async function streamsSelection(req, res, next) {
     }
     const userStreams = await getUserFinishedStreams(
       users.map((el) => el.id),
-      searchQuery,
+      searchQuery
     );
 
     const structure = {};
@@ -284,6 +285,41 @@ async function getTags(req, res, next) {
   }
 }
 
+<<<<<<< HEAD
+async function getStreamLikes(req, res, next) {
+  try {
+    const { stream_id } = req.params;
+    const streamLikes = await Like.findAll({
+      where: { stream_id: stream_id },
+    });
+    console.log(
+      streamLikes,
+      '================================================='
+    );
+    res.send(streamLikes);
+  } catch (error) {
+    next(error);
+  }
+}
+
+async function postLike(req, res, next) {
+  try {
+    const { user_id, stream_id } = req.body;
+    if (user_id) {
+      const like = await Like.findOne({
+        where: { user_id: user_id, stream_id: stream_id },
+      });
+      if (!like) {
+        const postedLike = await Like.create({ user_id, stream_id });
+        res.json({ postedLike, isLiked: true });
+      } else {
+        await like.destroy();
+        res.json({ isLiked: false });
+      }
+    }
+  } catch (error) {
+    next(error);
+=======
 // Comments
 
 async function comments(req, res, next) {
@@ -319,6 +355,7 @@ async function addComment(req, res, next) {
     res.send(await getCommentById(newComment.id));
   } catch (err) {
     next(err);
+>>>>>>> development
   }
 }
 
@@ -331,11 +368,17 @@ module.exports = {
   userFinishedStreams,
   streamsSelection,
   sendStream,
+  latestStreamKey,
   preview,
   newKey,
   addStream,
   getTags,
+<<<<<<< HEAD
+  getStreamLikes,
+  postLike,
+=======
   latestStreamKey,
   comments,
   addComment,
+>>>>>>> development
 };

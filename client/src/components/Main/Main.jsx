@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import SideBar from '../SideBar/SideBar.component';
 import CarouselMain from '../Carousel/CarouselMain';
 import styled from 'styled-components';
