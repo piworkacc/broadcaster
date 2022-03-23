@@ -123,7 +123,7 @@ const UserProfile = () => {
               className="site-layout-background"
               style={{ padding: 24, minHeight: 360 }}
             >
-              <DivContainer>
+              {/* <DivContainer> */}
                 <StartStreamButton
                   type="button"
                   onClick={() => {
@@ -152,7 +152,7 @@ const UserProfile = () => {
                     loading={loading}
                   />
                 </div>
-              </DivContainer>
+              <p style={{ color: 'white' }}>Последний stream key: {keys}</p>
               {!selectedMenuItem && <UserStreamList />}
               {componentsSwitch(selectedMenuItem)}
             </div>
