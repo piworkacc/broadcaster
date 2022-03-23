@@ -1,36 +1,36 @@
-import React, {useEffect, useState} from 'react';
-import {useParams} from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
 import ReactPlayer from 'react-player/lazy';
 import styled from 'styled-components';
-import {useDispatch, useSelector} from 'react-redux';
-import {addLikeAC} from "../../redux/actionCreators/addLikeAC";
-import {HeartOutlined} from '@ant-design/icons';
-import {getStreamLikesAC} from '../../redux/actionCreators/getStreamLikesAC';
+import { useDispatch, useSelector } from 'react-redux';
+import { addLikeAC } from '../../redux/actionCreators/addLikeAC';
+import { HeartOutlined } from '@ant-design/icons';
+import { getStreamLikesAC } from '../../redux/actionCreators/getStreamLikesAC';
 import CommentSection from '../CommentSection/CommentSection';
 
 const VideoPage = () => {
   const [video, setVideo] = useState('');
-  const [streamLikes, setstreamLikes] = useState([])
+  const [streamLikes, setstreamLikes] = useState([]);
   const [isLiked, setIsLiked] = useState(false);
   const dispatch = useDispatch();
-  const {videoId} = useParams();
+  const { videoId } = useParams();
   const currVideo = useSelector((state) => {
     const videoRedux = state.videos;
 
     return videoRedux.filter((el) => el.broadcast_id === videoId)[0];
   });
 
-  const currUser = useSelector(state => state?.auth.id)
-  const likes = useSelector(state => state?.likes)
-  console.log(likes)
+  const currUser = useSelector((state) => state?.auth.id);
+  const likes = useSelector((state) => state?.likes);
 
   const LikeHandler = () => {
-    dispatch(addLikeAC({stream_id: currVideo.id, user_id: currUser}))
-  }
+    dispatch(addLikeAC({ stream_id: currVideo.id, user_id: currUser }));
+    setIsLiked(!isLiked);
+  };
 
   useEffect(() => {
-    dispatch(getStreamLikesAC({stream_id: currVideo.id}))
-  }, [])
+    dispatch(getStreamLikesAC({ stream_id: currVideo.id }));
+  }, []);
 
   useEffect(() => {
     if (currVideo) {
@@ -39,22 +39,26 @@ const VideoPage = () => {
   }, [video]);
 
   return (
-      <Wrapper>
-        <ReactPlayer
-            width={'100vw'}
-            height={'80vh'}
-            url={video.source}
-            playing
-            controls
-        />
-        <StyledLikeContainer style={isLiked ? {backgroundColor: '#ee4540'} : {backgroundColor: 'transparent'} }>
-          <StyledLikeBtn onClick={() => LikeHandler()}/>
-          <span>{
-          likes.length}
-        </span>
-        </StyledLikeContainer>
-        <CommentSection key={currVideo.id} stream_id={currVideo.id}/>
-      </Wrapper>
+    <Wrapper>
+      <ReactPlayer
+        width={'100vw'}
+        height={'80vh'}
+        url={video.source}
+        playing
+        controls
+      />
+      <StyledLikeContainer
+        style={
+          isLiked
+            ? { backgroundColor: '#ee4540' }
+            : { backgroundColor: 'transparent' }
+        }
+      >
+        <StyledLikeBtn onClick={() => LikeHandler()} />
+        <span>{likes.length}</span>
+      </StyledLikeContainer>
+      <CommentSection key={currVideo.id} stream_id={currVideo.id} />
+    </Wrapper>
   );
 };
 
@@ -73,7 +77,7 @@ const Wrapper = styled.div`
 const StyledLikeBtn = styled(HeartOutlined)`
   width: 30px;
   height: 30px;
-`
+`;
 const StyledLikeContainer = styled.div`
   margin-left: 2%;
   align-self: flex-start;
@@ -89,5 +93,4 @@ const StyledLikeContainer = styled.div`
   padding: 15px;
   border-radius: 20px;
   margin-right: 20px;
-`
-
+`;

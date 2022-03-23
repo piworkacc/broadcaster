@@ -87,7 +87,6 @@ const UserProfile = () => {
     setCopied(!copied);
     navigator.clipboard.writeText(keys);
   }
-  console.log(copied)
 
   return (
     <StyledContainer className="container">

@@ -4,7 +4,7 @@ const {
   Tag,
   Comment,
   User,
-  Sequelize: { Op, literal, QueryTypes },
+  Sequelize: { Op, literal, QueryTypes, fn, col },
   Like,
   sequelize,
 } = require('../db/models');
@@ -145,6 +145,7 @@ function getUserFinishedStreams(userId, searchQuery) {
       'path',
       'user_id',
       'preview',
+      [fn('COUNT', col('Likes.id')), 'likesCount'],
     ],
     include: [
       {
@@ -153,11 +154,13 @@ function getUserFinishedStreams(userId, searchQuery) {
         through: { model: StreamTag, attributes: [] },
       },
       { model: User, attributes: ['id', 'name'] },
+      { model: Like, attributes: [] },
     ],
     where: {
       path: { [Op.not]: null },
       user_id: { [Op.in]: userId },
     },
+    group: ['Stream.id', 'Tags.id', 'User.id'],
     order: [['updatedAt', 'DESC']],
   };
   filterStreamsBySearchQuery(queryObject, searchQuery);

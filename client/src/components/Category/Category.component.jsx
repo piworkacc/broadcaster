@@ -5,11 +5,9 @@ import '@splidejs/splide/dist/css/splide.min.css';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { HeartOutlined } from '@ant-design/icons';
-import playIcon from './play-icon.png';
 
 const Category = ({ title }) => {
   const videos = useSelector((state) => state.videos);
-  const likes = useSelector((state) => state.likes);
   const nav = useNavigate();
   const videosToRender = videos.filter((el) =>
     el.Tags.some((someEl) => someEl.tag === title),
@@ -40,8 +38,7 @@ const Category = ({ title }) => {
             />
             {/* <ImgPlay src={playIcon} /> */}
             <StyledLike>
-              <StyledLikeIcon />{' '}
-              {likes?.filter((like) => like.stream_id === el.id).length}
+              <StyledLikeIcon /> {el.likesCount}
             </StyledLike>
           </SlideContainer>
         ))}
