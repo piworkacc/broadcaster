@@ -43,5 +43,5 @@ const DivContainer = styled.div`
   }
   &::-webkit-scrollbar-corner {
     background: rgba(0,0,0,0);
-  }
+  };
 `

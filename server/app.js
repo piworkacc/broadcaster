@@ -19,6 +19,7 @@ const streamsRouter = require('./src/routes/streams.router');
 const messagesRouter = require('./src/routes/messages.routes');
 const streamkeysRouter = require('./src/routes/streamkeys.router');
 const tagsRouter = require('./src/routes/tags.router');
+const likesRouter = require('./src/routes/likes.router');
 
 const app = express();
 const HTTPServer = http.createServer(app);
@@ -43,7 +44,7 @@ app.use(
     name: process.env.COOKIE,
     store: new FileStore(),
     expires: new Date(Date.now() + 5 * 86400 * 1000),
-  }),
+  })
 );
 
 app.use(cors());
@@ -60,6 +61,7 @@ app.use('/api/streams', streamsRouter);
 app.use('/api/keys', streamkeysRouter);
 app.use('/api/tags', tagsRouter);
 app.use('/messages', messagesRouter);
+app.use('/api/likes', likesRouter);
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {

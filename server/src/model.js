@@ -4,6 +4,7 @@ const {
   Tag,
   Comment,
   User,
+  Like,
   Sequelize: { Op, fn, col },
 } = require('../db/models');
 
@@ -44,7 +45,7 @@ function getStreamByStreamKey(streamKey) {
 async function startStream(broadcastId, stream) {
   await Stream.update(
     { start: new Date(), end: null, broadcast_id: broadcastId },
-    { where: { id: stream.id } },
+    { where: { id: stream.id } }
   );
 
   return Stream.findOne({ where: { id: stream.id } });
@@ -58,7 +59,7 @@ function endStream(broadcastId, filePath) {
     },
     {
       where: { broadcast_id: broadcastId },
-    },
+    }
   );
 }
 
@@ -83,7 +84,7 @@ async function closeLostStreams(getStreamPathName) {
   currStreams.forEach((el, ind) => {
     const prm = Stream.update(
       { end: new Date(), path: paths[ind] },
-      { where: { id: el.id } },
+      { where: { id: el.id } }
     );
     prms.push(prm);
   });
@@ -195,6 +196,10 @@ function tags() {
   return Tag.findAll();
 }
 
+function likes() {
+  return Like.findAll();
+}
+
 module.exports = {
   getStreamByStreamKey,
   startStream,
@@ -208,5 +213,6 @@ module.exports = {
   createStream,
   addTagsToStream,
   tags,
+  likes,
   getLatestStreamKeyByUserId,
 };
