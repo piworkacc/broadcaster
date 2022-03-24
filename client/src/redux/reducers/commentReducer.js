@@ -1,9 +1,9 @@
 import { ADD_NEW_COMMENT, GET_ALL_COMMENTS } from "../actionTypes/commentTypes";
 
-const cache = window.localStorage.getItem('state');
-const preloadedState = cache ? JSON.parse(cache).comments : [];
+// const cache = window.localStorage.getItem('state');
+// const preloadedState = cache ? JSON.parse(cache).comments : [];
 
-export default function commentReducer(state = preloadedState || [], action) {
+export default function commentReducer(state = [], action) {
   const { type, payload } = action;
   
   switch (type) {
@@ -12,7 +12,7 @@ export default function commentReducer(state = preloadedState || [], action) {
     return payload;
 
   case ADD_NEW_COMMENT:
-    return [...state, payload];
+    return [payload, ...state];
 
   default:
     return state;

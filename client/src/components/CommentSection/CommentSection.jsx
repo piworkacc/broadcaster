@@ -8,9 +8,11 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getAllCommentsAC } from '../../redux/actionCreators/getAllCommentsAC';
 import useUxios from '../../hooks/useUxios';
 import { createNewCommentAC } from '../../redux/actionCreators/createNewCommentAC';
+import ErrorComponent from '../ErrorComponent';
+import Loading from '../Loading';
 
 const CommentList = ({ comments }) => (
-  <List
+  <StyledList
     style={{ color: 'white' }}
     header={comments.length > 1 ? `Всего комментариев: ${comments.length}` : 'Ответить'}
     dataSource={comments}
@@ -62,9 +64,13 @@ const CommentSection = ({ stream_id }) => {
   };
 
   return (
+    <>
+    <ErrorComponent error={error} />
+      <Loading loading={loading} />
     <CommentSectionWrapper>
       {videoComments.length > 0 && <CommentList comments={videoComments} />}
-      <Comment
+      {auth.ok &&
+      <StyledComment
         className='commentSectionInput'
         avatar={<Avatar src="https://joeschmoe.io/api/v1/random" alt={auth.name} />}
         author={<span style={{ color: 'white' }}>{auth.name}</span>}
@@ -75,24 +81,50 @@ const CommentSection = ({ stream_id }) => {
             onSubmit={handleSubmit}
             submitting={submitting}
             value={value}
-          />
-        }
-      />
+          />}
+      />}
       {videoComments?.map((el) => (
-        <Comment author={el.User.name} key={el.id} id={el.id} content={el.comment} datetime={<Moment format='YYYY-MM-DD HH:mm:ss'>{el.createdAt}</Moment>} />
+        <StyledComment author={el.User.name} key={el.id} id={el.id} content={el.comment} datetime={<Moment format='YYYY-MM-DD HH:mm:ss'>{el.createdAt}</Moment>} />
       ))}
     </CommentSectionWrapper>
+    </>
   );
 }
 
 export default CommentSection;
 
 const CommentSectionWrapper = styled.div`
-color: white;
-  display: flex;
-  flex-wrap: wrap;
+  color: #fff;
+  align-self: flex-start;
+  max-width: 800px;
+  width: 100%;
+  margin-top: 1%;
+  margin-left: 2%;
+  display:flex;
   flex-direction: column;
-  justify-content: space-evenly;
-  overflow: auto;
-  overflow-x: hidden;
+  justify-content: flex-start;
+  align-items: flex-start;
+  //width: 100%;
+  //color: white;
+  //display: flex;
+  //justify-content: stretch;
+  //flex-wrap: wrap;
+  //flex-direction: column;
+  //align-items: center;
+  //overflow: auto;
+  //overflow-x: hidden;
 `;
+
+
+// CommentList
+
+
+const StyledList = styled(List)`
+  font-weight: 700;
+  font-size: 20px;
+`
+const StyledComment = styled(Comment)`
+  width: 100%;
+  text-align: start;
+  box-shadow: 2px 2px 10px #434343;
+`

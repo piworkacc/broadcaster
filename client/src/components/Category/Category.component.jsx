@@ -36,8 +36,9 @@ const Category = ({ title }) => {
               broadcast_id={el.broadcast_id}
               onClick={() => nav(`videos/${el.broadcast_id}`)}
             />
+            {/* <ImgPlay src={playIcon} /> */}
             <StyledLike>
-              <StyledLikeIcon /> 78
+              <StyledLikeIcon /> {el.likesCount}
             </StyledLike>
           </SlideContainer>
         ))}
@@ -71,38 +72,40 @@ const Title = styled.h2`
 `;
 
 const SlideContainer = styled(SplideSlide)`
-  width: 300px;
+  max-width: 390px;
   height: 200px;
   margin: 20px;
 
   &:hover {
     transition: 0.3s;
     opacity: 1;
-
-    &:before {
-      content: '▶';
-      display: block;
-      font-size: 20px;
-      line-height: 20px;
-      color: #fff;
-      background-color: #ee4540;
-      border-radius: 50%;
-      background-position: center;
-      position: absolute;
-      padding: 12px 10px 10px 12px;
-      top: 45%;
-      left: 50%;
-      z-index: 2;
-      opacity: 1;
-      cursor: pointer;
-    }
   }
 `;
+
+// &:before {
+//   content: '▶';
+//   display: block;
+//   font-size: 20px;
+//   line-height: 20px;
+//   color: #fff;
+//   background-color: #ee4540;
+//   border-radius: 50%;
+//   background-position: center;
+//   position: absolute;
+//   padding: 12px 10px 10px 12px;
+//   top: 45%;
+//   left: 50%;
+//   z-index: 2;
+//   opacity: 1;
+//   cursor: pointer;
+// }
+
 const Img = styled.img`
   max-width: 100%;
   height: 200px;
   object-fit: cover;
   border-radius: 5px;
+  cursor: pointer;
 
   &:hover {
     transition: 0.4s ease-in-out;
@@ -121,8 +124,23 @@ const Img = styled.img`
   }
 `;
 
+// const ImgPlay = styled.img`
+// position: absolute;
+// top: 65%;
+// left: 45%;
+// width: 20%;
+// height: 20%;
+// z-index: 3;
+// padding: 0;
+// visible: false;
+// &:hover: {
+//   visible: true;
+// }
+// `
+
 const CatergoryLi = styled.li`
   padding-left: 30px;
+  max-width: 2550px;
 `;
 
 const StyledStreamTitle = styled.h3`

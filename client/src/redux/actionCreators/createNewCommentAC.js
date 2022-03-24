@@ -11,7 +11,9 @@ export const createNewCommentAC = (data) => {
       };
 
       const addedComment = await service.uxios('/api/comments/', 'POST', body);
-      dispatch(newComment(addedComment));
+      if (addedComment) {
+        dispatch(newComment(addedComment));
+      }
     } catch (err) {
       throw new Error(err);
     }

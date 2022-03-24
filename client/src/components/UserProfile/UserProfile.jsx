@@ -88,7 +88,6 @@ const UserProfile = () => {
     setCopied(!copied);
     navigator.clipboard.writeText(keys);
   }
-  console.log(copied)
 
   return (
     <StyledContainer className="container">
@@ -124,7 +123,7 @@ const UserProfile = () => {
               className="site-layout-background"
               style={{ padding: 24, minHeight: 360 }}
             >
-              <DivContainer>
+              {/* <DivContainer> */}
                 <StartStreamButton
                   type="button"
                   onClick={() => {
@@ -134,7 +133,7 @@ const UserProfile = () => {
                   Начать новый стрим
                 </StartStreamButton>
                 <StyledKeyContainer>
-                <StyledKeyText>Последний stream key: <span style={{color: '#ee4540'}}>{keys}</span> </StyledKeyText>
+                <StyledKeyText>Последний stream key: <span style={{color:'#ee4540'}}>{keys}</span> </StyledKeyText>
                 <StyledCopyButton  aria-label="Скопировать"
                                     onClick={() => {copyClickHandler()}} />
                 </StyledKeyContainer>
@@ -153,7 +152,7 @@ const UserProfile = () => {
                     loading={loading}
                   />
                 </div>
-              </DivContainer>
+              {/* <p style={{ color: 'white' }}>Последний stream key: {keys}</p> */}
               {!selectedMenuItem && <UserStreamList />}
               {componentsSwitch(selectedMenuItem)}
             </div>

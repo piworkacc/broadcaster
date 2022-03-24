@@ -1,41 +1,27 @@
 'use strict';
 
+const { randomArrayElement } = require('../../src/miscellaneous');
+
 module.exports = {
   async up(queryInterface, Sequelize) {
     const streams = await queryInterface.sequelize.query(
       'select * from "Streams" ',
       {
         type: queryInterface.sequelize.QueryTypes.SELECT,
-      }
+      },
     );
     const tags = await queryInterface.sequelize.query('select * from "Tags"', {
       type: queryInterface.sequelize.QueryTypes.SELECT,
     });
 
-    await queryInterface.bulkInsert(
-      'StreamTags',
-      [
-        {
-          tag_id: tags[0].id,
-          stream_id: streams[0].id,
-          createdAt: new Date().toISOString(),
-          updatedAt: new Date().toISOString(),
-        },
-        {
-          tag_id: tags[1].id,
-          stream_id: streams[1].id,
-          createdAt: new Date().toISOString(),
-          updatedAt: new Date().toISOString(),
-        },
-        {
-          tag_id: tags[2].id,
-          stream_id: streams[2].id,
-          createdAt: new Date().toISOString(),
-          updatedAt: new Date().toISOString(),
-        },
-      ],
-      {}
-    );
+    const data = streams.map((el) => ({
+      stream_id: el.id,
+      tag_id: randomArrayElement(tags).id,
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    }));
+
+    await queryInterface.bulkInsert('StreamTags', data, {});
   },
 
   async down(queryInterface, Sequelize) {

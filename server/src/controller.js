@@ -126,15 +126,8 @@ async function streams(req, res, next) {
     }
     res.json(
       result.map((el) => ({
-        id: el.id,
-        broadcast_id: el.broadcast_id,
-        title: el.title,
-        start: el.start,
-        preview: el.preview,
-        User: el.User,
+        ...el.dataValues,
         source: `/live/${el.stream_key}.flv`,
-        Tags: el.Tags,
-        // comments: el.Comments,
       })),
     );
   } catch (err) {
@@ -150,7 +143,7 @@ async function userFinishedStreams(req, res, next) {
     }
     const results = foundStreams.map((el) => {
       const obj = el.dataValues;
-      obj.source = makeStreamSource(el.id);
+      obj.source = makeStreamSource(el);
       return obj;
     });
     res.json(results);
@@ -189,7 +182,7 @@ async function streamsSelection(req, res, next) {
         if (structure[el][i] && result.length < amount) {
           added = true;
           const obj = structure[el][i];
-          obj.source = makeStreamSource(obj.id);
+          obj.source = makeStreamSource(obj);
           result.push(obj);
         }
       });
@@ -344,11 +337,11 @@ module.exports = {
   userFinishedStreams,
   streamsSelection,
   sendStream,
+  latestStreamKey,
   preview,
   newKey,
   addStream,
   getTags,
-  latestStreamKey,
   comments,
   addComment,
 };
