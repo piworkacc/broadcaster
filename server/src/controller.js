@@ -269,15 +269,15 @@ async function addStream(req, res, next) {
     return undefined;
   });
   try {
-    const { tags: tagsArr, data } = req.body;
+    const { data } = req.body;
     const fields = JSON.parse(data);
 
     fields.user_id = req.session.userId;
     fields.preview = path.join('images', file.name);
 
     const newStream = await createStream(fields);
-    await addTagsToStream(newStream, tagsArr);
-    res.send(await getStreamById(newStream.id));
+    await addTagsToStream(newStream, fields.tags);
+    res.json(await getStreamById(newStream.id));
   } catch (err) {
     next(err);
   }

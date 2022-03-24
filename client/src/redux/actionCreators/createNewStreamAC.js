@@ -32,7 +32,6 @@ export const createNewStreamAC = (data) => {
         console.error(error);
       }
 
-      // const stream = await service.uxios('/api/streams', 'POST', body);
     } catch (err) {
       throw new Error(err);
     }

@@ -11,6 +11,7 @@ router.get('/:stream_id', async (req, res, next) => {
       where: {
         stream_id: req.params.stream_id,
       },
+      order: [['createdAt']],
     });
     res.json(chatMessages);
   } catch (error) {

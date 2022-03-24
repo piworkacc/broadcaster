@@ -47,6 +47,7 @@ function getStreamById(id) {
       'path',
       'user_id',
       'preview',
+      'stream_key',
       [fn('COUNT', col('Likes.id')), 'likesCount'],
     ],
     where: { id },

@@ -29,6 +29,8 @@ const config = {
         },
         {
           app: 'live',
+          ac: 'aac',
+          acParam: ['-ab', '64k', '-ac', '1', '-ar', '44100'],
           vcParam: [
             '-c:v',
             'libx264',
