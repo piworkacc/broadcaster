@@ -48,7 +48,8 @@ const UserProfile = () => {
       createNewStreamAC({
         user_id: auth.id,
         title: values.title,
-        preview: values.preview,
+        preview: '',
+        file: values.upload[0],
         tags: values.tags,
         service: { error, loading, uxios },
       }),

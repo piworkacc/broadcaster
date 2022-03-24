@@ -4,7 +4,9 @@ const {
   Tag,
   Comment,
   User,
-  Sequelize: { Op, fn, col, literal, QueryTypes },
+  Sequelize: {
+    Op, fn, col, literal, QueryTypes,
+  },
   sequelize,
 } = require('../db/models');
 
@@ -219,11 +221,13 @@ function tags() {
 // COMMENTS
 
 function getCommentsByVideoId(videoId) {
-  return Comment.findAll({ 
+  return Comment.findAll({
     where: { stream_id: videoId },
     include: [
-      { model: User,
-        attributes: ['name', 'id'] },
+      {
+        model: User,
+        attributes: ['name', 'id'],
+      },
     ],
     order: [['createdAt', 'ASC']],
   });
@@ -237,7 +241,8 @@ function getCommentById(id) {
   return Comment.findOne({
     where: { id },
     include: [
-      { model: User,
+      {
+        model: User,
         attributes: ['id', 'name'],
       },
     ],

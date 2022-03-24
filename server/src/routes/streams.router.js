@@ -1,4 +1,5 @@
 const router = require('express').Router();
+const fileUpload = require('express-fileupload');
 
 const { authenticated } = require('../middleware/middlewares');
 
@@ -11,6 +12,7 @@ const {
   addStream,
 } = require('../controller');
 
+router.use(fileUpload());
 router.get('/', streams);
 router.get('/user/:userId', userFinishedStreams);
 router.get('/selection/:amount', streamsSelection);
