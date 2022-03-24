@@ -25,6 +25,7 @@ export const createNewStreamAC = (data) => {
         });
         if (res.ok) {
           const stream = await res.json();
+          // console.log(stream);
           dispatch(newStream(stream));
           dispatch(latestKey(stream));
         }

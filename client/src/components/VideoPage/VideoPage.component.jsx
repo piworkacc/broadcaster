@@ -86,6 +86,7 @@ const Wrapper = styled.div`
   justify-content: space-evenly;
   align-items: center;
   min-height: 100vh;
+  padding-top: 75px;
   // overflow: auto;
 `;
 

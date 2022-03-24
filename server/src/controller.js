@@ -277,7 +277,7 @@ async function addStream(req, res, next) {
 
     const newStream = await createStream(fields);
     await addTagsToStream(newStream, tagsArr);
-    res.send(await getStreamById(newStream.id));
+    res.json(await getStreamById(newStream.id));
   } catch (err) {
     next(err);
   }

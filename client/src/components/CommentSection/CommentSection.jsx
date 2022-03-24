@@ -81,7 +81,7 @@ const CommentSection = ({ stream_id }) => {
       <ErrorComponent error={error} />
       <Loading loading={loading} />
       {videoComments.length && <CommentSectionWrapper>
-        {videoComments.length > 0 && <CommentList comments={videoComments} />}
+        {<CommentList comments={videoComments} />}
         {auth.ok && (
           <StyledComment
             className="commentSectionInput"
@@ -103,7 +103,7 @@ const CommentSection = ({ stream_id }) => {
             }
           />
         )}
-        {videoComments?.map((el) => (
+        {videoComments.length > 0 && videoComments?.map((el) => (
           <StyledComment
             author={el.User.name}
             key={el.id}
