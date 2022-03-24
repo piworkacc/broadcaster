@@ -18,7 +18,7 @@ const Particle = () => {
 								value: "#131313",
 							},
 						},
-						fpsLimit: 120,
+						fpsLimit: 30,
 						interactivity: {
 							events: {
 								onClick: {

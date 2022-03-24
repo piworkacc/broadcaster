@@ -4,7 +4,9 @@ const {
   Tag,
   Comment,
   User,
-  Sequelize: { Op, literal, QueryTypes, fn, col },
+  Sequelize: {
+    Op, literal, QueryTypes, fn, col,
+  },
   Like,
   sequelize,
 } = require('../../db/models');
@@ -45,6 +47,7 @@ function getStreamById(id) {
       'path',
       'user_id',
       'preview',
+      'stream_key',
       [fn('COUNT', col('Likes.id')), 'likesCount'],
     ],
     where: { id },
