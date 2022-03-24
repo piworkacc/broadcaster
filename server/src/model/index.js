@@ -4,7 +4,9 @@ const {
   Tag,
   Comment,
   User,
-  Sequelize: { Op, literal, QueryTypes, fn, col },
+  Sequelize: {
+    Op, literal, QueryTypes, fn, col,
+  },
   Like,
   sequelize,
 } = require('../../db/models');

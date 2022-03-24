@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
-import { Select, Form, Input, Modal } from 'antd';
+import React, { useState, useEffect } from 'react';
+import { UploadOutlined } from '@ant-design/icons';
+import { Select, Form, Input, Modal, Upload, Button } from 'antd';
 import ErrorComponent from '../ErrorComponent/index';
 import Loading from '../Loading/index';
 
@@ -12,6 +13,20 @@ const UserNewStreamModal = ({ visible, onCreate, onCancel, tags, error, loading 
   function handleChange(selectedTags) {
     setselectedTags(selectedTags);
   }
+
+  const uploadProps =
+  {
+    action: "/upload",
+    listType: "picture",
+    maxCount: 1,
+    beforeUpload: (file) => {
+      return false;
+    },
+  };
+
+  const normFile = (e) => {
+    return e && e.fileList;
+  };
 
   return (
     <Modal
@@ -30,6 +45,7 @@ const UserNewStreamModal = ({ visible, onCreate, onCancel, tags, error, loading 
           .catch((info) => {
             console.log('Validate Failed:', info);
           });
+
       }}
     >
       <Form
@@ -52,7 +68,7 @@ const UserNewStreamModal = ({ visible, onCreate, onCancel, tags, error, loading 
         >
           <Input />
         </Form.Item>
-        <Form.Item
+        {/* <Form.Item
           name="preview"
           label="Обложка"
           rules={[
@@ -62,7 +78,21 @@ const UserNewStreamModal = ({ visible, onCreate, onCancel, tags, error, loading 
             },
           ]}
         >
-          <Input type="textarea" />
+          <Input placeholder="Путь к изображению"
+            value={patToFile}
+            onChange={(e) => onChangeHandler(e)}
+            type="textarea"
+          />
+        </Form.Item> */}
+        <Form.Item
+          name="upload"
+          label="Добавьте изображение для вашего стрима!"
+          valuePropName="fileList"
+          getValueFromEvent={normFile}
+        >
+          <Upload {...uploadProps}>
+            <Button icon={<UploadOutlined />}>Выбрать файл</Button>
+          </Upload>
         </Form.Item>
         <Form.Item
           name="tags"
@@ -88,6 +118,7 @@ const UserNewStreamModal = ({ visible, onCreate, onCancel, tags, error, loading 
             ))}
           </Select>
         </Form.Item>
+
         <div className='errorText'>
           <ErrorComponent error={error} />
           <Loading loading={loading} />
