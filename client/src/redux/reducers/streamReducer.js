@@ -5,7 +5,7 @@ import {
 } from '../actionTypes/streamTypes';
 
 const cache = window.localStorage.getItem('state');
-const preloadedState = cache ? JSON.parse(cache).videos : [];
+const preloadedState = cache ? JSON.parse(cache).streams : [];
 
 const streamReducer = (state = preloadedState || [], action) => {
   const { type, payload } = action;

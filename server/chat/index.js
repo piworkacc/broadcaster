@@ -15,9 +15,11 @@ const onConnection = (socket, io) => {
   const { headers } = handshake;
 
   console.log('User connected', headers.host);
-
-  socket.on('message:send', async ({ message, room, user }) => {
+  socket.on('message:join', ({ message, room, user }) => {
+    // if (user.ok) 
     socket.join(room);
+  });
+  socket.on('message:send', async ({ message, room, user }) => {
     if (user.ok) {
       try {
         const messagefromDB = await Message.create({

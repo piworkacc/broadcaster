@@ -82,23 +82,6 @@ const SlideContainer = styled(SplideSlide)`
   }
 `;
 
-// &:before {
-//   content: '▶';
-//   display: block;
-//   font-size: 20px;
-//   line-height: 20px;
-//   color: #fff;
-//   background-color: #ee4540;
-//   border-radius: 50%;
-//   background-position: center;
-//   position: absolute;
-//   padding: 12px 10px 10px 12px;
-//   top: 45%;
-//   left: 50%;
-//   z-index: 2;
-//   opacity: 1;
-//   cursor: pointer;
-// }
 
 const Img = styled.img`
   max-width: 100%;
@@ -123,20 +106,6 @@ const Img = styled.img`
     z-index: 2;
   }
 `;
-
-// const ImgPlay = styled.img`
-// position: absolute;
-// top: 65%;
-// left: 45%;
-// width: 20%;
-// height: 20%;
-// z-index: 3;
-// padding: 0;
-// visible: false;
-// &:hover: {
-//   visible: true;
-// }
-// `
 
 const CatergoryLi = styled.li`
   padding-left: 30px;
