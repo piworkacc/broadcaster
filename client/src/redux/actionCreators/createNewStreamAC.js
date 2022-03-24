@@ -25,7 +25,6 @@ export const createNewStreamAC = (data) => {
         });
         if (res.ok) {
           const stream = await res.json();
-          // console.log(stream);
           dispatch(newStream(stream));
           dispatch(latestKey(stream));
         }
@@ -33,7 +32,6 @@ export const createNewStreamAC = (data) => {
         console.error(error);
       }
 
-      // const stream = await service.uxios('/api/streams', 'POST', body);
     } catch (err) {
       throw new Error(err);
     }

@@ -29,6 +29,7 @@ const CommentSection = ({ stream_id }) => {
   const videoComments = useSelector((state) => state.comments);
   const auth = useSelector((state) => state.auth);
   // const [comments, setComments] = useState([]);
+  const [showComments, setShowComments] = useState(false);
   const [submitting, setSubmitting] = useState(false);
   const [value, setValue] = useState('');
   const { error, loading, uxios } = useUxios();
@@ -44,10 +45,9 @@ const CommentSection = ({ stream_id }) => {
 
   useEffect(() => {
     getAllComments(stream_id);
-    // setComments(videoComments);
+    setShowComments(true);
     return () => {
       dispatch(allComments([]));
-      // setComments([]);
     };
   }, []);
 
@@ -77,45 +77,47 @@ const CommentSection = ({ stream_id }) => {
   };
 
   return (
-    <>
-      <ErrorComponent error={error} />
-      <Loading loading={loading} />
-      {videoComments.length && <CommentSectionWrapper>
-        {<CommentList comments={videoComments} />}
-        {auth.ok && (
-          <StyledComment
-            className="commentSectionInput"
-            avatar={
-              <Avatar
-                src="https://joeschmoe.io/api/v1/random"
-                alt={auth.name}
-              />
-            }
-            author={<span style={{ color: 'white' }}>{auth.name}</span>}
-            content={
-              <CommentEditor
-                header={'Ответить'}
-                onChange={handleChange}
-                onSubmit={handleSubmit}
-                submitting={submitting}
-                value={value}
-              />
-            }
-          />
-        )}
-        {videoComments.length > 0 && videoComments?.map((el) => (
-          <StyledComment
-            author={el.User.name}
-            key={el.id}
-            id={el.id}
-            content={el.comment}
-            datetime={
-              <Moment format="YYYY-MM-DD HH:mm:ss">{el.createdAt}</Moment>
-            }
-          />
-        ))}
-      </CommentSectionWrapper>}
-    </>
+    showComments && (
+      <>
+        <ErrorComponent error={error} />
+        <Loading loading={loading} />
+        <CommentSectionWrapper>
+          {videoComments.length > 0 && <CommentList comments={videoComments} />}
+          {auth.ok && (
+            <StyledComment
+              className="commentSectionInput"
+              avatar={
+                <Avatar
+                  src="https://joeschmoe.io/api/v1/random"
+                  alt={auth.name}
+                />
+              }
+              author={<span style={{ color: 'white' }}>{auth.name}</span>}
+              content={
+                <CommentEditor
+                  header={'Ответить'}
+                  onChange={handleChange}
+                  onSubmit={handleSubmit}
+                  submitting={submitting}
+                  value={value}
+                />
+              }
+            />
+          )}
+          {videoComments?.map((el) => (
+            <StyledComment
+              author={el.User.name}
+              key={el.id}
+              id={el.id}
+              content={el.comment}
+              datetime={
+                <Moment format="YYYY-MM-DD HH:mm:ss">{el.createdAt}</Moment>
+              }
+            />
+          ))}
+        </CommentSectionWrapper>
+      </>
+    )
   );
 };
 
@@ -139,9 +141,8 @@ const CommentSectionWrapper = styled.div`
   //flex-wrap: wrap;
   //flex-direction: column;
   //align-items: center;
-  // overflow-y: scroll;
-  // height: 1000px;
-
+  //overflow: auto;
+  //overflow-x: hidden;
 `;
 
 // CommentList
