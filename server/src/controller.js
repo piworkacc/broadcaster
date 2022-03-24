@@ -263,19 +263,21 @@ async function addStream(req, res, next) {
 
   // Use the mv() method to place the file somewhere on your server
   file.mv(uploadPath, (err) => {
-    if (err) { return res.status(500).send(err); }
-    return res.send('File uploaded!');
+    if (err) {
+      return res.status(500).send(err);
+    }
+    return undefined;
   });
   try {
     const { tags: tagsArr, data } = req.body;
     const fields = JSON.parse(data);
-    console.log(fields);
+
     fields.user_id = req.session.userId;
     fields.preview = path.join('images', file.name);
 
     const newStream = await createStream(fields);
     await addTagsToStream(newStream, tagsArr);
-    res.json(await getStreamById(newStream.id));
+    res.send(await getStreamById(newStream.id));
   } catch (err) {
     next(err);
   }

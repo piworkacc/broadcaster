@@ -86,6 +86,7 @@ const UserNewStreamModal = ({ visible, onCreate, onCancel, tags, error, loading 
         </Form.Item> */}
         <Form.Item
           name="upload"
+          label="Добавьте изображение для вашего стрима!"
           valuePropName="fileList"
           getValueFromEvent={normFile}
         >
