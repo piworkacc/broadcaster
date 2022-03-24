@@ -23,7 +23,7 @@ const VideoPage = () => {
 
   // const currUser = useSelector((state) => state?.auth.id);
   const likes = useSelector((state) => state.likes);
-
+  // window.scrollTo(0, 0);
   const LikeHandler = () => {
     dispatch(
       likeStreamAC({
@@ -86,6 +86,7 @@ const Wrapper = styled.div`
   justify-content: space-evenly;
   align-items: center;
   min-height: 100vh;
+  // overflow: auto;
 `;
 
 const StyledLikeBtn = styled(HeartOutlined)`
