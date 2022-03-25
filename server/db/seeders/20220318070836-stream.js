@@ -2,21 +2,23 @@ const { randomString, randomArrayElement } = require('../../src/miscellaneous');
 
 module.exports = {
   async up(queryInterface, Sequelize) {
-    const users = (
-      await queryInterface.sequelize.query('select * from "Users"', {
+    const users = await queryInterface.sequelize.query(
+      'select * from "Users"',
+      {
         type: queryInterface.sequelize.QueryTypes.SELECT,
-      })
+      },
     );
 
     const seedingData = [
       {
         title: '10 часов смотрим в стену челлендж',
         preview: 'https://avatarko.ru/img/kartinka/2/zhivotnye_kot_1902.jpg',
-        path: 'https://www.youtube.com/watch?v=axWVMr-RpMM',
+        path: 'https://www.youtube.com/watch?v=HUgMWJKn2YY',
       },
       {
         title: 'едим картоху',
-        preview: 'https://www.b17.ru/foto/uploaded/upl_1535735741_254740.jpg',
+        preview:
+          'https://www.restoran.ru/upload/resize_cache/editor/151/870_580_01a88371ca9e7ba72ce6f5767ba9eff1a/mg_54723b6.webp',
         path: 'https://www.youtube.com/watch?v=Pj8qAG_d324',
       },
       {
@@ -115,7 +117,7 @@ module.exports = {
       },
       {
         title: 'league of legends',
-        preview: 'https://gameinside.ua/wp-content/uploads/2021/12/lol.jpg',
+        preview: 'https://cdn.shazoo.ru/c1400x625/165852_OMi5hc4hvb_lol.jpg',
         path: 'https://www.youtube.com/watch?v=tEnsqpThaFg',
       },
       {
@@ -159,6 +161,12 @@ module.exports = {
         preview:
           'https://cdn.igromania.ru/mnt/news/8/9/2/a/0/1/111594/cb214632cae86c63_1920xH.jpg',
         path: 'https://www.youtube.com/watch?v=u4-FCsiF5x4',
+      },
+      {
+        title: 'пятничный разнос',
+        preview:
+          'https://i05.fotocdn.net/s122/5f72a1f23f1f2116/public_pin_l/2783716645.jpg',
+        path: 'https://www.youtube.com/watch?v=5tPHqdJRElE',
       },
     ];
 
